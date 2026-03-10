@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Peru Sistemas Pro — Software para el Perú Real</title>
+<meta name="description" content="Sistemas de ventas, restaurantes, colegios profesionales y facturación electrónica. Hechos en Iquitos para todo el Perú.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Tinos:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ═══════════════ TOKENS ═══════════════ */
+:root {
+  --red:       #B91C1C;
+  --red-dark:  #7F1010;
+  --red-deep:  #4A0808;
+  --red-light: #DC2626;
+  --gold:      #D4A017;
+  --gold-light:#F0C843;
+  --white:     #FAFAFA;
+  --off:       #F5F0EE;
+  --text:      #1A0A0A;
+  --text2:     #5C3030;
+  --border:    rgba(180,28,28,0.18);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'Tinos', serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--text);
+  overflow-x: hidden;
+  padding-bottom: 80px; /* espacio para botonera fija */
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ═══════════════ NAV ═══════════════ */
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--red-dark);
+  border-bottom: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 20px;
+}
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 1.5rem; letter-spacing: 1px;
+  color: var(--white);
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-brand span { color: var(--gold); }
+.nav-links {
+  display: flex; gap: 20px; list-style: none;
+}
+.nav-links a {
+  color: rgba(255,255,255,0.75); font-size: 0.82rem; font-weight: 600;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-wa {
+  background: #25D366; border-radius: 20px;
+  padding: 6px 14px; font-size: 0.78rem; font-weight: 700;
+  color: white; display: flex; align-items: center; gap: 5px;
+  transition: opacity 0.15s;
+}
+.nav-wa:hover { opacity: 0.88; }
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .nav-brand { font-size: 1.2rem; }
+}
+
+/* ═══════════════ HERO ═══════════════ */
+.hero {
+  position: relative;
+  background: var(--red-dark);
+  overflow: hidden;
+  padding: 60px 20px 80px;
+  text-align: center;
+}
+/* patrón geométrico sutil */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 0, transparent 50%);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+/* franja dorada inferior */
+.hero::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.hero-kicker {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,215,0,0.3);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 1px;
+  color: var(--gold-light); text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 8vw, 5rem);
+  color: var(--white); line-height: 1;
+  letter-spacing: 1px; margin-bottom: 8px;
+}
+.hero h1 em {
+  font-style: normal; color: var(--gold);
+}
+.hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: rgba(255,255,255,0.8);
+  font-style: italic; margin-bottom: 28px;
+  font-family: var(--font-serif);
+}
+.hero-desc {
+  max-width: 540px; margin: 0 auto 36px;
+  color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.65;
+}
+.hero-btns {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+}
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--red-deep); font-weight: 800; font-size: 0.95rem;
+  padding: 14px 28px; border-radius: 8px; border: none;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+  box-shadow: 0 6px 20px rgba(212,160,23,0.4);
+  transition: all 0.15s; font-family: var(--font-body);
+}
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,160,23,0.5); }
+.btn-outline {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.4);
+  color: white; font-weight: 600; font-size: 0.9rem;
+  padding: 13px 24px; border-radius: 8px;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+  transition: all 0.15s; font-family: var(--font-body);
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+/* stats rápidas */
+.hero-stats {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 24px;
+  margin-top: 48px;
+}
+.hero-stat {
+  text-align: center; color: white;
+}
+.hero-stat strong {
+  display: block; font-family: var(--font-display);
+  font-size: 2rem; color: var(--gold); line-height: 1;
+}
+.hero-stat span { font-size: 0.72rem; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ═══════════════ IMAGEN HERO ═══════════════ */
+.hero-image-strip {
+  width: 100%; overflow: hidden;
+  background: var(--red-deep);
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+.hero-mockup {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 900px; width: 100%; margin: 0 auto;
+  gap: 2px; background: var(--red-deep);
+}
+.mockup-screen {
+  background: #111;
+  aspect-ratio: 9/16;
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.mockup-bar {
+  height: 32px; display: flex; align-items: center; padding: 0 10px; gap: 6px;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px;
+}
+.mockup-content {
+  flex: 1; padding: 10px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.mockup-row {
+  height: 8px; border-radius: 2px; opacity: 0.3;
+}
+.mockup-bignum {
+  font-family: var(--font-display); font-size: 1.8rem;
+  line-height: 1; opacity: 0.9;
+}
+
+/* ═══════════════ SECCIÓN GENÉRICA ═══════════════ */
+section { padding: 60px 20px; }
+.container { max-width: 980px; margin: 0 auto; }
+.section-label {
+  text-transform: uppercase; letter-spacing: 2px;
+  font-size: 0.68rem; font-weight: 700; color: var(--red);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  line-height: 1; margin-bottom: 14px;
+  color: var(--text);
+}
+.section-title em { font-style: normal; color: var(--red); }
+.section-body {
+  color: var(--text2); font-size: 0.95rem; line-height: 1.65;
+  max-width: 560px;
+}
+
+/* ═══════════════ PRODUCTOS ═══════════════ */
+.productos { background: var(--off); }
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.prod-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(180,28,28,0.08);
+  border: 1px solid rgba(180,28,28,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.prod-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(180,28,28,0.15); }
+.prod-header {
+  padding: 20px 20px 16px;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.prod-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+}
+.prod-name {
+  font-family: var(--font-display); font-size: 1.6rem; line-height: 1;
+  margin-bottom: 3px;
+}
+.prod-tagline {
+  font-size: 0.72rem; color: var(--text2); font-weight: 600; text-transform: uppercase;
+}
+.prod-url { font-size: 0.68rem; opacity: 0.5; margin-top: 2px; }
+.prod-body { padding: 0 20px 20px; }
+.prod-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.55; margin-bottom: 14px; }
+.prod-features {
+  list-style: none; display: flex; flex-direction: column; gap: 5px;
+  margin-bottom: 18px;
+}
+.prod-features li {
+  font-size: 0.8rem; display: flex; align-items: flex-start; gap: 7px;
+}
+.prod-features li::before {
+  content: '›'; font-weight: 900; flex-shrink: 0; margin-top: 1px;
+}
+.prod-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  border-radius: 4px; padding: 3px 8px;
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.prod-badges { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px; }
+.prod-cta {
+  width: 100%; padding: 11px; border-radius: 8px;
+  font-size: 0.82rem; font-weight: 700; cursor: pointer;
+  border: none; font-family: var(--font-body);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: opacity 0.15s;
+}
+.prod-cta:hover { opacity: 0.88; }
+
+/* QueVendi */
+.qv .prod-icon   { background: #FFF3ED; }
+.qv .prod-name   { color: #C2410C; }
+.qv .prod-features li::before { color: #C2410C; }
+.qv .badge-lite  { background: #FFF3ED; color: #C2410C; }
+.qv .badge-new   { background: #DCFCE7; color: #15803D; }
+.qv .prod-cta    { background: #C2410C; color: white; }
+
+/* MeTraes */
+.mt .prod-icon   { background: #FEF3C7; }
+.mt .prod-name   { color: #B45309; }
+.mt .prod-features li::before { color: #B45309; }
+.mt .badge-beta  { background: #FEF3C7; color: #B45309; }
+.mt .badge-kds   { background: #EDE9FE; color: #6D28D9; }
+.mt .prod-cta    { background: #B45309; color: white; }
+
+/* ColegiosPro */
+.cp .prod-icon   { background: #EFF6FF; }
+.cp .prod-name   { color: #1D4ED8; }
+.cp .prod-features li::before { color: #1D4ED8; }
+.cp .badge-sunat { background: #DCFCE7; color: #15803D; }
+.cp .prod-cta    { background: #1D4ED8; color: white; }
+
+/* Facturalo */
+.fl .prod-icon   { background: #F0FDF4; }
+.fl .prod-name   { color: #15803D; }
+.fl .prod-features li::before { color: #15803D; }
+.fl .prod-cta    { background: #15803D; color: white; }
+
+/* ═══════════════ BARRA DE ESTADO ═══════════════ */
+.status-bar {
+  background: var(--red);
+  padding: 20px;
+  overflow-x: auto;
+}
+.status-inner {
+  display: flex; gap: 16px; min-width: max-content;
+  justify-content: center;
+}
+.status-item {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px; padding: 10px 16px;
+  text-align: center; min-width: 130px;
+}
+.status-name { font-size: 0.65rem; font-weight: 700; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 2px; }
+.status-dot-row { display: flex; align-items: center; justify-content: center; gap: 5px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot-green  { background: #4ADE80; box-shadow: 0 0 6px #4ADE80; }
+.dot-yellow { background: #FCD34D; box-shadow: 0 0 6px #FCD34D; }
+.dot-blue   { background: #60A5FA; box-shadow: 0 0 6px #60A5FA; }
+.status-label { font-size: 0.7rem; font-weight: 700; color: white; }
+
+/* ═══════════════ POR QUÉ ═══════════════ */
+.porque { background: var(--red-deep); }
+.porque .section-title { color: white; }
+.porque .section-title em { color: var(--gold); }
+.porque .section-label { color: var(--gold-light); }
+.razones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px; margin-top: 36px;
+}
+.razon-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 20px;
+  transition: background 0.15s;
+}
+.razon-card:hover { background: rgba(255,255,255,0.1); }
+.razon-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.razon-title { font-size: 0.9rem; font-weight: 700; color: white; margin-bottom: 6px; }
+.razon-body { font-size: 0.8rem; color: rgba(255,255,255,0.55); line-height: 1.55; }
+
+/* ═══════════════ ORIGEN ═══════════════ */
+.origen { background: white; }
+.origen-wrap {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+}
+.origen-map {
+  background: var(--off);
+  border-radius: 16px;
+  border: 2px solid var(--border);
+  aspect-ratio: 4/5;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.mapa-peru {
+  font-size: 6rem; opacity: 0.12; position: absolute;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+.mapa-pin {
+  position: absolute; text-align: center;
+}
+.mapa-pin-dot {
+  width: 16px; height: 16px; background: var(--red);
+  border-radius: 50%; margin: 0 auto 4px;
+  box-shadow: 0 0 0 4px rgba(185,28,28,0.2), 0 0 20px rgba(185,28,28,0.4);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(185,28,28,0.2), 0 0 20px rgba(185,28,28,0.3); }
+  50%       { box-shadow: 0 0 0 8px rgba(185,28,28,0.1), 0 0 30px rgba(185,28,28,0.5); }
+}
+.mapa-pin-label {
+  font-size: 0.65rem; font-weight: 800; color: var(--red);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  background: white; padding: 2px 6px; border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.mapa-lines {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.mapa-reach {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 16px 20px;
+}
+.reach-city {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.72rem; color: var(--text2); font-weight: 500;
+}
+.reach-city::before { content: '→'; color: var(--red); font-weight: 900; }
+
+@media (max-width: 640px) {
+  .origen-wrap { grid-template-columns: 1fr; }
+  .origen-map { display: none; }
+}
+
+/* ═══════════════ FAQ ═══════════════ */
+.faq { background: var(--off); }
+.faq-list {
+  margin-top: 36px; display: flex; flex-direction: column; gap: 8px;
+  max-width: 720px; margin-left: auto; margin-right: auto;
+}
+details {
+  background: white; border-radius: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: box-shadow 0.15s;
+}
+details[open] { box-shadow: 0 4px 20px rgba(185,28,28,0.1); }
+details summary {
+  padding: 16px 18px;
+  font-size: 0.9rem; font-weight: 700;
+  cursor: pointer; list-style: none;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 10px; color: var(--text);
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::after {
+  content: '+'; font-size: 1.2rem; color: var(--red);
+  flex-shrink: 0; font-weight: 300; transition: transform 0.15s;
+}
+details[open] summary::after { content: '−'; }
+details p {
+  padding: 0 18px 16px;
+  font-size: 0.85rem; color: var(--text2); line-height: 1.65;
+}
+details strong { color: var(--text); }
+
+/* ═══════════════ CTA WHATSAPP ═══════════════ */
+.cta-wa {
+  background: linear-gradient(135deg, var(--red-dark), var(--red-deep));
+  padding: 60px 20px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta-wa::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px,
+    transparent 0, transparent 12px
+  );
+}
+.cta-wa h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: white; margin-bottom: 14px; position: relative;
+}
+.cta-wa h2 em { font-style: normal; color: var(--gold); }
+.cta-wa p {
+  color: rgba(255,255,255,0.7); font-size: 0.95rem;
+  max-width: 480px; margin: 0 auto 32px; position: relative; line-height: 1.6;
+}
+.wa-number {
+  font-family: var(--font-display);
+  font-size: 1.8rem; color: #4ADE80; letter-spacing: 2px;
+  margin-bottom: 20px; position: relative;
+}
+.btn-wa-big {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #25D366; color: white;
+  font-size: 1.05rem; font-weight: 800;
+  padding: 16px 36px; border-radius: 50px;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+  transition: all 0.15s; position: relative;
+  font-family: var(--font-body);
+}
+.btn-wa-big:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(37,211,102,0.5); }
+.btn-wa-big i { font-size: 1.3rem; }
+
+/* ═══════════════ FOOTER ═══════════════ */
+footer {
+  background: var(--red-deep);
+  padding: 32px 20px; text-align: center;
+  border-top: 2px solid var(--gold);
+}
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 1.6rem; color: white; margin-bottom: 6px;
+}
+.footer-brand span { color: var(--gold); }
+.footer-meta {
+  font-size: 0.72rem; color: rgba(255,255,255,0.4);
+  line-height: 1.7; margin-bottom: 14px;
+}
+.footer-socials { display: flex; justify-content: center; gap: 12px; margin-top: 16px; }
+.social-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 0.9rem; transition: background 0.15s;
+}
+.social-btn:hover { background: var(--gold); color: var(--red-deep); }
+
+/* ═══════════════ BOTONERA FIJA MÓVIL ═══════════════ */
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--red-deep);
+  border-top: 2px solid var(--gold);
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
+}
+.bb-btn {
+  padding: 14px 8px;
+  font-family: var(--font-body);
+  font-size: 0.82rem; font-weight: 800;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  letter-spacing: 0.2px; transition: opacity 0.15s;
+  text-transform: uppercase;
+}
+.bb-btn:hover { opacity: 0.88; }
+.bb-oferta { background: var(--gold); color: var(--red-deep); }
+.bb-wa     { background: #25D366; color: white; }
+.bb-sep    { width: 1px; background: rgba(255,255,255,0.15); }
+
+/* ═══════════════ ANIMACIONES DE ENTRADA ═══════════════ */
+.fade-in {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- ██ NAV ██ -->
+<nav>
+  <div class="nav-brand">PERU<span>SISTEMAS</span>.PRO</div>
+  <ul class="nav-links">
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#porque">¿Por qué?</a></li>
+    <li><a href="#faq">Preguntas</a></li>
+  </ul>
+  <a href="https://wa.me/51967317946?text=Hola%2C%20vi%20la%20web%20de%20Peru%20Sistemas%20y%20quiero%20información"
+     class="nav-wa" target="_blank" rel="noopener">
+    <i class="fab fa-whatsapp"></i> Escribir
+  </a>
+</nav>
+
+<!-- ██ HERO ██ -->
+<section class="hero">
+  <div class="hero-kicker">
+    <i class="fas fa-map-marker-alt"></i> Hecho en Iquitos · Usado en todo el Perú
+  </div>
+  <h1>SOFTWARE PARA<br>EL <em>PERÚ REAL</em></h1>
+  <p class="hero-sub">Sistemas que entienden cómo trabajamos de verdad</p>
+  <p class="hero-desc">
+    Bodegas, restaurantes, colegios profesionales y facturación electrónica.
+    Todo integrado, todo simple, todo a precio justo. Sin letra chica.
+  </p>
+  <div class="hero-btns">
+    <a href="https://wa.me/51967317946?text=Hola%2C%20quiero%20la%20oferta%20de%20Peru%20Sistemas"
+       class="btn-gold" target="_blank">
+      <i class="fas fa-star"></i> QUIERO LA OFERTA
+    </a>
+    <a href="#productos" class="btn-outline">
+      <i class="fas fa-th-large"></i> Ver productos
+    </a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <strong>4</strong>
+      <span>sistemas integrados</span>
+    </div>
+    <div class="hero-stat">
+      <strong>SUNAT</strong>
+      <span>100% compatible</span>
+    </div>
+    <div class="hero-stat">
+      <strong>5 min</strong>
+      <span>para empezar</span>
+    </div>
+    <div class="hero-stat">
+      <strong>S/50</strong>
+      <span>desde este precio</span>
+    </div>
+  </div>
+</section>
+
+<!-- ██ IMAGEN — Mockups visuales ██ -->
+<div class="hero-image-strip">
+  <div class="hero-mockup">
+    <!-- QueVendi mockup -->
+    <div class="mockup-screen" style="background:#0d0d14">
+      <div class="mockup-bar" style="background:#13131e;color:#ff6b35">
+        <span style="font-size:0.75rem">⬡</span> QUEVENDI POS
+      </div>
+      <div class="mockup-content">
+        <div class="mockup-bignum" style="color:#ff6b35">S/ 139<span style="font-size:1rem">.00</span></div>
+        <div style="font-size:0.55rem;color:#4a5568;margin-bottom:4px">TOTAL A COBRAR</div>
+        <div class="mockup-row" style="background:#ff6b35;width:90%;height:6px;opacity:0.6"></div>
+        <div class="mockup-row" style="background:#4a5568;width:70%"></div>
+        <div class="mockup-row" style="background:#4a5568;width:55%"></div>
+        <div style="margin-top:auto">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:8px">
+            <div style="background:#ff6b3522;border:1px solid #ff6b3544;border-radius:3px;padding:4px;text-align:center;font-size:0.5rem;color:#ff6b35;font-weight:700">EFECTIVO</div>
+            <div style="background:#25D36622;border:1px solid #25D36644;border-radius:3px;padding:4px;text-align:center;font-size:0.5rem;color:#25D366;font-weight:700">YAPE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MeTraes mockup -->
+    <div class="mockup-screen" style="background:#0a0a0f">
+      <div class="mockup-bar" style="background:#12120a;color:#f59e0b">
+        🍽 METRAES KDS
+      </div>
+      <div class="mockup-content">
+        <div style="font-size:0.55rem;color:#78716c;margin-bottom:2px;font-weight:700">COCINA — PEDIDOS</div>
+        <div style="background:#292524;border:1px solid #f59e0b44;border-radius:4px;padding:5px;margin-bottom:4px">
+          <div style="font-size:0.55rem;color:#f59e0b;font-weight:700">Mesa 4 · 12:34</div>
+          <div style="font-size:0.5rem;color:#a8a29e">2× Pollo a la brasa</div>
+          <div style="font-size:0.5rem;color:#a8a29e">1× Ensalada mixta</div>
+        </div>
+        <div style="background:#292524;border:1px solid #22c55e44;border-radius:4px;padding:5px">
+          <div style="font-size:0.55rem;color:#22c55e;font-weight:700">Mesa 2 · 12:41</div>
+          <div style="font-size:0.5rem;color:#a8a29e">1× Arroz con leche</div>
+        </div>
+      </div>
+    </div>
+    <!-- Facturalo mockup -->
+    <div class="mockup-screen" style="background:#0a0f0a">
+      <div class="mockup-bar" style="background:#0a130a;color:#22c55e">
+        ✔ FACTURALO.PRO
+      </div>
+      <div class="mockup-content">
+        <div style="font-size:0.5rem;color:#166534;font-weight:700;letter-spacing:0.5px">BOLETA ELECTRÓNICA</div>
+        <div class="mockup-bignum" style="color:#22c55e;font-size:1.3rem">B001-00000042</div>
+        <div style="font-size:0.5rem;color:#4b5563;margin:2px 0">RUC 20600123456</div>
+        <div style="display:flex;gap:3px;margin-top:4px">
+          <div style="flex:1;height:5px;background:#22c55e;border-radius:2px;opacity:0.8"></div>
+          <div style="flex:1;height:5px;background:#22c55e22;border-radius:2px"></div>
+        </div>
+        <div style="font-size:0.5rem;color:#22c55e;margin-top:4px;font-weight:700">✓ ENVIADO A SUNAT</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██ ESTADO DE PRODUCTOS ██ -->
+<div class="status-bar">
+  <div class="status-inner">
+    <div class="status-item">
+      <div class="status-name">QueVendi</div>
+      <div class="status-dot-row">
+        <div class="dot dot-green"></div>
+        <div class="status-label">Activo · disponible</div>
+      </div>
+    </div>
+    <div class="status-item">
+      <div class="status-name">QueVendi Lite</div>
+      <div class="status-dot-row">
+        <div class="dot dot-green"></div>
+        <div class="status-label">Activo · nuevo</div>
+      </div>
+    </div>
+    <div class="status-item">
+      <div class="status-name">MeTraes</div>
+      <div class="status-dot-row">
+        <div class="dot dot-yellow"></div>
+        <div class="status-label">Beta · 2-3 días</div>
+      </div>
+    </div>
+    <div class="status-item">
+      <div class="status-name">ColegiosPro</div>
+      <div class="status-dot-row">
+        <div class="dot dot-blue"></div>
+        <div class="status-label">Activo · CCPL</div>
+      </div>
+    </div>
+    <div class="status-item">
+      <div class="status-name">Facturalo.pro</div>
+      <div class="status-dot-row">
+        <div class="dot dot-green"></div>
+        <div class="status-label">Activo · SUNAT</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ██ PRODUCTOS ██ -->
+<section class="productos" id="productos">
+  <div class="container">
+    <div class="section-label fade-in">Nuestros Sistemas</div>
+    <h2 class="section-title fade-in">Cada negocio tiene<br><em>su propio sistema</em></h2>
+    <p class="section-body fade-in">Sin pagar por lo que no usas. Sin complicaciones. Sin mensualidades sorpresa.</p>
+
+    <div class="productos-grid">
+
+      <!-- QueVendi -->
+      <div class="prod-card qv fade-in">
+        <div class="prod-header">
+          <div class="prod-icon">🛒</div>
+          <div>
+            <div class="prod-name">QueVendi</div>
+            <div class="prod-tagline">Sistema de Ventas POS</div>
+            <div class="prod-url">quevendi.pro</div>
+          </div>
+        </div>
+        <div class="prod-body">
+          <p class="prod-desc">POS completo para bodegas, ferreterías, lubricentros, roperías, zapaterías y más. Con facturación SUNAT integrada.</p>
+          <div class="prod-badges">
+            <span class="prod-badge badge-lite" style="background:#FFF3ED;color:#C2410C">⚡ Lite disponible</span>
+            <span class="prod-badge" style="background:#FFF3ED;color:#C2410C">Proforma</span>
+            <span class="prod-badge badge-new" style="background:#DCFCE7;color:#15803D">✦ Catálogo Virtual</span>
+            <span class="prod-badge" style="background:#FEF3C7;color:#92400E">Control Fiados</span>
+          </div>
+          <ul class="prod-features">
+            <li>Boletas y facturas electrónicas automáticas</li>
+            <li>Funciona offline — sin internet no te para</li>
+            <li>Tienda online con tu número de celular</li>
+            <li>Control de fiados y deudas de clientes</li>
+            <li>Reportes de ventas del día, semana y mes</li>
+          </ul>
+          <div style="display:flex;gap:6px;margin-bottom:12px">
+            <div style="flex:1;background:#FFF3ED;border-radius:6px;padding:8px;text-align:center">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#C2410C;line-height:1">S/50</div>
+              <div style="font-size:0.6rem;color:#92400E">Básico/mes</div>
+            </div>
+            <div style="flex:1;background:#FFF3ED;border-radius:6px;padding:8px;text-align:center">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#C2410C;line-height:1">S/70</div>
+              <div style="font-size:0.6rem;color:#92400E">Crece/mes</div>
+            </div>
+            <div style="flex:1;background:#FFF3ED;border-radius:6px;padding:8px;text-align:center">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#C2410C;line-height:1">S/90</div>
+              <div style="font-size:0.6rem;color:#92400E">Pro/mes</div>
+            </div>
+          </div>
+          <a href="https://wa.me/51967317946?text=Hola%2C%20quiero%20información%20sobre%20QueVendi"
+             class="prod-cta" target="_blank">
+            <i class="fab fa-whatsapp"></i> Pedir demo gratis
+          </a>
+        </div>
+      </div>
+
+      <!-- MeTraes -->
+      <div class="prod-card mt fade-in">
+        <div class="prod-header">
+          <div class="prod-icon">🍽</div>
+          <div>
+            <div class="prod-name">MeTraes</div>
+            <div class="prod-tagline">Sistema para Restaurantes</div>
+            <div class="prod-url">metraes.com</div>
+          </div>
+        </div>
+        <div class="prod-body">
+          <p class="prod-desc">Para chifas, pollerías, pizzerías, anticucherías y cafés. Cero papel, cero gritos, todo en pantalla.</p>
+          <div class="prod-badges">
+            <span class="prod-badge badge-beta" style="background:#FEF3C7;color:#92400E">🔥 MVP en 2-3 días</span>
+            <span class="prod-badge badge-kds" style="background:#EDE9FE;color:#6D28D9">KDS Cocina</span>
+            <span class="prod-badge" style="background:#FEF3C7;color:#B45309">Carta QR</span>
+          </div>
+          <ul class="prod-features">
+            <li>KDS de cocina — el mozo en la mesa, el pedido ya está en pantalla</li>
+            <li>POS Mesero + POS Caja separados</li>
+            <li>Carta Virtual con QR por mesa</li>
+            <li>Delivery con seguimiento en tiempo real</li>
+            <li>Control de personal (20–40 por turno)</li>
+          </ul>
+          <div style="background:#FEF9C3;border:1px solid #FCD34D;border-radius:8px;padding:10px;margin-bottom:14px">
+            <div style="font-size:0.72rem;font-weight:800;color:#92400E;margin-bottom:2px">⚡ PRECIO DE LANZAMIENTO</div>
+            <div style="font-size:0.8rem;color:#78350F">Primeros 10 clientes — tarifa especial de fundadores. Contáctanos antes que se acaben.</div>
+          </div>
+          <a href="https://wa.me/51967317946?text=Hola%2C%20quiero%20ser%20uno%20de%20los%20primeros%20en%20MeTraes"
+             class="prod-cta" target="_blank">
+            <i class="fab fa-whatsapp"></i> Reservar mi lugar
+          </a>
+        </div>
+      </div>
+
+      <!-- ColegiosPro -->
+      <div class="prod-card cp fade-in">
+        <div class="prod-header">
+          <div class="prod-icon">🏛</div>
+          <div>
+            <div class="prod-name" style="font-size:1.3rem">ColegiosPro</div>
+            <div class="prod-tagline">Colegios Profesionales</div>
+            <div class="prod-url">colegios.pro</div>
+          </div>
+        </div>
+        <div class="prod-body">
+          <p class="prod-desc">Sistema integral para colegios de contadores, abogados, médicos e ingenieros. Gestión de colegiados, aportes, constancias y más.</p>
+          <div class="prod-badges">
+            <span class="prod-badge badge-sunat" style="background:#DCFCE7;color:#15803D">✓ SUNAT</span>
+            <span class="prod-badge" style="background:#EFF6FF;color:#1D4ED8">Constancias digitales</span>
+          </div>
+          <ul class="prod-features">
+            <li>Gestión de colegiados y estado de pagos</li>
+            <li>Fraccionamiento de deuda automático</li>
+            <li>Constancias con código de verificación QR</li>
+            <li>Módulo de elecciones y asambleas</li>
+            <li>Cajas con control por roles y aprobaciones</li>
+          </ul>
+          <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px;margin-bottom:14px">
+            <div style="font-size:0.72rem;color:#1D4ED8;font-weight:700">✓ En producción</div>
+            <div style="font-size:0.78rem;color:#1e40af">Actualmente en uso por el Colegio de Contadores Públicos de Loreto.</div>
+          </div>
+          <a href="https://wa.me/51967317946?text=Hola%2C%20quiero%20información%20sobre%20ColegiosPro"
+             class="prod-cta" target="_blank">
+            <i class="fab fa-whatsapp"></i> Solicitar información
+          </a>
+        </div>
+      </div>
+
+      <!-- Facturalo -->
+      <div class="prod-card fl fade-in">
+        <div class="prod-header">
+          <div class="prod-icon">🧾</div>
+          <div>
+            <div class="prod-name" style="font-size:1.2rem">Facturalo.pro</div>
+            <div class="prod-tagline">Facturación Electrónica SUNAT</div>
+            <div class="prod-url">facturalo.pro</div>
+          </div>
+        </div>
+        <div class="prod-body">
+          <p class="prod-desc">API de facturación electrónica UBL 2.1 para empresas, contadores y desarrolladores. El motor de facturación detrás de todos nuestros sistemas.</p>
+          <div class="prod-badges">
+            <span class="prod-badge" style="background:#F0FDF4;color:#15803D">API REST</span>
+            <span class="prod-badge" style="background:#F0FDF4;color:#15803D">Boletas · Facturas · NC</span>
+          </div>
+          <ul class="prod-features">
+            <li>Boletas, facturas, notas de crédito y débito</li>
+            <li>Reintento automático SUNAT ante caídas</li>
+            <li>Multi-empresa · Multi-serie</li>
+            <li>Consulta RUC y DNI en tiempo real</li>
+            <li>Para contadores y empresas de cualquier rubro</li>
+          </ul>
+          <a href="https://wa.me/51967317946?text=Hola%2C%20quiero%20información%20sobre%20Facturalo.pro"
+             class="prod-cta" target="_blank">
+            <i class="fab fa-whatsapp"></i> Consultar precios API
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /grid -->
+  </div>
+</section>
+
+<!-- ██ POR QUÉ PERU SISTEMAS ██ -->
+<section class="porque" id="porque">
+  <div class="container">
+    <div class="section-label">Nuestros diferenciadores</div>
+    <h2 class="section-title">¿Por qué elegir<br><em>Peru Sistemas?</em></h2>
+    <div class="razones-grid">
+      <div class="razon-card fade-in">
+        <div class="razon-icon">🌿</div>
+        <div class="razon-title">Nacimos en la Amazonía</div>
+        <div class="razon-body">Iquitos nos enseñó a hacer software que funciona con internet lento, en negocios pequeños con cuentas claras. Entendemos la realidad del comerciante peruano.</div>
+      </div>
+      <div class="razon-card fade-in">
+        <div class="razon-icon">🇵🇪</div>
+        <div class="razon-title">100% adaptado al Perú</div>
+        <div class="razon-body">Exoneración IGV Amazónica, régimen NRUS, fraccionamiento de deuda, control de fiados — todo lo que los sistemas de Lima no traen por defecto.</div>
+      </div>
+      <div class="razon-card fade-in">
+        <div class="razon-icon">⚡</div>
+        <div class="razon-title">5 minutos y ya vendes</div>
+        <div class="razon-body">Sin capacitaciones de 2 días. Sin instaladores. Sin técnicos. Entras, configuras tu negocio y emites tu primera boleta en minutos.</div>
+      </div>
+      <div class="razon-card fade-in">
+        <div class="razon-icon">🔗</div>
+        <div class="razon-title">Todo integrado</div>
+        <div class="razon-body">Vendes en QueVendi → factura en Facturalo.pro → automáticamente, sin copiar y pegar, sin doble trabajo. Un solo ecosistema.</div>
+      </div>
+      <div class="razon-card fade-in">
+        <div class="razon-icon">💬</div>
+        <div class="razon-title">Soporte real por WhatsApp</div>
+        <div class="razon-body">No hay tickets de soporte que esperan 5 días hábiles. Escribes al WhatsApp y te responde el mismo desarrollador que construyó el sistema.</div>
+      </div>
+      <div class="razon-card fade-in">
+        <div class="razon-icon">💰</div>
+        <div class="razon-title">Precio justo, sin sorpresas</div>
+        <div class="razon-body">Desde S/50 al mes todo incluido. Sin cobros por número de boletas, sin "add-ons" ocultos, sin contratos de permanencia.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ ORIGEN ██ -->
+<section class="origen">
+  <div class="container">
+    <div class="origen-wrap">
+      <div>
+        <div class="section-label fade-in">Dónde estamos</div>
+        <h2 class="section-title fade-in">Nacimos en <em>Iquitos</em>,<br>servimos a todo el Perú</h2>
+        <p class="section-body fade-in" style="margin-bottom:24px">
+          Iquitos es una ciudad que solo se alcanza por río o por aire. Eso nos enseñó que el software tiene que funcionar aunque fallen las cosas. Desde aquí operamos para clientes en:
+        </p>
+        <div class="mapa-reach fade-in">
+          <div class="reach-city">Iquitos y toda la Región Loreto</div>
+          <div class="reach-city">Lima y Callao</div>
+          <div class="reach-city">Arequipa, Cusco, Trujillo</div>
+          <div class="reach-city">Pucallpa, Tarapoto, Yurimaguas</div>
+          <div class="reach-city">Cualquier ciudad del Perú</div>
+        </div>
+      </div>
+      <div class="origen-map fade-in">
+        <div class="mapa-peru">🗺</div>
+        <div class="mapa-pin" style="top:28%;left:52%">
+          <div class="mapa-pin-dot"></div>
+          <div class="mapa-pin-label">IQUITOS</div>
+        </div>
+        <div style="position:absolute;bottom:20px;width:100%;padding:0 16px">
+          <div class="mapa-reach">
+            <div class="reach-city" style="font-size:0.68rem">Lima</div>
+            <div class="reach-city" style="font-size:0.68rem">Arequipa</div>
+            <div class="reach-city" style="font-size:0.68rem">Cusco</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ FAQ ██ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-label fade-in">Resolvemos tus dudas</div>
+    <h2 class="section-title fade-in" style="text-align:center">Preguntas <em>frecuentes</em></h2>
+
+    <div class="faq-list">
+
+      <details class="fade-in">
+        <summary>¿Necesito internet para vender con QueVendi?</summary>
+        <p>No. QueVendi funciona <strong>offline</strong>: cuando el internet se va, sigues vendiendo normalmente. Las boletas y facturas se sincronizan con SUNAT en cuanto la conexión vuelve, automáticamente, sin que tengas que hacer nada.</p>
+      </details>
+
+      <details class="fade-in">
+        <summary>¿Qué es QueVendi Lite y en qué se diferencia del POS completo?</summary>
+        <p><strong>QueVendi Lite</strong> es una versión simplificada pensada para negocios de servicios (salones, veterinarias, notarías, consultorios) que no manejan inventario complejo. Tiene un catálogo de 100 productos, los 30 más vendidos en acceso rápido, y está optimizado para cobrar y emitir comprobante en segundos. El POS completo incluye kardex, múltiples vendedores, reportes avanzados y más.</p>
+      </details>
+
+      <details class="fade-in">
+        <summary>¿Qué es el Catálogo Virtual y el Control de Fiados?</summary>
+        <p>El <strong>Catálogo Virtual</strong> es tu tienda online con la URL <em>quevendi.pro/tu-numero</em> — tus clientes pueden ver tu catálogo, hacer pedidos para recoger o delivery, desde su celular. El <strong>Control de Fiados</strong> registra las deudas de tus clientes habituales, te avisa cuándo cobrar y lleva el historial completo.</p>
+      </details>
+
+      <details class="fade-in">
+        <summary>¿MeTraes ya está disponible?</summary>
+        <p>El producto mínimo (MVP) con KDS de cocina, POS Mesero y POS Caja estará listo en <strong>2 a 3 días</strong>. Si eres de los primeros 10 clientes, tendrás precio de fundador y soporte prioritario. Escríbenos ya para reservar tu lugar.</p>
+      </details>
+
+      <details class="fade-in">
+        <summary>¿ColegiosPro sirve para cualquier colegio profesional?</summary>
+        <p>Sí. Está diseñado para colegios de <strong>contadores, abogados, médicos, ingenieros, arquitectos</strong> y cualquier organización gremial con estructura de colegiados, cuotas, fraccionamientos, constancias y asambleas. Actualmente en producción con el Colegio de Contadores Públicos de Loreto.</p>
+      </details>
+
+      <details class="fade-in">
+        <summary>¿Cómo es la facturación electrónica? ¿Necesito otro programa?</summary>
+        <p>No. Facturalo.pro está <strong>integrado</strong> en todos nuestros sistemas. Cuando cobras en QueVendi, la boleta o factura se genera y envía a SUNAT automáticamente, en el mismo acto. No necesitas abrir otro programa, no hay pasos adicionales.</p>
+      </details>
+
+      <details class="fade-in">
+        <summary>¿Qué pasa si tengo un problema técnico?</summary>
+        <p>Nos escribes directo al WhatsApp <strong>+51 967317946</strong> y te responde el desarrollador. No hay mesa de ayuda con scripts, no hay esperas de 48 horas. Soporte real, en castellano peruano.</p>
+      </details>
+
+      <details class="fade-in">
+        <summary>¿Puedo probar antes de pagar?</summary>
+        <p>Sí. Ofrecemos una <strong>demo funcional</strong> con tu RUC real para que emitas una boleta de prueba y veas el sistema con tus propios datos. Si no te convence, no pagas nada.</p>
+      </details>
+
+      <details class="fade-in">
+        <summary>¿Qué incluye el precio mensual?</summary>
+        <p>Todo: uso del sistema, actualizaciones, correcciones de bugs, soporte por WhatsApp y facturación electrónica ilimitada sin costo por boleta. <strong>Sin letra chica</strong>. El único costo adicional posible es si necesitas más dispositivos registrados en un plan superior.</p>
+      </details>
+
+      <details class="fade-in">
+        <summary>¿Pueden adaptar el sistema a mi negocio específico?</summary>
+        <p>Sí. Todos nuestros sistemas tienen configuración por nicho (bodega, ferretería, pollería, consultorio, etc.) con plantillas pre-cargadas. Para necesidades más específicas, conversamos y cotizamos. Escríbenos con los detalles de tu negocio.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ██ CTA WHATSAPP ██ -->
+<section class="cta-wa" id="contacto">
+  <h2>¿Listo para <em>arrancar</em>?</h2>
+  <p>Escríbenos ahora. En menos de 24 horas tienes tu sistema funcionando con una demo en vivo con tus propios datos.</p>
+  <div class="wa-number">+51 967 317 946</div>
+  <a href="https://wa.me/51967317946?text=Hola%20Duilio%2C%20vi%20PeruSistemas.pro%20y%20quiero%20información%20sobre%20los%20sistemas"
+     class="btn-wa-big" target="_blank" rel="noopener">
+    <i class="fab fa-whatsapp"></i>
+    ESCRIBIR POR WHATSAPP AHORA
+  </a>
+  <p style="margin-top:16px;font-size:0.78rem;color:rgba(255,255,255,0.4);position:relative">
+    Respuesta garantizada el mismo día · Sin compromiso de compra
+  </p>
+</section>
+
+<!-- ██ FOOTER ██ -->
+<footer>
+  <div class="footer-brand">PERU<span>SISTEMAS</span>.PRO</div>
+  <div class="footer-meta">
+    Peru Sistemas Pro E.I.R.L. · RUC 20xxxxxxxxx<br>
+    Iquitos, Loreto, Perú<br>
+    <a href="mailto:info@perusistemas.pro" style="color:rgba(255,255,255,0.4)">info@perusistemas.pro</a> · +51 967 317 946
+  </div>
+  <div style="font-size:0.68rem;color:rgba(255,255,255,0.25)">
+    QueVendi.pro · MeTraes.com · ColegiosPro · Facturalo.pro<br>
+    © 2025 Peru Sistemas Pro. Todos los derechos reservados.
+  </div>
+  <div class="footer-socials">
+    <a href="https://wa.me/51967317946" class="social-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.linkedin.com" class="social-btn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+  </div>
+</footer>
+
+<!-- ██ BOTONERA FIJA ██ -->
+<div class="bottom-bar">
+  <a href="https://wa.me/51967317946?text=Hola%2C%20quiero%20la%20oferta%20de%20Peru%20Sistemas%20Pro"
+     class="bb-btn bb-oferta" target="_blank" rel="noopener">
+    <i class="fas fa-star"></i> Quiero la oferta
+  </a>
+  <a href="https://wa.me/51967317946?text=Hola%2C%20quiero%20consultar%20sobre%20Peru%20Sistemas%20Pro"
+     class="bb-btn bb-wa" target="_blank" rel="noopener">
+    <i class="fab fa-whatsapp"></i> Consultar WhatsApp
+  </a>
+</div>
+
+<script>
+// Animación de entrada con IntersectionObserver
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-in').forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 60 + 'ms';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
