@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planes ColegiosPro · ICAL — Perú Sistemas Pro</title>
+<meta name="description" content="Propuesta de suscripción ColegiosPro para el Ilustre Colegio de Abogados de Loreto. Tres planes accesibles con beneficios escalables.">
+<style>
+  :root {
+    --primario: #1e3a8a;
+    --primario-claro: #3b82f6;
+    --accent: #059669;
+    --accent-claro: #10b981;
+    --texto: #1f2937;
+    --muted: #6b7280;
+    --fondo: #ffffff;
+    --fondo-suave: #f8fafc;
+    --fondo-card: #ffffff;
+    --border: #e2e8f0;
+    --destaque: #fef3c7;
+    --destaque-border: #f59e0b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--fondo-suave);
+    color: var(--texto);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+
+  /* HEADER */
+  header.hero {
+    background: linear-gradient(135deg, var(--primario) 0%, var(--primario-claro) 100%);
+    color: white;
+    padding: 40px 0 32px;
+    text-align: center;
+  }
+  .hero .brand { font-size: 13px; letter-spacing: 1.5px; opacity: 0.9; margin-bottom: 8px; }
+  .hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; line-height: 1.2; }
+  .hero .subtitle { font-size: 16px; opacity: 0.95; max-width: 600px; margin: 0 auto; }
+  .hero .destinatario { margin-top: 20px; padding: 12px 20px; background: rgba(255,255,255,0.15); border-radius: 8px; display: inline-block; font-size: 14px; }
+  .hero .destinatario strong { display: block; font-size: 16px; margin-top: 2px; }
+
+  /* INTRO */
+  section.intro {
+    background: var(--fondo);
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  section.intro p { font-size: 16px; color: var(--texto); margin-bottom: 14px; }
+  section.intro p.destacado {
+    padding: 14px 16px;
+    background: var(--fondo-suave);
+    border-left: 3px solid var(--primario);
+    border-radius: 4px;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  /* PLANES */
+  section.planes { padding: 40px 0 24px; }
+  section.planes h2 {
+    text-align: center;
+    font-size: 22px;
+    color: var(--primario);
+    margin-bottom: 28px;
+    font-weight: 700;
+  }
+  .planes-grid { display: grid; gap: 20px; }
+  @media (min-width: 768px) {
+    .planes-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .plan-card {
+    background: var(--fondo-card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .plan-card.recomendado {
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.12);
+  }
+  .plan-card.recomendado::before {
+    content: "★ MÁS ELEGIDO";
+    position: absolute;
+    top: 0; right: 0;
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-bottom-left-radius: 8px;
+  }
+  .plan-header {
+    padding: 20px 18px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .plan-nombre { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
+  .plan-card.recomendado .plan-nombre { color: var(--accent); }
+  .plan-precio { font-size: 36px; font-weight: 800; color: var(--primario); line-height: 1; }
+  .plan-card.recomendado .plan-precio { color: var(--accent); }
+  .plan-periodo { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .plan-anual { font-size: 12px; color: var(--muted); margin-top: 8px; font-style: italic; }
+  .plan-implementacion { font-size: 12px; color: var(--muted); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); }
+  .plan-implementacion strong { color: var(--texto); }
+
+  .plan-features { padding: 16px 18px; }
+  .plan-features-titulo {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .plan-features ul { list-style: none; }
+  .plan-features li {
+    padding: 6px 0 6px 22px;
+    position: relative;
+    font-size: 13.5px;
+    color: var(--texto);
+    line-height: 1.45;
+  }
+  .plan-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .plan-features li.destacado {
+    background: var(--destaque);
+    margin: 4px -8px;
+    padding-left: 30px;
+    padding-right: 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .plan-capacidad {
+    padding: 12px 18px;
+    background: var(--fondo-suave);
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  .plan-capacidad strong { color: var(--texto); }
+
+  /* URGENCIA */
+  section.urgencia {
+    padding: 28px 0;
+    background: var(--fondo);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  section.urgencia h2 {
+    font-size: 18px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .urgencia-grid { display: grid; gap: 12px; }
+  @media (min-width: 600px) { .urgencia-grid { grid-template-columns: 1fr 1fr; } }
+  .urgencia-card {
+    padding: 16px;
+    background: var(--fondo-suave);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+  }
+  .urgencia-card .fecha { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .urgencia-card .descuento { font-size: 20px; font-weight: 700; color: var(--texto); margin-bottom: 4px; }
+  .urgencia-card .detalle { font-size: 13px; color: var(--muted); }
+
+  /* COMPARATIVA / REFERENCIA ANTERIOR */
+  section.referencia {
+    padding: 24px 0;
+    text-align: center;
+  }
+  .referencia-box {
+    display: inline-block;
+    padding: 14px 22px;
+    background: var(--fondo);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .referencia-box strong { color: var(--texto); display: block; margin-bottom: 4px; }
+  .referencia-box a {
+    color: var(--primario);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid var(--primario-claro);
+  }
+
+  /* CONTACTO */
+  section.contacto {
+    padding: 32px 0 40px;
+    background: linear-gradient(135deg, var(--primario) 0%, var(--primario-claro) 100%);
+    color: white;
+    text-align: center;
+  }
+  section.contacto h2 { font-size: 22px; margin-bottom: 8px; }
+  section.contacto p { font-size: 15px; opacity: 0.95; margin-bottom: 18px; }
+  .contacto-cta {
+    display: inline-block;
+    padding: 12px 28px;
+    background: white;
+    color: var(--primario);
+    font-weight: 700;
+    border-radius: 24px;
+    text-decoration: none;
+    font-size: 15px;
+    transition: transform 0.2s;
+  }
+  .contacto-cta:hover { transform: translateY(-2px); }
+  .contacto-info {
+    margin-top: 20px;
+    font-size: 13px;
+    opacity: 0.85;
+  }
+  .contacto-info a { color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); }
+
+  /* FOOTER */
+  footer {
+    padding: 20px 0;
+    background: var(--texto);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    font-size: 12px;
+  }
+  footer strong { color: white; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="brand">PERÚ SISTEMAS PRO · COLEGIOSPRO</div>
+    <h1>Modernización Administrativa<br>para el ICAL</h1>
+    <p class="subtitle">Tres planes de suscripción accesibles, diseñados para que el Colegio de Abogados de Loreto incorpore tecnología sin una inversión inicial mayor.</p>
+    <div class="destinatario">
+      Dirigido a:
+      <strong>Dr. Erick Salas Alvarado, Decano · Junta Directiva ICAL</strong>
+    </div>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="container">
+    <p>Tras la reunión anterior, en la que presentamos la propuesta de colaboración sin contraprestación, hemos preparado esta alternativa: <strong>suscripción mensual</strong> con tres planes que permiten incorporar la plataforma ColegiosPro de forma gradual.</p>
+    <p class="destacado">Algunos colegios profesionales han optado por priorizar otras inversiones antes que la modernización administrativa. Para esos casos, ofrecemos planes accesibles que permiten dar el primer paso sin un compromiso financiero importante, manteniendo la posibilidad de escalar conforme avancen los resultados.</p>
+  </div>
+</section>
+
+<section class="planes">
+  <div class="container">
+    <h2>Planes de Suscripción</h2>
+    <div class="planes-grid">
+
+      <!-- PLAN INICIAL -->
+      <article class="plan-card">
+        <div class="plan-header">
+          <div class="plan-nombre">Plan Inicial</div>
+          <div class="plan-precio">S/ 290</div>
+          <div class="plan-periodo">soles / mes</div>
+          <div class="plan-anual">Anual: S/ 2,958 (ahorra 2 meses)</div>
+          <div class="plan-implementacion"><strong>Implementación:</strong> S/ 1,500</div>
+        </div>
+        <div class="plan-features">
+          <div class="plan-features-titulo">Incluye</div>
+          <ul>
+            <li>Gestión completa de colegiados</li>
+            <li>Control de deudas y cuotas — cero errores</li>
+            <li>Fraccionamientos con seguimiento automático</li>
+            <li>Caja inteligente, más rápida que antes</li>
+            <li>Emisión SUNAT ilimitada (Facturalo.pro)</li>
+            <li>Validación Yape/Plin en segundos sin comisiones (PagoOK)</li>
+            <li>Constancias de habilidad automáticas con QR</li>
+            <li>Reportes administrativos en tiempo real</li>
+          </ul>
+        </div>
+        <div class="plan-capacidad">Hasta <strong>1,500 colegiados</strong></div>
+      </article>
+
+      <!-- PLAN PROFESIONAL ★ -->
+      <article class="plan-card recomendado">
+        <div class="plan-header">
+          <div class="plan-nombre">Plan Profesional</div>
+          <div class="plan-precio">S/ 390</div>
+          <div class="plan-periodo">soles / mes</div>
+          <div class="plan-anual">Anual: S/ 3,978 (ahorra 2 meses)</div>
+          <div class="plan-implementacion"><strong>Implementación:</strong> S/ 1,800</div>
+        </div>
+        <div class="plan-features">
+          <div class="plan-features-titulo">Todo lo del Plan Inicial, más</div>
+          <ul>
+            <li><strong>Portal del colegiado</strong>: pagos en línea 24/7</li>
+            <li>Cada abogado descarga su constancia y comprobantes al instante</li>
+            <li>Notificaciones automáticas (correo y WhatsApp)</li>
+            <li class="destacado">🌐 Web institucional profesional <strong>INCLUIDA</strong> (valor S/ 1,800)</li>
+            <li>CMS completo — control total del contenido</li>
+            <li>Tienda pública: Merchandaising + Servicos</li>
+            <li>Pasarela integrada (Visa, MasterCard, etc.)</li>
+          </ul>
+        </div>
+        <div class="plan-capacidad">Hasta <strong>3,000 colegiados</strong></div>
+      </article>
+
+      <!-- PLAN ÉLITE -->
+      <article class="plan-card">
+        <div class="plan-header">
+          <div class="plan-nombre">Plan Élite</div>
+          <div class="plan-precio">S/ 690</div>
+          <div class="plan-periodo">soles / mes</div>
+          <div class="plan-anual">Anual: S/ 7,038 (ahorra 2 meses)</div>
+          <div class="plan-implementacion"><strong>Implementación:</strong> S/ 2,500</div>
+        </div>
+        <div class="plan-features">
+          <div class="plan-features-titulo">Todo lo del Plan Profesional, más</div>
+          <ul>
+            <li><strong>Mini-sitio web para cada abogado</strong> dentro del dominio del ICAL</li>
+            <li>Listado público filtrable por especialidad</li>
+            <li>Voto electrónico con padrón y resultados en tiempo real</li>
+            <li>Control de asistencia automática (geolocalización)</li>
+            <li>Registro automático de multas por inasistencia</li>
+            <li>Gestión de eventos (capacitaciones, congresos)</li>
+            <li>Mesa de partes virtual con derivación por área</li>
+            <li>Tratamiento legal de datos (ANPD)</li>
+          </ul>
+        </div>
+        <div class="plan-capacidad"><strong>Sin límite</strong> de colegiados</div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="urgencia">
+  <div class="container">
+    <h2>Beneficios por Incorporación Temprana</h2>
+    <div class="urgencia-grid">
+      <div class="urgencia-card">
+        <div class="fecha">Antes del 31 de mayo</div>
+        <div class="descuento">– S/ 350</div>
+        <div class="detalle">Descuento en implementación + inclusión en el primer lote de pilotos institucionales.</div>
+      </div>
+      <div class="urgencia-card">
+        <div class="fecha">Antes del 30 de junio</div>
+        <div class="descuento">– S/ 250</div>
+        <div class="detalle">Descuento en el costo de implementación.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="referencia">
+  <div class="container">
+    <div class="referencia-box">
+      <strong>¿Prefieren la propiedad completa del sistema?</strong>
+      La propuesta anterior sigue vigente:
+      <a href="https://perusistemas.pro/propuestas/ical" target="_blank">perusistemas.pro/propuestas/ical</a>
+    </div>
+  </div>
+</section>
+
+<section class="contacto">
+  <div class="container">
+    <h2>Coordinemos una Reunión</h2>
+    <p>Le mostramos la plataforma funcionando en vivo, con casos reales del CCPL.</p>
+    <a class="contacto-cta" href="https://wa.me/51933453662?text=Hola%20Duilio,%20somos%20del%20ICAL%20y%20queremos%20conocer%20m%C3%A1s%20sobre%20ColegiosPro" target="_blank">Solicitar Demostración por WhatsApp</a>
+    <div class="contacto-info">
+      <strong>Duilio Restuccia Eslava</strong> · Gerente General<br>
+      <a href="mailto:info@perusistemas.pro">info@perusistemas.pro</a>  ·  <a href="https://perusistemas.pro" target="_blank">perusistemas.pro</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <strong>PERÚ SISTEMAS PRO E.I.R.L.</strong> · RUC 20615446565 · Iquitos, Loreto, Perú<br>
+    Propuesta válida hasta el 30 de junio de 2026
+  </div>
+</footer>
+
+</body>
+</html>
