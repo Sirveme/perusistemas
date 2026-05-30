@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta a Restaurantes — Perú Sistemas Pro</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Arial', sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #1a1a1a;
+    background: #ffffff;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem;
+  }
+
+  /* === Cabecera === */
+  .cabecera {
+    border-bottom: 2px solid #8B1A1F;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo-psp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo-cuadro {
+    background: #8B1A1F;
+    color: white;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .logo-texto strong {
+    display: block;
+    font-size: 0.95rem;
+    line-height: 1.1;
+  }
+
+  .logo-texto span {
+    display: block;
+    font-size: 0.75rem;
+    color: #666;
+  }
+
+  .titulo-hoja {
+    text-align: right;
+    font-size: 0.85rem;
+    color: #555;
+  }
+
+  .titulo-hoja strong {
+    color: #8B1A1F;
+    font-size: 1rem;
+    display: block;
+  }
+
+  /* === Datos del negocio === */
+  .datos-negocio {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+  }
+
+  .datos-negocio .fila {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .datos-negocio .fila:last-child {
+    margin-bottom: 0;
+  }
+
+  .datos-negocio .campo {
+    flex: 1;
+  }
+
+  .datos-negocio label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  .datos-negocio .linea {
+    border-bottom: 1px solid #888;
+    height: 1.3rem;
+    width: 100%;
+  }
+
+  /* === Speech de apertura === */
+  .speech {
+    background: #FFFBEB;
+    border-left: 3px solid #F59E0B;
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    font-style: italic;
+    color: #78350F;
+  }
+
+  .speech strong {
+    font-style: normal;
+    color: #92400E;
+  }
+
+  /* === Preguntas === */
+  .pregunta {
+    margin-bottom: 0.9rem;
+    page-break-inside: avoid;
+  }
+
+  .pregunta-numero {
+    display: inline-block;
+    background: #8B1A1F;
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+
+  .pregunta-titulo {
+    display: inline;
+    font-weight: 700;
+    font-size: 1rem;
+    vertical-align: middle;
+  }
+
+  .opciones {
+    margin-top: 0.4rem;
+    margin-left: 1.8rem;
+  }
+
+  .opcion {
+    display: block;
+    padding: 0.15rem 0;
+    font-size: 0.95rem;
+  }
+
+  .checkbox {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid #555;
+    border-radius: 3px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+
+  .respuesta-abierta {
+    border-bottom: 1px solid #888;
+    height: 1.3rem;
+    margin-top: 0.4rem;
+    margin-left: 1.8rem;
+  }
+
+  .respuesta-abierta-larga {
+    border-bottom: 1px solid #888;
+    height: 1.3rem;
+    margin-top: 0.4rem;
+    margin-left: 1.8rem;
+    margin-bottom: 0.3rem;
+  }
+
+  /* === Cierre === */
+  .cierre {
+    margin-top: 1.2rem;
+    padding-top: 0.8rem;
+    border-top: 2px solid #8B1A1F;
+  }
+
+  .cierre-titulo {
+    font-weight: 700;
+    color: #8B1A1F;
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+  }
+
+  .cierre-speech {
+    background: #F0FDF4;
+    border-left: 3px solid #16A34A;
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #14532D;
+  }
+
+  .cierre-datos {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .cierre-datos .campo {
+    flex: 1;
+  }
+
+  .cierre-datos label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  .cierre-datos .linea {
+    border-bottom: 1px solid #888;
+    height: 1.3rem;
+    width: 100%;
+  }
+
+  /* === Notas internas === */
+  .notas-internas {
+    margin-top: 1rem;
+    padding: 0.5rem 0.75rem;
+    background: #f3f4f6;
+    border-radius: 5px;
+    font-size: 0.78rem;
+  }
+
+  .notas-internas label {
+    font-weight: 700;
+    color: #555;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .notas-internas .checks {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .notas-internas .check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  /* === Footer === */
+  .footer-hoja {
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.7rem;
+    color: #888;
+    text-align: center;
+  }
+
+  /* === Print === */
+  @media print {
+    body {
+      padding: 0.8rem 1rem;
+      font-size: 10pt;
+    }
+
+    @page {
+      size: A4;
+      margin: 0.5cm;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ CABECERA ============ -->
+<div class="cabecera">
+  <div class="logo-psp">
+    <div class="logo-cuadro">PSP</div>
+    <div class="logo-texto">
+      <strong>Perú Sistemas Pro</strong>
+      <span>Iquitos, Loreto</span>
+    </div>
+  </div>
+  <div class="titulo-hoja">
+    <strong>Encuesta a Restaurantes</strong>
+    Estudio Iquitos 2026
+  </div>
+</div>
+
+<!-- ============ DATOS DEL NEGOCIO ============ -->
+<div class="datos-negocio">
+  <div class="fila">
+    <div class="campo">
+      <label>Nombre del negocio</label>
+      <div class="linea"></div>
+    </div>
+    <div class="campo">
+      <label>Dirección</label>
+      <div class="linea"></div>
+    </div>
+  </div>
+  <div class="fila">
+    <div class="campo">
+      <label>Persona que responde</label>
+      <div class="linea"></div>
+    </div>
+    <div class="campo">
+      <label>Cargo (dueño / administrador / mozo)</label>
+      <div class="linea"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SPEECH DE APERTURA ============ -->
+<div class="speech">
+  <strong>Apertura sugerida:</strong>
+  "Buenos días/tardes. Soy Duilio Restuccia, de Perú Sistemas Pro. Estoy haciendo
+  un breve estudio sobre restaurantes en Iquitos para entender mejor el rubro y
+  preparar materiales útiles. ¿Tiene 3 minutos? Si está ocupado, le dejo mi WhatsApp
+  y conversamos cuando guste."
+</div>
+
+<!-- ============ PREGUNTA 1 ============ -->
+<div class="pregunta">
+  <span class="pregunta-numero">1</span>
+  <span class="pregunta-titulo">¿Hace cuánto abrió este negocio?</span>
+  <div class="opciones">
+    <span class="opcion"><span class="checkbox"></span> Menos de 6 meses</span>
+    <span class="opcion"><span class="checkbox"></span> Entre 6 meses y 2 años</span>
+    <span class="opcion"><span class="checkbox"></span> Más de 2 años</span>
+  </div>
+</div>
+
+<!-- ============ PREGUNTA 2 ============ -->
+<div class="pregunta">
+  <span class="pregunta-numero">2</span>
+  <span class="pregunta-titulo">¿Aproximadamente cuántos platos vende en un día normal?</span>
+  <div class="opciones">
+    <span class="opcion"><span class="checkbox"></span> Menos de 40</span>
+    <span class="opcion"><span class="checkbox"></span> Entre 40 y 80</span>
+    <span class="opcion"><span class="checkbox"></span> Más de 80</span>
+  </div>
+</div>
+
+<!-- ============ PREGUNTA 3 ============ -->
+<div class="pregunta">
+  <span class="pregunta-numero">3</span>
+  <span class="pregunta-titulo">¿Cuánto consume en promedio un cliente?</span>
+  <div class="opciones">
+    <span class="opcion"><span class="checkbox"></span> Menos de S/ 15</span>
+    <span class="opcion"><span class="checkbox"></span> Entre S/ 15 y S/ 30</span>
+    <span class="opcion"><span class="checkbox"></span> Entre S/ 30 y S/ 50</span>
+    <span class="opcion"><span class="checkbox"></span> Más de S/ 50</span>
+    <span class="opcion"><span class="checkbox"></span> Prefiere medir por mesa: S/ _________</span>
+  </div>
+</div>
+
+<!-- ============ PREGUNTA 4 ============ -->
+<div class="pregunta">
+  <span class="pregunta-numero">4</span>
+  <span class="pregunta-titulo">¿Sus ventas diarias se ubican entre qué rangos?</span>
+  <div class="opciones">
+    <span class="opcion"><span class="checkbox"></span> Por debajo de S/ 700</span>
+    <span class="opcion"><span class="checkbox"></span> Entre S/ 700 y S/ 1,500</span>
+    <span class="opcion"><span class="checkbox"></span> Entre S/ 1,500 y S/ 3,000</span>
+    <span class="opcion"><span class="checkbox"></span> Más de S/ 3,000</span>
+    <span class="opcion"><span class="checkbox"></span> Prefiere no decir</span>
+  </div>
+</div>
+
+<!-- ============ PREGUNTA 5 ============ -->
+<div class="pregunta">
+  <span class="pregunta-numero">5</span>
+  <span class="pregunta-titulo">¿Cuánto representa la planilla del personal respecto a las ventas?</span>
+  <div class="opciones">
+    <span class="opcion"><span class="checkbox"></span> Aproximadamente 20% de las ventas</span>
+    <span class="opcion"><span class="checkbox"></span> Aproximadamente 30% de las ventas</span>
+    <span class="opcion"><span class="checkbox"></span> Aproximadamente 40% de las ventas</span>
+    <span class="opcion"><span class="checkbox"></span> Más del 40%</span>
+    <span class="opcion"><span class="checkbox"></span> No tiene la cifra exacta</span>
+  </div>
+</div>
+
+<!-- ============ PREGUNTA 6 ============ -->
+<div class="pregunta">
+  <span class="pregunta-numero">6</span>
+  <span class="pregunta-titulo">¿Cómo lleva el control de sus ventas?</span>
+  <div class="opciones">
+    <span class="opcion"><span class="checkbox"></span> En cuaderno o libreta</span>
+    <span class="opcion"><span class="checkbox"></span> En computadora con Excel</span>
+    <span class="opcion"><span class="checkbox"></span> Con un sistema o programa específico</span>
+    <span class="opcion"><span class="checkbox"></span> No lleva control formal</span>
+    <span class="opcion"><span class="checkbox"></span> Otro: _________________</span>
+  </div>
+</div>
+
+<!-- ============ PREGUNTA 7 ============ -->
+<div class="pregunta">
+  <span class="pregunta-numero">7</span>
+  <span class="pregunta-titulo">¿Qué es lo que más le cuesta del día a día del negocio?</span>
+  <div class="respuesta-abierta-larga"></div>
+  <div class="respuesta-abierta-larga"></div>
+  <div class="respuesta-abierta-larga"></div>
+</div>
+
+<!-- ============ CIERRE ============ -->
+<div class="cierre">
+  <div class="cierre-titulo">Cierre y captura de WhatsApp</div>
+
+  <div class="cierre-speech">
+    "Le agradezco mucho. Tengo un material que armé especialmente para restaurantes
+    de Iquitos sobre cómo mejorar la atención y lograr que los clientes regresen
+    más seguido. Si me da su WhatsApp, esta noche o mañana se lo envío sin compromiso.
+    Le voy a pedir un favor: cuando le llegue, respóndame con un 'Hola', así
+    WhatsApp no me bloquea por escribir a contactos nuevos."
+  </div>
+
+  <div class="cierre-datos">
+    <div class="campo">
+      <label>WhatsApp</label>
+      <div class="linea"></div>
+    </div>
+    <div class="campo">
+      <label>Nombre para tratarlo</label>
+      <div class="linea"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NOTAS INTERNAS ============ -->
+<div class="notas-internas">
+  <label>Anotaciones internas (para uso de Duilio, no leer al encuestado)</label>
+  <div class="checks">
+    <span class="check-item"><span class="checkbox"></span> Dueño presente</span>
+    <span class="check-item"><span class="checkbox"></span> Solo personal</span>
+    <span class="check-item"><span class="checkbox"></span> Local lleno</span>
+    <span class="check-item"><span class="checkbox"></span> Local vacío</span>
+    <span class="check-item"><span class="checkbox"></span> Buena disposición</span>
+    <span class="check-item"><span class="checkbox"></span> Apurado / esquivo</span>
+    <span class="check-item"><span class="checkbox"></span> Interesado en demo QueVendi</span>
+    <span class="check-item"><span class="checkbox"></span> Volver en otra ocasión</span>
+  </div>
+  <div style="margin-top: 0.5rem;">
+    <label style="font-size: 0.7rem;">Observaciones</label>
+    <div style="border-bottom: 1px solid #888; height: 1rem;"></div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<div class="footer-hoja">
+  Perú Sistemas Pro E.I.R.L. · WhatsApp +51 967 317 946 · perusistemas.pro
+</div>
+
+</body>
+</html>
