@@ -513,21 +513,80 @@
     background: white;
     border: 2px dashed var(--tool-qr);
     border-radius: 14px;
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
     text-align: center;
     margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .qr-resultado canvas, .qr-resultado img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
+    display: block;
+    margin: 0 auto;
   }
 
   .qr-resultado-vacio {
     color: var(--gris-500);
     padding: 2rem;
     font-style: italic;
+  }
+
+  .qr-tarjeta {
+    background: white;
+    padding: 1rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .qr-tarjeta-negocio {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--gris-900);
+    text-align: center;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    max-width: 280px;
+  }
+
+  .qr-tarjeta-imagen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .qr-tarjeta-imagen #qr-canvas-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .qr-tarjeta-imagen #qr-canvas-container img,
+  .qr-tarjeta-imagen #qr-canvas-container canvas {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .qr-tarjeta-info {
+    text-align: center;
+    color: var(--gris-700);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    max-width: 280px;
+    word-break: break-word;
+  }
+
+  .qr-tarjeta-info strong {
+    color: var(--tool-qr);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.15rem;
+    font-size: 0.95rem;
   }
 
   /* === TICKET === */
@@ -616,65 +675,150 @@
   }
 
   .ticket-preview {
-    background: white;
-    border: 2px solid var(--gris-300);
-    border-radius: 12px;
-    padding: 1.5rem;
+    background: #FFFEF7;
+    border: 1px solid var(--gris-300);
+    border-radius: 4px;
+    padding: 1.25rem 0.75rem;
     margin-top: 1rem;
-    font-family: 'Courier New', monospace;
-    font-size: 0.85rem;
-    line-height: 1.4;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    color: #1a1a1a;
   }
 
   .ticket-preview-header {
     text-align: center;
-    border-bottom: 2px dashed var(--gris-300);
-    padding-bottom: 0.75rem;
-    margin-bottom: 0.75rem;
+    border-bottom: 1px dashed #666;
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.6rem;
   }
 
   .ticket-preview-titulo {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 800;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.2rem;
+  }
+
+  .ticket-preview-ruc {
+    font-size: 0.72rem;
+    color: #555;
+    margin-top: 0.1rem;
   }
 
   .ticket-preview-aviso {
-    background: #FEF3C7;
+    background: #FFFBEB;
     border: 1px dashed #F59E0B;
-    padding: 0.5rem;
-    margin: 0.5rem 0;
+    padding: 0.45rem 0.5rem;
+    margin: 0.6rem 0;
     text-align: center;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #78350F;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .ticket-preview-num {
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin: 0.4rem 0;
+    padding: 0.3rem 0;
+    border-top: 1px dashed #999;
+    border-bottom: 1px dashed #999;
+  }
+
+  .ticket-preview-fecha {
+    font-size: 0.72rem;
+    color: #555;
+    text-align: center;
+    margin-top: 0.2rem;
+  }
+
+  .ticket-preview-cliente {
+    font-size: 0.78rem;
+    margin: 0.4rem 0;
+    padding: 0.3rem 0;
+    border-bottom: 1px dashed #ccc;
   }
 
   .ticket-preview-items {
     margin: 0.5rem 0;
   }
 
-  .ticket-preview-item {
+  .ticket-preview-item-cabecera {
     display: flex;
     justify-content: space-between;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-bottom: 1px solid #999;
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.3rem;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .ticket-preview-item {
     padding: 0.2rem 0;
+    font-size: 0.78rem;
+  }
+
+  .ticket-preview-item-linea {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .ticket-preview-item-cant {
+    color: #555;
+    font-size: 0.72rem;
+    margin-top: 0.05rem;
+  }
+
+  .ticket-preview-subtotal {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.4rem;
+    margin-top: 0.4rem;
+    border-top: 1px dashed #999;
+    font-size: 0.8rem;
   }
 
   .ticket-preview-total {
-    border-top: 2px dashed var(--gris-300);
-    padding-top: 0.5rem;
-    margin-top: 0.5rem;
-    font-size: 1.1rem;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    padding: 0.4rem 0;
+    margin-top: 0.4rem;
+    font-size: 1rem;
     font-weight: 800;
     display: flex;
     justify-content: space-between;
+    letter-spacing: 0.02em;
   }
 
   .ticket-preview-footer {
-    margin-top: 0.75rem;
+    margin-top: 0.6rem;
     padding-top: 0.5rem;
-    border-top: 2px dashed var(--gris-300);
+    border-top: 1px dashed #999;
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     white-space: pre-wrap;
+    color: #333;
+    line-height: 1.5;
+  }
+
+  .ticket-preview-marca {
+    text-align: center;
+    margin-top: 0.6rem;
+    padding-top: 0.4rem;
+    border-top: 1px dashed #999;
+    font-size: 0.65rem;
+    color: #888;
+    font-family: -apple-system, sans-serif;
   }
 
   /* === BUTTONS === */
@@ -833,8 +977,18 @@
     }
   }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+// Fallback si qrcodejs no carga, intentar otra CDN
+window.addEventListener('DOMContentLoaded', function() {
+  if (typeof QRCode === 'undefined') {
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';
+    document.head.appendChild(script);
+  }
+});
+</script>
 </head>
 <body>
 
@@ -982,9 +1136,16 @@
         <input type="text" class="form-input" id="egreso-responsable" placeholder="Ej. Mozo Carlos">
       </div>
 
-      <div class="form-group">
-        <label class="form-label">Monto S/</label>
-        <input type="number" class="form-input" id="egreso-monto" placeholder="0.00" step="0.10" inputmode="decimal">
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 0.5rem;">
+        <div class="form-group">
+          <label class="form-label">Monto S/</label>
+          <input type="number" class="form-input" id="egreso-monto" placeholder="0.00" step="0.10" inputmode="decimal">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Hora (opcional)</label>
+          <input type="time" class="form-input" id="egreso-hora" placeholder="--:--">
+        </div>
       </div>
 
       <button class="btn btn-add" onclick="agregarEgreso()">➕ Agregar Egreso</button>
@@ -1085,14 +1246,21 @@
 
     <button class="btn btn-add" style="background: var(--tool-ticket);" onclick="agregarItemTicket()">➕ Agregar Item</button>
 
-    <div class="ticket-config-msg">
-      <label class="form-label">📝 Mensaje al cliente (personalícelo)</label>
-      <textarea id="ticket-mensaje-cliente" placeholder="Ejemplo: Este es un ticket provisional. Escríbanos al 967 317 946 con un Hola para enviarle la boleta oficial."></textarea>
-    </div>
-
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 1rem;">
       <label class="form-label">Cliente (opcional)</label>
       <input type="text" class="form-input" id="ticket-cliente" placeholder="Nombre del cliente">
+    </div>
+
+    <div class="ticket-config-msg">
+      <label class="form-label">💬 Mensaje al cliente</label>
+      <div style="display: flex; gap: 0.4rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
+        <button class="categoria-chip" onclick="aplicarMensajeSugerido(1)" style="font-size: 0.75rem;">Sugerencia 1</button>
+        <button class="categoria-chip" onclick="aplicarMensajeSugerido(2)" style="font-size: 0.75rem;">Sugerencia 2</button>
+        <button class="categoria-chip" onclick="aplicarMensajeSugerido(3)" style="font-size: 0.75rem;">Sugerencia 3</button>
+        <button class="categoria-chip" onclick="aplicarMensajeSugerido(4)" style="font-size: 0.75rem;">Sugerencia 4</button>
+        <button class="categoria-chip" onclick="aplicarMensajeSugerido(5)" style="font-size: 0.75rem;">Sugerencia 5</button>
+      </div>
+      <textarea id="ticket-mensaje-cliente" placeholder="Toque una sugerencia o escriba el suyo..."></textarea>
     </div>
 
     <button class="btn btn-primary" style="background: var(--tool-ticket); width: 100%; margin-top: 0.5rem;" onclick="previsualizarTicket()">
@@ -1137,8 +1305,19 @@
 
 <!-- ============ FOOTER ============ -->
 <div class="footer">
-  Herramientas gratuitas de <a href="https://perusistemas.pro">Perú Sistemas Pro</a><br>
-  ¿Quiere automatizar todo esto? Conozca <a href="https://quevendi.pro">QueVendi</a>
+  <div style="margin-bottom: 0.75rem;">
+    Herramientas gratuitas de <a href="https://perusistemas.pro">Perú Sistemas Pro</a><br>
+    ¿Quiere automatizar todo esto? Conozca <a href="https://quevendi.pro">QueVendi</a>
+  </div>
+  <div style="background: #F0FDF4; border: 1px solid var(--qv-verde); border-radius: 10px; padding: 0.75rem; max-width: 360px; margin: 0.75rem auto 0;">
+    <div style="font-weight: 700; color: var(--qv-verde); margin-bottom: 0.4rem; font-size: 0.85rem;">
+      💡 ¿Tiene una sugerencia o quiere una nueva herramienta?
+    </div>
+    <a href="https://wa.me/51967317946?text=Hola%20Duilio%2C%20vengo%20del%20Kit%20de%20Herramientas%20para%20Cajeras." 
+       style="display: inline-flex; align-items: center; gap: 0.4rem; background: #25D366; color: white; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">
+      <span>📱</span> WhatsApp 967 317 946
+    </a>
+  </div>
 </div>
 
 <script>
@@ -1440,12 +1619,25 @@ function compartirCierre() {
 
 // ============ EGRESOS ============
 function inicializarChipsCategorias() {
-  document.querySelectorAll('.categoria-chip').forEach(chip => {
+  document.querySelectorAll('.categoria-chip[data-cat]').forEach(chip => {
     chip.addEventListener('click', () => {
       sonidoClick();
-      document.querySelectorAll('.categoria-chip').forEach(c => c.classList.remove('activo'));
+      document.querySelectorAll('.categoria-chip[data-cat]').forEach(c => c.classList.remove('activo'));
       chip.classList.add('activo');
       state.egresoCategoriaActiva = chip.dataset.cat;
+
+      // Pre-rellenar el concepto con la categoría (la cajera puede editarlo)
+      const conceptoInput = document.getElementById('egreso-concepto');
+      const conceptoActual = conceptoInput.value.trim();
+
+      // Solo pre-rellenar si está vacío o si tenía valor de una categoría anterior (auto-rellenado)
+      const categorias = ['Insumos', 'Gas', 'Gaseosas', 'Movilidad', 'Servicios', 'Retiros', 'Otro'];
+      if (!conceptoActual || categorias.some(c => conceptoActual.startsWith(c))) {
+        conceptoInput.value = chip.dataset.cat;
+        // Posicionar el cursor al final para que la cajera escriba a continuación
+        conceptoInput.focus();
+        conceptoInput.setSelectionRange(conceptoInput.value.length, conceptoInput.value.length);
+      }
     });
   });
 }
@@ -1454,6 +1646,7 @@ function agregarEgreso() {
   const concepto = document.getElementById('egreso-concepto').value.trim();
   const responsable = document.getElementById('egreso-responsable').value.trim();
   const monto = parseFloat(document.getElementById('egreso-monto').value);
+  const horaInput = document.getElementById('egreso-hora').value.trim();
 
   if (!concepto) {
     toast('Ingrese el concepto', 'error');
@@ -1472,7 +1665,7 @@ function agregarEgreso() {
     concepto,
     responsable: responsable || '—',
     monto,
-    hora: new Date().toLocaleTimeString('es-PE', {hour: '2-digit', minute: '2-digit'})
+    hora: horaInput || ''
   };
 
   state.egresos.unshift(egreso);
@@ -1482,6 +1675,7 @@ function agregarEgreso() {
   document.getElementById('egreso-concepto').value = '';
   document.getElementById('egreso-responsable').value = '';
   document.getElementById('egreso-monto').value = '';
+  document.getElementById('egreso-hora').value = '';
 
   toast('Egreso registrado');
   sonidoExito();
@@ -1498,7 +1692,7 @@ function renderEgresos() {
         <div class="egreso-info">
           <div class="egreso-categoria">${e.categoria}</div>
           <div class="egreso-concepto">${e.concepto}</div>
-          <div class="egreso-meta">${e.responsable} · ${e.hora}</div>
+          <div class="egreso-meta">${e.responsable}${e.hora ? ' · ' + e.hora : ''}</div>
         </div>
         <div class="egreso-monto">S/ ${e.monto.toFixed(2)}</div>
         <button class="egreso-eliminar" onclick="eliminarEgreso(${e.id})">✕</button>
@@ -1551,7 +1745,7 @@ function compartirEgresos() {
   Object.entries(porCategoria).forEach(([cat, items]) => {
     mensaje += `*${cat}*\n`;
     items.forEach(e => {
-      mensaje += `  • ${e.concepto} (${e.responsable}) - S/ ${e.monto.toFixed(2)} - ${e.hora}\n`;
+      mensaje += `  • ${e.concepto} (${e.responsable}) - S/ ${e.monto.toFixed(2)}${e.hora ? ' - ' + e.hora : ''}\n`;
     });
     const subtotal = items.reduce((s, e) => s + e.monto, 0);
     mensaje += `  Subtotal: S/ ${subtotal.toFixed(2)}\n\n`;
@@ -1576,10 +1770,14 @@ function cambiarTipoQR(tipo) {
 
 function generarQR() {
   let texto = '';
+  let tipoLabel = '';
+  let infoVisible = '';
 
   switch(state.qr.tipo) {
     case 'texto':
       texto = document.getElementById('qr-texto').value.trim();
+      tipoLabel = 'Texto / URL';
+      infoVisible = texto.length > 60 ? texto.substring(0, 57) + '...' : texto;
       break;
     case 'whatsapp':
       const num = document.getElementById('qr-wa-numero').value.trim();
@@ -1590,6 +1788,9 @@ function generarQR() {
         return;
       }
       texto = `https://wa.me/51${num}${msg ? '?text=' + encodeURIComponent(msg) : ''}`;
+      tipoLabel = 'WhatsApp';
+      const numFormat = num.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
+      infoVisible = `+51 ${numFormat}`;
       break;
     case 'wifi':
       const ssid = document.getElementById('qr-wifi-ssid').value.trim();
@@ -1600,6 +1801,8 @@ function generarQR() {
         return;
       }
       texto = `WIFI:S:${ssid};T:WPA;P:${pass};;`;
+      tipoLabel = 'WiFi';
+      infoVisible = `Red: ${ssid}`;
       break;
     case 'telefono':
       const tel = document.getElementById('qr-tel-numero').value.trim();
@@ -1609,6 +1812,9 @@ function generarQR() {
         return;
       }
       texto = `tel:+51${tel}`;
+      tipoLabel = 'Teléfono';
+      const telFormat = tel.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
+      infoVisible = `+51 ${telFormat}`;
       break;
   }
 
@@ -1618,41 +1824,121 @@ function generarQR() {
     return;
   }
 
-  const div = document.getElementById('qr-resultado');
-  div.innerHTML = '<canvas id="qr-canvas"></canvas>';
+  if (typeof QRCode === 'undefined') {
+    toast('Cargando librería... intente de nuevo en 2 segundos', 'error');
+    sonidoError();
+    return;
+  }
 
-  QRCode.toCanvas(document.getElementById('qr-canvas'), texto, {
-    width: 280,
-    margin: 2,
-    color: { dark: '#7C3AED', light: '#FFFFFF' }
-  }, function(error) {
-    if (error) {
-      toast('Error al generar QR', 'error');
-      sonidoError();
-      return;
-    }
-    state.qr.dataURL = document.getElementById('qr-canvas').toDataURL('image/png');
-    document.getElementById('qr-acciones').style.display = 'flex';
-    toast('QR generado');
-    sonidoExito();
-  });
+  const div = document.getElementById('qr-resultado');
+  const nombreNegocio = state.config.negocio || 'QR';
+
+  // Construir tarjeta completa con header, QR y footer
+  div.innerHTML = `
+    <div class="qr-tarjeta">
+      <div class="qr-tarjeta-negocio">${nombreNegocio}</div>
+      <div class="qr-tarjeta-imagen">
+        <div id="qr-canvas-container"></div>
+      </div>
+      <div class="qr-tarjeta-info">
+        <strong>${tipoLabel}</strong>
+        ${infoVisible}
+      </div>
+    </div>
+  `;
+
+  try {
+    new QRCode(document.getElementById('qr-canvas-container'), {
+      text: texto,
+      width: 240,
+      height: 240,
+      colorDark: '#7C3AED',
+      colorLight: '#FFFFFF',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+
+    setTimeout(() => {
+      const img = div.querySelector('#qr-canvas-container img');
+      const canvas = div.querySelector('#qr-canvas-container canvas');
+      if (img) {
+        state.qr.dataURL = img.src;
+      } else if (canvas) {
+        state.qr.dataURL = canvas.toDataURL('image/png');
+      }
+      document.getElementById('qr-acciones').style.display = 'flex';
+      toast('QR generado');
+      sonidoExito();
+    }, 100);
+  } catch (e) {
+    console.error('Error generando QR:', e);
+    toast('Error al generar QR', 'error');
+    sonidoError();
+  }
 }
 
-function descargarQR() {
+async function descargarQR() {
   if (!state.qr.dataURL) return;
+  sonidoClick();
+
+  // Intentar capturar la tarjeta completa con html2canvas
+  if (typeof html2canvas !== 'undefined') {
+    try {
+      const tarjeta = document.querySelector('.qr-tarjeta');
+      if (tarjeta) {
+        const canvas = await html2canvas(tarjeta, {
+          backgroundColor: '#FFFFFF',
+          scale: 2
+        });
+        const a = document.createElement('a');
+        a.href = canvas.toDataURL('image/png');
+        a.download = `QR-${(state.config.negocio || 'negocio').replace(/\s+/g, '-')}-${Date.now()}.png`;
+        a.click();
+        toast('QR descargado');
+        return;
+      }
+    } catch (e) {
+      console.error('Error con html2canvas:', e);
+      // Cae al fallback
+    }
+  }
+
+  // Fallback: solo el QR pelado
   const a = document.createElement('a');
   a.href = state.qr.dataURL;
   a.download = `QR-${Date.now()}.png`;
   a.click();
-  sonidoClick();
+  toast('QR descargado');
 }
 
 async function compartirQR() {
   if (!state.qr.dataURL) return;
 
   try {
-    const blob = await (await fetch(state.qr.dataURL)).blob();
-    const file = new File([blob], `QR-${Date.now()}.png`, { type: 'image/png' });
+    let blob;
+    let nombreArchivo = `QR-${(state.config.negocio || 'negocio').replace(/\s+/g, '-')}.png`;
+
+    // Intentar capturar la tarjeta completa con html2canvas
+    if (typeof html2canvas !== 'undefined') {
+      try {
+        const tarjeta = document.querySelector('.qr-tarjeta');
+        if (tarjeta) {
+          const canvas = await html2canvas(tarjeta, {
+            backgroundColor: '#FFFFFF',
+            scale: 2
+          });
+          blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        }
+      } catch (e) {
+        console.error('Error con html2canvas:', e);
+      }
+    }
+
+    // Fallback al QR pelado
+    if (!blob) {
+      blob = await (await fetch(state.qr.dataURL)).blob();
+    }
+
+    const file = new File([blob], nombreArchivo, { type: 'image/png' });
 
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({
@@ -1731,28 +2017,52 @@ function previsualizarTicket() {
   state.ticket.cliente = document.getElementById('ticket-cliente').value.trim();
 
   const total = itemsValidos.reduce((s, i) => s + (i.cantidad * i.precio), 0);
-  const fecha = new Date().toLocaleString('es-PE', {
-    day: '2-digit', month: '2-digit', year: 'numeric',
+  const ahora = new Date();
+  const fecha = ahora.toLocaleDateString('es-PE', {
+    day: '2-digit', month: '2-digit', year: 'numeric'
+  });
+  const hora = ahora.toLocaleTimeString('es-PE', {
     hour: '2-digit', minute: '2-digit'
   });
+  const numTicket = 'P-' + String(Date.now()).slice(-6);
 
   const preview = document.getElementById('ticket-preview');
   preview.innerHTML = `
     <div class="ticket-preview-header">
-      <div class="ticket-preview-titulo">${state.config.negocio || 'TICKET DE EMERGENCIA'}</div>
-      <div style="font-size: 0.75rem; color: var(--gris-500); margin-top: 0.3rem;">${fecha}</div>
-      ${state.ticket.cliente ? `<div style="margin-top: 0.3rem; font-weight: 600;">Cliente: ${state.ticket.cliente}</div>` : ''}
+      <div class="ticket-preview-titulo">${(state.config.negocio || 'TICKET DE EMERGENCIA').toUpperCase()}</div>
+      ${state.config.cajera ? `<div class="ticket-preview-ruc">Atendido por: ${state.config.cajera}</div>` : ''}
     </div>
 
     <div class="ticket-preview-aviso">
-      ⚠ Ticket provisional · No es comprobante SUNAT
+      ⚠ TICKET PROVISIONAL<br>
+      NO ES COMPROBANTE SUNAT
     </div>
 
+    <div class="ticket-preview-num">
+      N° ${numTicket}
+      <div class="ticket-preview-fecha">${fecha} · ${hora}</div>
+    </div>
+
+    ${state.ticket.cliente ? `
+      <div class="ticket-preview-cliente">
+        Cliente: ${state.ticket.cliente}
+      </div>
+    ` : ''}
+
     <div class="ticket-preview-items">
+      <div class="ticket-preview-item-cabecera">
+        <span>Producto</span>
+        <span>Importe</span>
+      </div>
       ${itemsValidos.map(i => `
         <div class="ticket-preview-item">
-          <span>${i.cantidad}x ${i.concepto}</span>
-          <span>S/ ${(i.cantidad * i.precio).toFixed(2)}</span>
+          <div class="ticket-preview-item-linea">
+            <span>${i.concepto}</span>
+            <span>S/ ${(i.cantidad * i.precio).toFixed(2)}</span>
+          </div>
+          <div class="ticket-preview-item-cant">
+            ${i.cantidad} × S/ ${i.precio.toFixed(2)}
+          </div>
         </div>
       `).join('')}
     </div>
@@ -1765,6 +2075,11 @@ function previsualizarTicket() {
     ${state.ticket.mensajeCliente ? `
       <div class="ticket-preview-footer">${state.ticket.mensajeCliente}</div>
     ` : ''}
+
+    <div class="ticket-preview-marca">
+      Generado con Herramientas Cajera PSP<br>
+      perusistemas.pro
+    </div>
   `;
 
   preview.style.display = 'block';
@@ -1814,6 +2129,25 @@ async function compartirTicket() {
   sonidoExito();
 }
 
+// ============ MENSAJES SUGERIDOS PARA TICKET ============
+const mensajesSugeridos = {
+  1: `Estimado cliente, este es un ticket provisional debido a una falla técnica temporal. Por favor escríbanos un "Hola" al WhatsApp del negocio para enviarle la boleta electrónica oficial. Disculpe las molestias y gracias por su comprensión.`,
+
+  2: `Disculpe las molestias. Nuestra impresora presenta una falla temporal. Le agradecemos su paciencia. Para recibir su boleta electrónica oficial por WhatsApp, envíenos un mensaje con la palabra "Hola" al número del negocio.`,
+
+  3: `Estimado cliente, nos encontramos sin servicio eléctrico en este momento. Le entregamos este comprobante provisional. Apenas se restablezca el servicio, le enviaremos su boleta electrónica SUNAT por WhatsApp. Escríbanos un "Hola" para mantener el contacto.`,
+
+  4: `Gracias por su compra. Este ticket es solo informativo mientras restablecemos nuestro sistema. Su boleta electrónica oficial será enviada por WhatsApp cuando vuelva el servicio. Por favor envíenos un "Hola" al WhatsApp para registrar su pedido.`,
+
+  5: `Aviso: Comprobante provisional. Por una falla momentánea no podemos imprimir su boleta SUNAT. Apenas se solucione, se la enviaremos por WhatsApp. Necesitamos que nos escriba primero un "Hola" para poder responderle (regla de WhatsApp). Muchas gracias.`
+};
+
+function aplicarMensajeSugerido(numero) {
+  sonidoClick();
+  document.getElementById('ticket-mensaje-cliente').value = mensajesSugeridos[numero];
+  toast(`Sugerencia ${numero} aplicada`);
+}
+
 // ============ COMPARTIR WHATSAPP ============
 function compartirPorWhatsApp(texto, telefono = '') {
   const tel = telefono ? `51${telefono.replace(/\D/g, '')}` : '';
@@ -1833,12 +2167,6 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('modal-config').addEventListener('click', (e) => {
     if (e.target.id === 'modal-config') cerrarConfig();
   });
-
-  // Mensaje default del ticket
-  const msgDefault = document.getElementById('ticket-mensaje-cliente');
-  if (!msgDefault.value) {
-    msgDefault.value = 'Este es un ticket provisional. Escríbanos al WhatsApp con un "Hola" para enviarle la boleta oficial cuando vuelva nuestro sistema. Gracias por su comprensión.';
-  }
 });
 </script>
 
