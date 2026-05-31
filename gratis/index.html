@@ -1172,7 +1172,7 @@ window.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <div class="qr-tipo-grid">
-      <div class="qr-tipo-btn activo" data-tipo="texto" onclick="cambiarTipoQR('texto')">📝 Texto / URL</div>
+      <div class="qr-tipo-btn activo" data-tipo="texto" onclick="cambiarTipoQR('texto')">🌐 Dirección Web</div>
       <div class="qr-tipo-btn" data-tipo="whatsapp" onclick="cambiarTipoQR('whatsapp')">💬 WhatsApp</div>
       <div class="qr-tipo-btn" data-tipo="wifi" onclick="cambiarTipoQR('wifi')">📶 WiFi</div>
       <div class="qr-tipo-btn" data-tipo="telefono" onclick="cambiarTipoQR('telefono')">📞 Teléfono</div>
@@ -1180,7 +1180,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     <div id="qr-form-texto" class="qr-form">
       <div class="form-group">
-        <label class="form-label">Texto o URL</label>
+        <label class="form-label">Dirección Web (URL) o Texto</label>
         <input type="text" class="form-input" id="qr-texto" placeholder="https://ejemplo.com o cualquier texto">
       </div>
     </div>
@@ -1777,7 +1777,9 @@ function generarQR() {
   switch(state.qr.tipo) {
     case 'texto':
       texto = document.getElementById('qr-texto').value.trim();
-      tipoLabel = 'Texto / URL';
+      // Detectar si es URL o texto plano
+      const esURL = /^https?:\/\//i.test(texto) || /^www\./i.test(texto) || /\.(com|pe|org|net|io)/i.test(texto);
+      tipoLabel = esURL ? 'Dirección Web' : 'Texto';
       infoVisible = texto.length > 60 ? texto.substring(0, 57) + '...' : texto;
       break;
     case 'whatsapp':
@@ -1802,8 +1804,8 @@ function generarQR() {
         return;
       }
       texto = `WIFI:S:${ssid};T:WPA;P:${pass};;`;
-      tipoLabel = 'WiFi';
-      infoVisible = `Red: ${ssid}`;
+      tipoLabel = 'Red WiFi';
+      infoVisible = ssid;
       break;
     case 'telefono':
       const tel = document.getElementById('qr-tel-numero').value.trim();
@@ -1833,6 +1835,9 @@ function generarQR() {
 
   const div = document.getElementById('qr-resultado');
   const nombreNegocio = state.config.negocio || 'QR';
+
+  // Guardar datos visibles en estado para reusar al descargar/compartir
+  state.qr.datosVisibles = { tipoLabel, infoVisible };
 
   // Construir tarjeta completa con header, QR y footer
   div.innerHTML = `
@@ -1878,67 +1883,55 @@ function generarQR() {
 }
 
 async function descargarQR() {
-  if (!state.qr.dataURL) return;
+  if (!state.qr.dataURL) {
+    toast('Primero genere el QR', 'error');
+    sonidoError();
+    return;
+  }
   sonidoClick();
 
-  // Intentar capturar la tarjeta completa con html2canvas
-  if (typeof html2canvas !== 'undefined') {
-    try {
-      const tarjeta = document.querySelector('.qr-tarjeta');
-      if (tarjeta) {
-        const canvas = await html2canvas(tarjeta, {
-          backgroundColor: '#FFFFFF',
-          scale: 2
-        });
-        const a = document.createElement('a');
-        a.href = canvas.toDataURL('image/png');
-        a.download = `QR-${(state.config.negocio || 'negocio').replace(/\s+/g, '-')}-${Date.now()}.png`;
-        a.click();
-        toast('QR descargado');
-        return;
-      }
-    } catch (e) {
-      console.error('Error con html2canvas:', e);
-      // Cae al fallback
+  try {
+    const blob = await crearTarjetaQRBlob();
+    if (!blob) {
+      // Fallback al QR pelado
+      const a = document.createElement('a');
+      a.href = state.qr.dataURL;
+      a.download = `QR-${Date.now()}.png`;
+      a.click();
+      toast('QR descargado');
+      return;
     }
-  }
 
-  // Fallback: solo el QR pelado
-  const a = document.createElement('a');
-  a.href = state.qr.dataURL;
-  a.download = `QR-${Date.now()}.png`;
-  a.click();
-  toast('QR descargado');
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `QR-${(state.config.negocio || 'negocio').replace(/\s+/g, '-')}-${Date.now()}.png`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    toast('QR descargado');
+  } catch (e) {
+    console.error('Error al descargar QR:', e);
+    toast('Error al descargar', 'error');
+    sonidoError();
+  }
 }
 
 async function compartirQR() {
-  if (!state.qr.dataURL) return;
+  if (!state.qr.dataURL) {
+    toast('Primero genere el QR', 'error');
+    sonidoError();
+    return;
+  }
 
   try {
-    let blob;
-    let nombreArchivo = `QR-${(state.config.negocio || 'negocio').replace(/\s+/g, '-')}.png`;
+    let blob = await crearTarjetaQRBlob();
 
-    // Intentar capturar la tarjeta completa con html2canvas
-    if (typeof html2canvas !== 'undefined') {
-      try {
-        const tarjeta = document.querySelector('.qr-tarjeta');
-        if (tarjeta) {
-          const canvas = await html2canvas(tarjeta, {
-            backgroundColor: '#FFFFFF',
-            scale: 2
-          });
-          blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-        }
-      } catch (e) {
-        console.error('Error con html2canvas:', e);
-      }
-    }
-
-    // Fallback al QR pelado
+    // Fallback al QR pelado si falla la composición
     if (!blob) {
       blob = await (await fetch(state.qr.dataURL)).blob();
     }
 
+    const nombreArchivo = `QR-${(state.config.negocio || 'negocio').replace(/\s+/g, '-')}.png`;
     const file = new File([blob], nombreArchivo, { type: 'image/png' });
 
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -1954,9 +1947,103 @@ async function compartirQR() {
     }
   } catch (e) {
     if (e.name !== 'AbortError') {
+      console.error('Error al compartir QR:', e);
       toast('Error al compartir', 'error');
     }
   }
+}
+
+// Construye una tarjeta completa (negocio + QR + info) en un canvas y devuelve blob
+async function crearTarjetaQRBlob() {
+  try {
+    const ancho = 400;
+    const alto = 540;
+    const canvas = document.createElement('canvas');
+    canvas.width = ancho;
+    canvas.height = alto;
+    const ctx = canvas.getContext('2d');
+
+    // Fondo blanco
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, ancho, alto);
+
+    // Header: nombre del negocio
+    const nombreNegocio = state.config.negocio || 'QR';
+    ctx.fillStyle = '#1F2937';
+    ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+
+    // Dividir nombre largo en líneas
+    const maxWidth = ancho - 40;
+    const lineas = dividirTexto(ctx, nombreNegocio, maxWidth);
+    let yActual = 30;
+    lineas.forEach(linea => {
+      ctx.fillText(linea, ancho / 2, yActual);
+      yActual += 28;
+    });
+
+    yActual += 10;
+
+    // Cargar imagen del QR
+    const imgQR = new Image();
+    await new Promise((resolve, reject) => {
+      imgQR.onload = resolve;
+      imgQR.onerror = reject;
+      imgQR.src = state.qr.dataURL;
+    });
+
+    // Dibujar QR centrado
+    const qrSize = 280;
+    const qrX = (ancho - qrSize) / 2;
+    ctx.drawImage(imgQR, qrX, yActual, qrSize, qrSize);
+    yActual += qrSize + 20;
+
+    // Footer: tipo + info
+    const datos = state.qr.datosVisibles;
+    if (datos) {
+      // Etiqueta del tipo
+      ctx.fillStyle = '#7C3AED';
+      ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif';
+      ctx.fillText(datos.tipoLabel, ancho / 2, yActual);
+      yActual += 22;
+
+      // Info debajo
+      ctx.fillStyle = '#374151';
+      ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif';
+      const lineasInfo = dividirTexto(ctx, datos.infoVisible, maxWidth);
+      lineasInfo.slice(0, 2).forEach(linea => {  // Máximo 2 líneas
+        ctx.fillText(linea, ancho / 2, yActual);
+        yActual += 18;
+      });
+    }
+
+    // Convertir a blob
+    return new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+  } catch (e) {
+    console.error('Error construyendo tarjeta QR:', e);
+    return null;
+  }
+}
+
+// Helper: divide texto en líneas según ancho máximo
+function dividirTexto(ctx, texto, maxWidth) {
+  const palabras = texto.split(' ');
+  const lineas = [];
+  let lineaActual = '';
+
+  for (const palabra of palabras) {
+    const test = lineaActual ? lineaActual + ' ' + palabra : palabra;
+    const w = ctx.measureText(test).width;
+    if (w > maxWidth && lineaActual) {
+      lineas.push(lineaActual);
+      lineaActual = palabra;
+    } else {
+      lineaActual = test;
+    }
+  }
+  if (lineaActual) lineas.push(lineaActual);
+  return lineas;
 }
 
 // ============ TICKET ============
@@ -2101,7 +2188,7 @@ function limpiarTicket() {
   sonidoClick();
 }
 
-async async function descargarTicket() {
+async function descargarTicket() {
   const itemsValidos = state.ticket.items.filter(i => i.concepto && i.precio > 0);
   if (itemsValidos.length === 0) return;
 
