@@ -1232,7 +1232,7 @@ window.addEventListener('DOMContentLoaded', function() {
   <div class="tool-panel" id="panel-ticket" style="--tool-color: var(--tool-ticket);">
     <div class="tool-header">
       <div class="tool-title">🧾 Ticket de Emergencia</div>
-      <div class="tool-subtitle">Para cuando se va la luz, internet o se malogra la ticketera.</div>
+      <div class="tool-subtitle">Para cuando se va la luz o internet o se malogra la ticketera.</div>
     </div>
 
     <div class="ticket-disclaimer">
@@ -1271,6 +1271,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     <div class="btn-row" id="ticket-acciones" style="display:none;">
       <button class="btn btn-secondary" onclick="limpiarTicket()">🔄 Nuevo</button>
+      <button class="btn btn-secondary" onclick="descargarTicket()">⬇️ Descargar</button>
       <button class="btn btn-whatsapp" onclick="compartirTicket()">📤 Compartir</button>
     </div>
   </div>
@@ -2100,33 +2101,119 @@ function limpiarTicket() {
   sonidoClick();
 }
 
+async async function descargarTicket() {
+  const itemsValidos = state.ticket.items.filter(i => i.concepto && i.precio > 0);
+  if (itemsValidos.length === 0) return;
+
+  const preview = document.getElementById('ticket-preview');
+  if (preview.style.display === 'none' || !preview.innerHTML.trim()) {
+    toast('Primero genere la vista previa', 'error');
+    sonidoError();
+    return;
+  }
+
+  if (typeof html2canvas === 'undefined') {
+    toast('Cargando librería... intente en 2 segundos', 'error');
+    sonidoError();
+    return;
+  }
+
+  sonidoClick();
+
+  try {
+    const canvas = await html2canvas(preview, {
+      backgroundColor: '#FFFEF7',
+      scale: 2,
+      logging: false
+    });
+
+    const nombreArchivo = `Ticket-${(state.config.negocio || 'negocio').replace(/\s+/g, '-')}-${Date.now()}.png`;
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = nombreArchivo;
+    a.click();
+    toast('Imagen descargada');
+  } catch (e) {
+    console.error('Error al descargar ticket:', e);
+    toast('Error al generar imagen', 'error');
+    sonidoError();
+  }
+}
+
 async function compartirTicket() {
   const itemsValidos = state.ticket.items.filter(i => i.concepto && i.precio > 0);
   if (itemsValidos.length === 0) return;
 
-  const total = itemsValidos.reduce((s, i) => s + (i.cantidad * i.precio), 0);
-  const fecha = new Date().toLocaleString('es-PE', {
-    day: '2-digit', month: '2-digit', year: 'numeric',
-    hour: '2-digit', minute: '2-digit'
-  });
-
-  let mensaje = `*${state.config.negocio || 'TICKET DE EMERGENCIA'}*\n`;
-  mensaje += `${fecha}\n`;
-  if (state.ticket.cliente) mensaje += `Cliente: ${state.ticket.cliente}\n`;
-  mensaje += `\n⚠ Ticket provisional - NO es comprobante SUNAT\n\n`;
-
-  itemsValidos.forEach(i => {
-    mensaje += `${i.cantidad}x ${i.concepto} - S/ ${(i.cantidad * i.precio).toFixed(2)}\n`;
-  });
-
-  mensaje += `\n*TOTAL: S/ ${total.toFixed(2)}*`;
-
-  if (state.ticket.mensajeCliente) {
-    mensaje += `\n\n${state.ticket.mensajeCliente}`;
+  // Verificar que el preview esté visible
+  const preview = document.getElementById('ticket-preview');
+  if (preview.style.display === 'none' || !preview.innerHTML.trim()) {
+    toast('Primero genere la vista previa', 'error');
+    sonidoError();
+    return;
   }
 
-  compartirPorWhatsApp(mensaje, '');
-  sonidoExito();
+  if (typeof html2canvas === 'undefined') {
+    toast('Cargando librería... intente en 2 segundos', 'error');
+    sonidoError();
+    return;
+  }
+
+  try {
+    toast('Generando imagen...');
+
+    const canvas = await html2canvas(preview, {
+      backgroundColor: '#FFFEF7',
+      scale: 2,
+      logging: false
+    });
+
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    const nombreArchivo = `Ticket-${(state.config.negocio || 'negocio').replace(/\s+/g, '-')}-${Date.now()}.png`;
+    const file = new File([blob], nombreArchivo, { type: 'image/png' });
+
+    // Mensaje breve adicional para acompañar la imagen
+    const total = itemsValidos.reduce((s, i) => s + (i.cantidad * i.precio), 0);
+    let mensajeBreve = `Su ticket por S/ ${total.toFixed(2)}`;
+    if (state.ticket.mensajeCliente) {
+      mensajeBreve += `\n\n${state.ticket.mensajeCliente}`;
+    }
+
+    // Intentar compartir nativo (móvil)
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          files: [file],
+          text: mensajeBreve
+        });
+        sonidoExito();
+        return;
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+        // Si falla el share, cae al fallback
+      }
+    }
+
+    // Fallback: descargar imagen + abrir WhatsApp con texto
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nombreArchivo;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    toast('Imagen descargada. Adjúntela en WhatsApp.');
+
+    // Abrir WhatsApp con mensaje complementario
+    setTimeout(() => {
+      compartirPorWhatsApp(mensajeBreve, '');
+    }, 800);
+
+    sonidoExito();
+  } catch (e) {
+    console.error('Error al capturar ticket:', e);
+    toast('Error al generar imagen', 'error');
+    sonidoError();
+  }
 }
 
 // ============ MENSAJES SUGERIDOS PARA TICKET ============
