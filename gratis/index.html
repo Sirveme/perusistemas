@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Herramientas para Cajeras — Perú Sistemas Pro</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --psp-rojo: #8B1A1F;
+    --qv-amarillo: #FCD34D;
+    --qv-amarillo-fuerte: #F59E0B;
+    --qv-verde: #16A34A;
+    --tool-arqueo: #2563EB;
+    --tool-cierre: #16A34A;
+    --tool-egresos: #DC2626;
+    --tool-qr: #7C3AED;
+    --tool-ticket: #EA580C;
+    --gris-50: #F9FAFB;
+    --gris-100: #F3F4F6;
+    --gris-300: #D1D5DB;
+    --gris-500: #6B7280;
+    --gris-700: #374151;
+    --gris-900: #1F2937;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--gris-50);
+    color: var(--gris-900);
+    line-height: 1.5;
+    min-height: 100vh;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* === HEADER === */
+  .header {
+    background: linear-gradient(135deg, var(--qv-amarillo) 0%, #FBBF24 100%);
+    padding: 0.75rem 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-content {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--gris-900);
+  }
+
+  .header-logo-cuadro {
+    background: var(--psp-rojo);
+    color: white;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+
+  .header-logo-text strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .header-logo-text span {
+    display: block;
+    font-size: 0.7rem;
+    opacity: 0.7;
+  }
+
+  .header-config {
+    background: rgba(0,0,0,0.1);
+    border: none;
+    color: var(--gris-900);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: background 0.2s;
+  }
+
+  .header-config:active {
+    background: rgba(0,0,0,0.2);
+    transform: scale(0.97);
+  }
+
+  /* === TABS === */
+  .tabs {
+    background: white;
+    padding: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-bottom: 1px solid var(--gris-300);
+    position: sticky;
+    top: 60px;
+    z-index: 99;
+  }
+
+  .tabs-content {
+    display: flex;
+    gap: 0.4rem;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 0.25rem;
+  }
+
+  .tab {
+    flex-shrink: 0;
+    padding: 0.6rem 1rem;
+    background: var(--gris-100);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+  }
+
+  .tab:active {
+    transform: scale(0.95);
+  }
+
+  .tab-icon {
+    font-size: 1.1rem;
+  }
+
+  .tab.active {
+    color: white;
+    border-color: rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .tab.active[data-tool="arqueo"] { background: var(--tool-arqueo); }
+  .tab.active[data-tool="cierre"] { background: var(--tool-cierre); }
+  .tab.active[data-tool="egresos"] { background: var(--tool-egresos); }
+  .tab.active[data-tool="qr"] { background: var(--tool-qr); }
+  .tab.active[data-tool="ticket"] { background: var(--tool-ticket); }
+
+  /* === MAIN CONTENT === */
+  .main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    padding-bottom: 6rem;
+  }
+
+  .tool-panel {
+    display: none;
+  }
+
+  .tool-panel.active {
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tool-header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--tool-color, var(--gris-300));
+  }
+
+  .tool-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--tool-color, var(--gris-900));
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tool-subtitle {
+    font-size: 0.9rem;
+    color: var(--gris-500);
+    margin-top: 0.25rem;
+  }
+
+  /* === FORM ELEMENTS === */
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gris-700);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--gris-300);
+    border-radius: 10px;
+    font-size: 1rem;
+    background: white;
+    transition: all 0.15s;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--tool-color, var(--qv-verde));
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+  }
+
+  .form-input[type="number"] {
+    text-align: right;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  /* === ARQUEO === */
+  #panel-arqueo .tool-header { border-color: var(--tool-arqueo); }
+  #panel-arqueo .tool-title { color: var(--tool-arqueo); }
+
+  .denominacion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .denominacion-card {
+    background: white;
+    border: 2px solid var(--gris-300);
+    border-radius: 12px;
+    padding: 0.75rem;
+    transition: all 0.15s;
+  }
+
+  .denominacion-card.tiene-cantidad {
+    border-color: var(--tool-arqueo);
+    background: #EFF6FF;
+  }
+
+  .denominacion-label {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--tool-arqueo);
+    margin-bottom: 0.3rem;
+    text-align: center;
+  }
+
+  .denominacion-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid var(--gris-300);
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .denominacion-input:focus {
+    outline: none;
+    border-color: var(--tool-arqueo);
+  }
+
+  .denominacion-subtotal {
+    font-size: 0.85rem;
+    color: var(--gris-500);
+    text-align: center;
+    margin-top: 0.3rem;
+    font-weight: 600;
+  }
+
+  .denominacion-subtotal.activo {
+    color: var(--tool-arqueo);
+    font-weight: 700;
+  }
+
+  .total-box {
+    background: linear-gradient(135deg, var(--tool-arqueo) 0%, #1E40AF 100%);
+    color: white;
+    padding: 1.25rem;
+    border-radius: 14px;
+    text-align: center;
+    margin: 1.25rem 0;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  }
+
+  .total-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .total-amount {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  /* === CIERRE === */
+  #panel-cierre .tool-header { border-color: var(--tool-cierre); }
+  #panel-cierre .tool-title { color: var(--tool-cierre); }
+
+  .metodo-pago-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .metodo-card {
+    background: white;
+    border: 2px solid var(--gris-300);
+    border-radius: 12px;
+    padding: 0.75rem;
+  }
+
+  .metodo-card.activo {
+    border-color: var(--tool-cierre);
+    background: #F0FDF4;
+  }
+
+  .metodo-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--gris-700);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .total-box.cierre {
+    background: linear-gradient(135deg, var(--tool-cierre) 0%, #15803D 100%);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+  }
+
+  /* === EGRESOS === */
+  #panel-egresos .tool-header { border-color: var(--tool-egresos); }
+  #panel-egresos .tool-title { color: var(--tool-egresos); }
+
+  .egreso-form {
+    background: white;
+    border: 2px solid var(--gris-300);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .egreso-categoria-row {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+
+  .categoria-chip {
+    padding: 0.4rem 0.8rem;
+    background: var(--gris-100);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+
+  .categoria-chip.activo {
+    background: var(--tool-egresos);
+    color: white;
+    border-color: rgba(0,0,0,0.1);
+  }
+
+  .categoria-chip:active {
+    transform: scale(0.95);
+  }
+
+  .egresos-lista {
+    margin-top: 1rem;
+  }
+
+  .egreso-item {
+    background: white;
+    border: 1px solid var(--gris-300);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .egreso-info {
+    flex: 1;
+  }
+
+  .egreso-categoria {
+    font-size: 0.7rem;
+    color: var(--tool-egresos);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .egreso-concepto {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 0.2rem;
+  }
+
+  .egreso-meta {
+    font-size: 0.75rem;
+    color: var(--gris-500);
+    margin-top: 0.2rem;
+  }
+
+  .egreso-monto {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--tool-egresos);
+  }
+
+  .egreso-eliminar {
+    background: none;
+    border: none;
+    color: var(--gris-500);
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    margin-left: 0.5rem;
+  }
+
+  .egreso-eliminar:active {
+    color: var(--tool-egresos);
+  }
+
+  .total-box.egresos {
+    background: linear-gradient(135deg, var(--tool-egresos) 0%, #991B1B 100%);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  }
+
+  /* === QR === */
+  #panel-qr .tool-header { border-color: var(--tool-qr); }
+  #panel-qr .tool-title { color: var(--tool-qr); }
+
+  .qr-tipo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .qr-tipo-btn {
+    padding: 0.75rem;
+    background: white;
+    border: 2px solid var(--gris-300);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+  }
+
+  .qr-tipo-btn.activo {
+    border-color: var(--tool-qr);
+    background: #F5F3FF;
+    color: var(--tool-qr);
+  }
+
+  .qr-tipo-btn:active {
+    transform: scale(0.97);
+  }
+
+  .qr-resultado {
+    background: white;
+    border: 2px dashed var(--tool-qr);
+    border-radius: 14px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .qr-resultado canvas, .qr-resultado img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .qr-resultado-vacio {
+    color: var(--gris-500);
+    padding: 2rem;
+    font-style: italic;
+  }
+
+  /* === TICKET === */
+  #panel-ticket .tool-header { border-color: var(--tool-ticket); }
+  #panel-ticket .tool-title { color: var(--tool-ticket); }
+
+  .ticket-disclaimer {
+    background: #FEF3C7;
+    border: 2px solid #F59E0B;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: #78350F;
+  }
+
+  .ticket-disclaimer strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: #92400E;
+  }
+
+  .ticket-items {
+    margin-bottom: 1rem;
+  }
+
+  .ticket-item-row {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+
+  .ticket-item-cantidad {
+    width: 60px;
+    padding: 0.5rem;
+    border: 2px solid var(--gris-300);
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .ticket-item-concepto {
+    flex: 1;
+    padding: 0.5rem;
+    border: 2px solid var(--gris-300);
+    border-radius: 8px;
+  }
+
+  .ticket-item-precio {
+    width: 90px;
+    padding: 0.5rem;
+    border: 2px solid var(--gris-300);
+    border-radius: 8px;
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .ticket-item-eliminar {
+    background: none;
+    border: none;
+    color: var(--gris-500);
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 0.25rem;
+  }
+
+  .ticket-config-msg {
+    background: var(--gris-100);
+    border-radius: 10px;
+    padding: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .ticket-config-msg textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.5rem;
+    border: 2px solid var(--gris-300);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    resize: vertical;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  .ticket-preview {
+    background: white;
+    border: 2px solid var(--gris-300);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .ticket-preview-header {
+    text-align: center;
+    border-bottom: 2px dashed var(--gris-300);
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ticket-preview-titulo {
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .ticket-preview-aviso {
+    background: #FEF3C7;
+    border: 1px dashed #F59E0B;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #78350F;
+  }
+
+  .ticket-preview-items {
+    margin: 0.5rem 0;
+  }
+
+  .ticket-preview-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.2rem 0;
+  }
+
+  .ticket-preview-total {
+    border-top: 2px dashed var(--gris-300);
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .ticket-preview-footer {
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 2px dashed var(--gris-300);
+    text-align: center;
+    font-size: 0.8rem;
+    white-space: pre-wrap;
+  }
+
+  /* === BUTTONS === */
+  .btn-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary {
+    background: var(--tool-color, var(--qv-verde));
+    color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .btn-secondary {
+    background: white;
+    color: var(--gris-700);
+    border: 2px solid var(--gris-300);
+  }
+
+  .btn-whatsapp {
+    background: #25D366;
+    color: white;
+  }
+
+  .btn-add {
+    background: var(--tool-color, var(--qv-verde));
+    color: white;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .btn-clear {
+    background: white;
+    color: var(--tool-egresos);
+    border: 2px solid var(--tool-egresos);
+  }
+
+  /* === MODAL === */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 1rem;
+  }
+
+  .modal-overlay.show {
+    display: flex;
+    animation: fadeIn 0.2s;
+  }
+
+  .modal-content {
+    background: white;
+    border-radius: 14px;
+    padding: 1.5rem;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    animation: slideUp 0.3s ease-out;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--psp-rojo);
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  /* === TOAST === */
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--gris-900);
+    color: white;
+    padding: 0.85rem 1.5rem;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 300;
+    transition: transform 0.3s ease-out;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    max-width: 90%;
+    text-align: center;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .toast.success {
+    background: var(--qv-verde);
+  }
+
+  .toast.error {
+    background: var(--tool-egresos);
+  }
+
+  /* === FOOTER === */
+  .footer {
+    text-align: center;
+    padding: 1.5rem 1rem 2rem;
+    font-size: 0.75rem;
+    color: var(--gris-500);
+  }
+
+  .footer a {
+    color: var(--psp-rojo);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* === RESPONSIVE === */
+  @media (min-width: 600px) {
+    .denominacion-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .metodo-pago-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<div class="header">
+  <div class="header-content">
+    <div class="header-logo">
+      <div class="header-logo-cuadro">PSP</div>
+      <div class="header-logo-text">
+        <strong>Herramientas Cajera</strong>
+        <span id="header-negocio">Configure su negocio</span>
+      </div>
+    </div>
+    <button class="header-config" onclick="abrirConfig()">⚙️ Negocio</button>
+  </div>
+</div>
+
+<!-- ============ TABS ============ -->
+<div class="tabs">
+  <div class="tabs-content">
+    <button class="tab active" data-tool="arqueo" onclick="cambiarTab('arqueo')">
+      <span class="tab-icon">💰</span> Arqueo
+    </button>
+    <button class="tab" data-tool="cierre" onclick="cambiarTab('cierre')">
+      <span class="tab-icon">📊</span> Cierre
+    </button>
+    <button class="tab" data-tool="egresos" onclick="cambiarTab('egresos')">
+      <span class="tab-icon">💸</span> Egresos
+    </button>
+    <button class="tab" data-tool="qr" onclick="cambiarTab('qr')">
+      <span class="tab-icon">📱</span> QR
+    </button>
+    <button class="tab" data-tool="ticket" onclick="cambiarTab('ticket')">
+      <span class="tab-icon">🧾</span> Ticket
+    </button>
+  </div>
+</div>
+
+<!-- ============ MAIN ============ -->
+<div class="main">
+
+  <!-- ============ ARQUEO ============ -->
+  <div class="tool-panel active" id="panel-arqueo" style="--tool-color: var(--tool-arqueo);">
+    <div class="tool-header">
+      <div class="tool-title">💰 Arqueo de Caja</div>
+      <div class="tool-subtitle">Cuente sus billetes y monedas. El total se calcula solo.</div>
+    </div>
+
+    <div class="denominacion-grid" id="denominaciones-billetes">
+      <!-- Generado por JS -->
+    </div>
+
+    <div class="denominacion-grid" id="denominaciones-monedas">
+      <!-- Generado por JS -->
+    </div>
+
+    <div class="total-box">
+      <div class="total-label">Total en caja</div>
+      <div class="total-amount" id="arqueo-total">S/ 0.00</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="limpiarArqueo()">🔄 Limpiar</button>
+      <button class="btn btn-whatsapp" onclick="compartirArqueo()">📤 Compartir</button>
+    </div>
+  </div>
+
+  <!-- ============ CIERRE TURNO ============ -->
+  <div class="tool-panel" id="panel-cierre" style="--tool-color: var(--tool-cierre);">
+    <div class="tool-header">
+      <div class="tool-title">📊 Cierre de Turno</div>
+      <div class="tool-subtitle">Resumen del día. Envíelo al dueño por WhatsApp.</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Nombre del turno (opcional)</label>
+      <input type="text" class="form-input" id="cierre-turno-nombre" placeholder="Ej. Turno Mañana, Ana">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Horario del turno (opcional)</label>
+      <input type="text" class="form-input" id="cierre-horario" placeholder="Ej. 14:00 - 22:00">
+    </div>
+
+    <div class="metodo-pago-grid">
+      <div class="metodo-card">
+        <div class="metodo-label">💵 Efectivo</div>
+        <input type="number" class="form-input" id="cierre-efectivo" placeholder="0.00" step="0.10" inputmode="decimal" oninput="actualizarCierre()">
+      </div>
+      <div class="metodo-card">
+        <div class="metodo-label">📱 Yape</div>
+        <input type="number" class="form-input" id="cierre-yape" placeholder="0.00" step="0.10" inputmode="decimal" oninput="actualizarCierre()">
+      </div>
+      <div class="metodo-card">
+        <div class="metodo-label">📲 Plin</div>
+        <input type="number" class="form-input" id="cierre-plin" placeholder="0.00" step="0.10" inputmode="decimal" oninput="actualizarCierre()">
+      </div>
+      <div class="metodo-card">
+        <div class="metodo-label">💳 Tarjeta</div>
+        <input type="number" class="form-input" id="cierre-tarjeta" placeholder="0.00" step="0.10" inputmode="decimal" oninput="actualizarCierre()">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Observaciones (opcional)</label>
+      <input type="text" class="form-input" id="cierre-obs" placeholder="Ej. Faltó vuelto a las 19h">
+    </div>
+
+    <div class="total-box cierre">
+      <div class="total-label">Total vendido en el turno</div>
+      <div class="total-amount" id="cierre-total">S/ 0.00</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="limpiarCierre()">🔄 Limpiar</button>
+      <button class="btn btn-whatsapp" onclick="compartirCierre()">📤 Compartir</button>
+    </div>
+  </div>
+
+  <!-- ============ EGRESOS ============ -->
+  <div class="tool-panel" id="panel-egresos" style="--tool-color: var(--tool-egresos);">
+    <div class="tool-header">
+      <div class="tool-title">💸 Control de Egresos</div>
+      <div class="tool-subtitle">Anote cada salida de dinero del día.</div>
+    </div>
+
+    <div class="egreso-form">
+      <div class="egreso-categoria-row" id="categorias-chips">
+        <div class="categoria-chip activo" data-cat="Insumos">Insumos</div>
+        <div class="categoria-chip" data-cat="Gas">Gas</div>
+        <div class="categoria-chip" data-cat="Gaseosas">Gaseosas</div>
+        <div class="categoria-chip" data-cat="Movilidad">Movilidad</div>
+        <div class="categoria-chip" data-cat="Servicios">Servicios</div>
+        <div class="categoria-chip" data-cat="Retiros">Retiros</div>
+        <div class="categoria-chip" data-cat="Otro">Otro</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Concepto / Descripción</label>
+        <input type="text" class="form-input" id="egreso-concepto" placeholder="Ej. Compra de limones">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Responsable / Quien lo gastó</label>
+        <input type="text" class="form-input" id="egreso-responsable" placeholder="Ej. Mozo Carlos">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Monto S/</label>
+        <input type="number" class="form-input" id="egreso-monto" placeholder="0.00" step="0.10" inputmode="decimal">
+      </div>
+
+      <button class="btn btn-add" onclick="agregarEgreso()">➕ Agregar Egreso</button>
+    </div>
+
+    <div class="egresos-lista" id="egresos-lista"></div>
+
+    <div class="total-box egresos">
+      <div class="total-label">Total egresos</div>
+      <div class="total-amount" id="egresos-total">S/ 0.00</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-clear" onclick="limpiarEgresos()">🗑️ Limpiar Todo</button>
+      <button class="btn btn-whatsapp" onclick="compartirEgresos()">📤 Compartir</button>
+    </div>
+  </div>
+
+  <!-- ============ QR ============ -->
+  <div class="tool-panel" id="panel-qr" style="--tool-color: var(--tool-qr);">
+    <div class="tool-header">
+      <div class="tool-title">📱 Generador de QR</div>
+      <div class="tool-subtitle">Cree códigos QR para WhatsApp, Yape, Plin, ubicación, etc.</div>
+    </div>
+
+    <div class="qr-tipo-grid">
+      <div class="qr-tipo-btn activo" data-tipo="texto" onclick="cambiarTipoQR('texto')">📝 Texto / URL</div>
+      <div class="qr-tipo-btn" data-tipo="whatsapp" onclick="cambiarTipoQR('whatsapp')">💬 WhatsApp</div>
+      <div class="qr-tipo-btn" data-tipo="wifi" onclick="cambiarTipoQR('wifi')">📶 WiFi</div>
+      <div class="qr-tipo-btn" data-tipo="telefono" onclick="cambiarTipoQR('telefono')">📞 Teléfono</div>
+    </div>
+
+    <div id="qr-form-texto" class="qr-form">
+      <div class="form-group">
+        <label class="form-label">Texto o URL</label>
+        <input type="text" class="form-input" id="qr-texto" placeholder="https://ejemplo.com o cualquier texto">
+      </div>
+    </div>
+
+    <div id="qr-form-whatsapp" class="qr-form" style="display:none;">
+      <div class="form-group">
+        <label class="form-label">Número WhatsApp (sin +51)</label>
+        <input type="tel" class="form-input" id="qr-wa-numero" placeholder="987654321" inputmode="numeric">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mensaje inicial (opcional)</label>
+        <input type="text" class="form-input" id="qr-wa-mensaje" placeholder="Hola, vi su negocio y quiero pedir...">
+      </div>
+    </div>
+
+    <div id="qr-form-wifi" class="qr-form" style="display:none;">
+      <div class="form-group">
+        <label class="form-label">Nombre de la red (SSID)</label>
+        <input type="text" class="form-input" id="qr-wifi-ssid" placeholder="MiRestaurante">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input type="text" class="form-input" id="qr-wifi-pass" placeholder="contraseña123">
+      </div>
+    </div>
+
+    <div id="qr-form-telefono" class="qr-form" style="display:none;">
+      <div class="form-group">
+        <label class="form-label">Número de teléfono</label>
+        <input type="tel" class="form-input" id="qr-tel-numero" placeholder="987654321" inputmode="numeric">
+      </div>
+    </div>
+
+    <button class="btn btn-primary" style="background: var(--tool-qr); width: 100%; margin-top: 0.5rem;" onclick="generarQR()">
+      ⚡ Generar QR
+    </button>
+
+    <div class="qr-resultado" id="qr-resultado">
+      <div class="qr-resultado-vacio">Su QR aparecerá aquí</div>
+    </div>
+
+    <div class="btn-row" id="qr-acciones" style="display:none;">
+      <button class="btn btn-secondary" onclick="descargarQR()">⬇️ Descargar</button>
+      <button class="btn btn-whatsapp" onclick="compartirQR()">📤 Compartir</button>
+    </div>
+  </div>
+
+  <!-- ============ TICKET APAGÓN ============ -->
+  <div class="tool-panel" id="panel-ticket" style="--tool-color: var(--tool-ticket);">
+    <div class="tool-header">
+      <div class="tool-title">🧾 Ticket de Emergencia</div>
+      <div class="tool-subtitle">Para cuando se va la luz o se rompe la ticketera.</div>
+    </div>
+
+    <div class="ticket-disclaimer">
+      <strong>⚠ Importante:</strong>
+      Este NO es comprobante SUNAT. Es solo nota interna provisional. Cuando vuelva la electricidad o internet, emita la boleta electrónica oficial.
+    </div>
+
+    <div class="ticket-items" id="ticket-items">
+      <!-- Items generados por JS -->
+    </div>
+
+    <button class="btn btn-add" style="background: var(--tool-ticket);" onclick="agregarItemTicket()">➕ Agregar Item</button>
+
+    <div class="ticket-config-msg">
+      <label class="form-label">📝 Mensaje al cliente (personalícelo)</label>
+      <textarea id="ticket-mensaje-cliente" placeholder="Ejemplo: Este es un ticket provisional. Escríbanos al 967 317 946 con un Hola para enviarle la boleta oficial."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Cliente (opcional)</label>
+      <input type="text" class="form-input" id="ticket-cliente" placeholder="Nombre del cliente">
+    </div>
+
+    <button class="btn btn-primary" style="background: var(--tool-ticket); width: 100%; margin-top: 0.5rem;" onclick="previsualizarTicket()">
+      👁️ Ver Ticket
+    </button>
+
+    <div class="ticket-preview" id="ticket-preview" style="display:none;"></div>
+
+    <div class="btn-row" id="ticket-acciones" style="display:none;">
+      <button class="btn btn-secondary" onclick="limpiarTicket()">🔄 Nuevo</button>
+      <button class="btn btn-whatsapp" onclick="compartirTicket()">📤 Compartir</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ MODAL CONFIG ============ -->
+<div class="modal-overlay" id="modal-config">
+  <div class="modal-content">
+    <div class="modal-title">⚙️ Configurar Negocio</div>
+    <div class="form-group">
+      <label class="form-label">Nombre del negocio</label>
+      <input type="text" class="form-input" id="config-negocio" placeholder="Ej. Restaurante El Sabor">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Su nombre (cajera/o)</label>
+      <input type="text" class="form-input" id="config-cajera" placeholder="Ej. Ana">
+    </div>
+    <div class="form-group">
+      <label class="form-label">WhatsApp de la dueña/o (opcional)</label>
+      <input type="tel" class="form-input" id="config-wa-dueno" placeholder="987654321" inputmode="numeric">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="cerrarConfig()">Cancelar</button>
+      <button class="btn btn-primary" style="background: var(--psp-rojo);" onclick="guardarConfig()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ FOOTER ============ -->
+<div class="footer">
+  Herramientas gratuitas de <a href="https://perusistemas.pro">Perú Sistemas Pro</a><br>
+  ¿Quiere automatizar todo esto? Conozca <a href="https://quevendi.pro">QueVendi</a>
+</div>
+
+<script>
+// ============ ESTADO GLOBAL ============
+const state = {
+  config: {
+    negocio: '',
+    cajera: '',
+    waDueno: ''
+  },
+  arqueo: {},
+  cierre: { efectivo: 0, yape: 0, plin: 0, tarjeta: 0 },
+  egresos: [],
+  egresoCategoriaActiva: 'Insumos',
+  qr: { tipo: 'texto', dataURL: null },
+  ticket: { items: [], mensajeCliente: '', cliente: '' }
+};
+
+// ============ AUDIO FEEDBACK ============
+function beep(freq = 800, duration = 80, volume = 0.05) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = freq;
+    osc.type = 'sine';
+    gain.gain.value = volume;
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    setTimeout(() => {
+      osc.stop();
+      ctx.close();
+    }, duration);
+  } catch (e) {}
+}
+
+function sonidoExito() {
+  beep(800, 100);
+  setTimeout(() => beep(1200, 120), 100);
+}
+
+function sonidoClick() {
+  beep(600, 40);
+}
+
+function sonidoError() {
+  beep(300, 200);
+}
+
+// ============ TOAST ============
+function toast(msg, tipo = 'success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast ' + tipo + ' show';
+  setTimeout(() => {
+    el.className = 'toast ' + tipo;
+  }, 2500);
+}
+
+// ============ TABS ============
+function cambiarTab(tool) {
+  sonidoClick();
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.tab[data-tool="${tool}"]`).classList.add('active');
+  document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`panel-${tool}`).classList.add('active');
+}
+
+// ============ CONFIG ============
+function cargarConfig() {
+  try {
+    const saved = localStorage.getItem('psp-config');
+    if (saved) {
+      state.config = JSON.parse(saved);
+      actualizarHeader();
+    }
+  } catch (e) {}
+}
+
+function abrirConfig() {
+  document.getElementById('config-negocio').value = state.config.negocio || '';
+  document.getElementById('config-cajera').value = state.config.cajera || '';
+  document.getElementById('config-wa-dueno').value = state.config.waDueno || '';
+  document.getElementById('modal-config').classList.add('show');
+}
+
+function cerrarConfig() {
+  document.getElementById('modal-config').classList.remove('show');
+}
+
+function guardarConfig() {
+  state.config.negocio = document.getElementById('config-negocio').value.trim();
+  state.config.cajera = document.getElementById('config-cajera').value.trim();
+  state.config.waDueno = document.getElementById('config-wa-dueno').value.trim();
+  try {
+    localStorage.setItem('psp-config', JSON.stringify(state.config));
+  } catch (e) {}
+  actualizarHeader();
+  cerrarConfig();
+  toast('✅ Negocio configurado');
+  sonidoExito();
+}
+
+function actualizarHeader() {
+  const headerNeg = document.getElementById('header-negocio');
+  if (state.config.negocio) {
+    headerNeg.textContent = state.config.negocio;
+  } else {
+    headerNeg.textContent = 'Configure su negocio';
+  }
+}
+
+// ============ ARQUEO DE CAJA ============
+const denominacionesBilletes = [200, 100, 50, 20, 10];
+const denominacionesMonedas = [5, 2, 1, 0.50, 0.20, 0.10];
+
+function renderDenominaciones() {
+  const billetesDiv = document.getElementById('denominaciones-billetes');
+  const monedasDiv = document.getElementById('denominaciones-monedas');
+
+  billetesDiv.innerHTML = denominacionesBilletes.map(d => `
+    <div class="denominacion-card" id="denom-card-${d}">
+      <div class="denominacion-label">S/ ${d}</div>
+      <input type="number" class="denominacion-input"
+             id="denom-${d}"
+             placeholder="0"
+             min="0"
+             inputmode="numeric"
+             oninput="actualizarArqueo(${d})">
+      <div class="denominacion-subtotal" id="subtotal-${d}">S/ 0.00</div>
+    </div>
+  `).join('');
+
+  monedasDiv.innerHTML = denominacionesMonedas.map(d => `
+    <div class="denominacion-card" id="denom-card-${d}">
+      <div class="denominacion-label">S/ ${d.toFixed(2)}</div>
+      <input type="number" class="denominacion-input"
+             id="denom-${d}"
+             placeholder="0"
+             min="0"
+             inputmode="numeric"
+             oninput="actualizarArqueo(${d})">
+      <div class="denominacion-subtotal" id="subtotal-${d}">S/ 0.00</div>
+    </div>
+  `).join('');
+}
+
+function actualizarArqueo(denom) {
+  const input = document.getElementById(`denom-${denom}`);
+  const cantidad = parseInt(input.value) || 0;
+  const subtotal = denom * cantidad;
+
+  state.arqueo[denom] = cantidad;
+
+  const subtotalDiv = document.getElementById(`subtotal-${denom}`);
+  const card = document.getElementById(`denom-card-${denom}`);
+
+  if (cantidad > 0) {
+    subtotalDiv.textContent = `S/ ${subtotal.toFixed(2)}`;
+    subtotalDiv.classList.add('activo');
+    card.classList.add('tiene-cantidad');
+  } else {
+    subtotalDiv.textContent = 'S/ 0.00';
+    subtotalDiv.classList.remove('activo');
+    card.classList.remove('tiene-cantidad');
+  }
+
+  calcularTotalArqueo();
+}
+
+function calcularTotalArqueo() {
+  let total = 0;
+  for (const [denom, cantidad] of Object.entries(state.arqueo)) {
+    total += parseFloat(denom) * cantidad;
+  }
+  document.getElementById('arqueo-total').textContent = `S/ ${total.toFixed(2)}`;
+}
+
+function limpiarArqueo() {
+  if (!confirm('¿Limpiar todo el arqueo?')) return;
+  state.arqueo = {};
+  [...denominacionesBilletes, ...denominacionesMonedas].forEach(d => {
+    const input = document.getElementById(`denom-${d}`);
+    if (input) input.value = '';
+    actualizarArqueo(d);
+  });
+  toast('Arqueo limpiado');
+  sonidoClick();
+}
+
+function compartirArqueo() {
+  let total = 0;
+  const lineas = [];
+
+  const todasDenom = [...denominacionesBilletes, ...denominacionesMonedas];
+
+  todasDenom.forEach(d => {
+    const cant = state.arqueo[d] || 0;
+    if (cant > 0) {
+      const subt = d * cant;
+      total += subt;
+      const tipo = denominacionesBilletes.includes(d) ? 'Billetes' : 'Monedas';
+      lineas.push(`  S/ ${d.toFixed(2)} × ${cant} = S/ ${subt.toFixed(2)}`);
+    }
+  });
+
+  if (total === 0) {
+    toast('Ingrese al menos una denominación', 'error');
+    sonidoError();
+    return;
+  }
+
+  const fecha = new Date().toLocaleString('es-PE', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+
+  let mensaje = `*ARQUEO DE CAJA*\n`;
+  if (state.config.negocio) mensaje += `${state.config.negocio}\n`;
+  if (state.config.cajera) mensaje += `Cajera: ${state.config.cajera}\n`;
+  mensaje += `Fecha: ${fecha}\n\n`;
+  mensaje += `Denominaciones:\n${lineas.join('\n')}\n\n`;
+  mensaje += `*TOTAL: S/ ${total.toFixed(2)}*`;
+
+  compartirPorWhatsApp(mensaje, state.config.waDueno);
+  sonidoExito();
+}
+
+// ============ CIERRE TURNO ============
+function actualizarCierre() {
+  state.cierre.efectivo = parseFloat(document.getElementById('cierre-efectivo').value) || 0;
+  state.cierre.yape = parseFloat(document.getElementById('cierre-yape').value) || 0;
+  state.cierre.plin = parseFloat(document.getElementById('cierre-plin').value) || 0;
+  state.cierre.tarjeta = parseFloat(document.getElementById('cierre-tarjeta').value) || 0;
+
+  // Resaltar cards con valor
+  ['efectivo', 'yape', 'plin', 'tarjeta'].forEach(metodo => {
+    const card = document.getElementById(`cierre-${metodo}`).closest('.metodo-card');
+    if (state.cierre[metodo] > 0) {
+      card.classList.add('activo');
+    } else {
+      card.classList.remove('activo');
+    }
+  });
+
+  const total = state.cierre.efectivo + state.cierre.yape + state.cierre.plin + state.cierre.tarjeta;
+  document.getElementById('cierre-total').textContent = `S/ ${total.toFixed(2)}`;
+}
+
+function limpiarCierre() {
+  if (!confirm('¿Limpiar el cierre de turno?')) return;
+  ['turno-nombre', 'horario', 'efectivo', 'yape', 'plin', 'tarjeta', 'obs'].forEach(c => {
+    document.getElementById(`cierre-${c}`).value = '';
+  });
+  state.cierre = { efectivo: 0, yape: 0, plin: 0, tarjeta: 0 };
+  actualizarCierre();
+  toast('Cierre limpiado');
+  sonidoClick();
+}
+
+function compartirCierre() {
+  const total = state.cierre.efectivo + state.cierre.yape + state.cierre.plin + state.cierre.tarjeta;
+  if (total === 0) {
+    toast('Ingrese al menos un método de pago', 'error');
+    sonidoError();
+    return;
+  }
+
+  const fecha = new Date().toLocaleString('es-PE', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+
+  const turno = document.getElementById('cierre-turno-nombre').value.trim();
+  const horario = document.getElementById('cierre-horario').value.trim();
+  const obs = document.getElementById('cierre-obs').value.trim();
+
+  let mensaje = `*CIERRE DE TURNO*\n`;
+  if (state.config.negocio) mensaje += `${state.config.negocio}\n`;
+  if (turno) mensaje += `Turno: ${turno}\n`;
+  if (horario) mensaje += `Horario: ${horario}\n`;
+  if (state.config.cajera) mensaje += `Cajera: ${state.config.cajera}\n`;
+  mensaje += `Fecha: ${fecha}\n\n`;
+
+  mensaje += `*Métodos de pago:*\n`;
+  if (state.cierre.efectivo > 0) mensaje += `💵 Efectivo: S/ ${state.cierre.efectivo.toFixed(2)}\n`;
+  if (state.cierre.yape > 0) mensaje += `📱 Yape: S/ ${state.cierre.yape.toFixed(2)}\n`;
+  if (state.cierre.plin > 0) mensaje += `📲 Plin: S/ ${state.cierre.plin.toFixed(2)}\n`;
+  if (state.cierre.tarjeta > 0) mensaje += `💳 Tarjeta: S/ ${state.cierre.tarjeta.toFixed(2)}\n`;
+
+  mensaje += `\n*TOTAL: S/ ${total.toFixed(2)}*`;
+
+  if (obs) mensaje += `\n\n📝 Obs: ${obs}`;
+
+  compartirPorWhatsApp(mensaje, state.config.waDueno);
+  sonidoExito();
+}
+
+// ============ EGRESOS ============
+function inicializarChipsCategorias() {
+  document.querySelectorAll('.categoria-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      sonidoClick();
+      document.querySelectorAll('.categoria-chip').forEach(c => c.classList.remove('activo'));
+      chip.classList.add('activo');
+      state.egresoCategoriaActiva = chip.dataset.cat;
+    });
+  });
+}
+
+function agregarEgreso() {
+  const concepto = document.getElementById('egreso-concepto').value.trim();
+  const responsable = document.getElementById('egreso-responsable').value.trim();
+  const monto = parseFloat(document.getElementById('egreso-monto').value);
+
+  if (!concepto) {
+    toast('Ingrese el concepto', 'error');
+    sonidoError();
+    return;
+  }
+  if (!monto || monto <= 0) {
+    toast('Ingrese un monto válido', 'error');
+    sonidoError();
+    return;
+  }
+
+  const egreso = {
+    id: Date.now(),
+    categoria: state.egresoCategoriaActiva,
+    concepto,
+    responsable: responsable || '—',
+    monto,
+    hora: new Date().toLocaleTimeString('es-PE', {hour: '2-digit', minute: '2-digit'})
+  };
+
+  state.egresos.unshift(egreso);
+  renderEgresos();
+
+  // Limpiar form
+  document.getElementById('egreso-concepto').value = '';
+  document.getElementById('egreso-responsable').value = '';
+  document.getElementById('egreso-monto').value = '';
+
+  toast('Egreso registrado');
+  sonidoExito();
+}
+
+function renderEgresos() {
+  const lista = document.getElementById('egresos-lista');
+
+  if (state.egresos.length === 0) {
+    lista.innerHTML = '<div style="text-align:center; color: var(--gris-500); padding: 1.5rem; font-style: italic;">No hay egresos registrados</div>';
+  } else {
+    lista.innerHTML = state.egresos.map(e => `
+      <div class="egreso-item">
+        <div class="egreso-info">
+          <div class="egreso-categoria">${e.categoria}</div>
+          <div class="egreso-concepto">${e.concepto}</div>
+          <div class="egreso-meta">${e.responsable} · ${e.hora}</div>
+        </div>
+        <div class="egreso-monto">S/ ${e.monto.toFixed(2)}</div>
+        <button class="egreso-eliminar" onclick="eliminarEgreso(${e.id})">✕</button>
+      </div>
+    `).join('');
+  }
+
+  const total = state.egresos.reduce((sum, e) => sum + e.monto, 0);
+  document.getElementById('egresos-total').textContent = `S/ ${total.toFixed(2)}`;
+}
+
+function eliminarEgreso(id) {
+  state.egresos = state.egresos.filter(e => e.id !== id);
+  renderEgresos();
+  sonidoClick();
+}
+
+function limpiarEgresos() {
+  if (state.egresos.length === 0) return;
+  if (!confirm(`¿Eliminar los ${state.egresos.length} egresos registrados?`)) return;
+  state.egresos = [];
+  renderEgresos();
+  toast('Egresos eliminados');
+}
+
+function compartirEgresos() {
+  if (state.egresos.length === 0) {
+    toast('No hay egresos para compartir', 'error');
+    sonidoError();
+    return;
+  }
+
+  const fecha = new Date().toLocaleString('es-PE', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+
+  let mensaje = `*EGRESOS DEL DÍA*\n`;
+  if (state.config.negocio) mensaje += `${state.config.negocio}\n`;
+  if (state.config.cajera) mensaje += `Cajera: ${state.config.cajera}\n`;
+  mensaje += `Fecha: ${fecha}\n\n`;
+
+  // Agrupar por categoría
+  const porCategoria = {};
+  state.egresos.forEach(e => {
+    if (!porCategoria[e.categoria]) porCategoria[e.categoria] = [];
+    porCategoria[e.categoria].push(e);
+  });
+
+  Object.entries(porCategoria).forEach(([cat, items]) => {
+    mensaje += `*${cat}*\n`;
+    items.forEach(e => {
+      mensaje += `  • ${e.concepto} (${e.responsable}) - S/ ${e.monto.toFixed(2)} - ${e.hora}\n`;
+    });
+    const subtotal = items.reduce((s, e) => s + e.monto, 0);
+    mensaje += `  Subtotal: S/ ${subtotal.toFixed(2)}\n\n`;
+  });
+
+  const total = state.egresos.reduce((s, e) => s + e.monto, 0);
+  mensaje += `*TOTAL EGRESOS: S/ ${total.toFixed(2)}*`;
+
+  compartirPorWhatsApp(mensaje, state.config.waDueno);
+  sonidoExito();
+}
+
+// ============ QR ============
+function cambiarTipoQR(tipo) {
+  sonidoClick();
+  state.qr.tipo = tipo;
+  document.querySelectorAll('.qr-tipo-btn').forEach(b => b.classList.remove('activo'));
+  document.querySelector(`.qr-tipo-btn[data-tipo="${tipo}"]`).classList.add('activo');
+  document.querySelectorAll('.qr-form').forEach(f => f.style.display = 'none');
+  document.getElementById(`qr-form-${tipo}`).style.display = 'block';
+}
+
+function generarQR() {
+  let texto = '';
+
+  switch(state.qr.tipo) {
+    case 'texto':
+      texto = document.getElementById('qr-texto').value.trim();
+      break;
+    case 'whatsapp':
+      const num = document.getElementById('qr-wa-numero').value.trim();
+      const msg = document.getElementById('qr-wa-mensaje').value.trim();
+      if (!num) {
+        toast('Ingrese el número', 'error');
+        sonidoError();
+        return;
+      }
+      texto = `https://wa.me/51${num}${msg ? '?text=' + encodeURIComponent(msg) : ''}`;
+      break;
+    case 'wifi':
+      const ssid = document.getElementById('qr-wifi-ssid').value.trim();
+      const pass = document.getElementById('qr-wifi-pass').value.trim();
+      if (!ssid) {
+        toast('Ingrese nombre de red', 'error');
+        sonidoError();
+        return;
+      }
+      texto = `WIFI:S:${ssid};T:WPA;P:${pass};;`;
+      break;
+    case 'telefono':
+      const tel = document.getElementById('qr-tel-numero').value.trim();
+      if (!tel) {
+        toast('Ingrese el número', 'error');
+        sonidoError();
+        return;
+      }
+      texto = `tel:+51${tel}`;
+      break;
+  }
+
+  if (!texto) {
+    toast('Complete los datos', 'error');
+    sonidoError();
+    return;
+  }
+
+  const div = document.getElementById('qr-resultado');
+  div.innerHTML = '<canvas id="qr-canvas"></canvas>';
+
+  QRCode.toCanvas(document.getElementById('qr-canvas'), texto, {
+    width: 280,
+    margin: 2,
+    color: { dark: '#7C3AED', light: '#FFFFFF' }
+  }, function(error) {
+    if (error) {
+      toast('Error al generar QR', 'error');
+      sonidoError();
+      return;
+    }
+    state.qr.dataURL = document.getElementById('qr-canvas').toDataURL('image/png');
+    document.getElementById('qr-acciones').style.display = 'flex';
+    toast('QR generado');
+    sonidoExito();
+  });
+}
+
+function descargarQR() {
+  if (!state.qr.dataURL) return;
+  const a = document.createElement('a');
+  a.href = state.qr.dataURL;
+  a.download = `QR-${Date.now()}.png`;
+  a.click();
+  sonidoClick();
+}
+
+async function compartirQR() {
+  if (!state.qr.dataURL) return;
+
+  try {
+    const blob = await (await fetch(state.qr.dataURL)).blob();
+    const file = new File([blob], `QR-${Date.now()}.png`, { type: 'image/png' });
+
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        files: [file],
+        title: 'Código QR'
+      });
+      sonidoExito();
+    } else {
+      // Fallback: descargar
+      descargarQR();
+      toast('QR descargado. Compártalo manualmente.');
+    }
+  } catch (e) {
+    if (e.name !== 'AbortError') {
+      toast('Error al compartir', 'error');
+    }
+  }
+}
+
+// ============ TICKET ============
+function renderItemsTicket() {
+  const div = document.getElementById('ticket-items');
+
+  if (state.ticket.items.length === 0) {
+    state.ticket.items.push({ cantidad: 1, concepto: '', precio: 0 });
+  }
+
+  div.innerHTML = state.ticket.items.map((item, i) => `
+    <div class="ticket-item-row">
+      <input type="number" class="ticket-item-cantidad" value="${item.cantidad}"
+             min="1" inputmode="numeric"
+             onchange="actualizarItemTicket(${i}, 'cantidad', this.value)">
+      <input type="text" class="ticket-item-concepto" value="${item.concepto}"
+             placeholder="Producto"
+             oninput="actualizarItemTicket(${i}, 'concepto', this.value)">
+      <input type="number" class="ticket-item-precio" value="${item.precio || ''}"
+             placeholder="0.00" step="0.10" inputmode="decimal"
+             onchange="actualizarItemTicket(${i}, 'precio', this.value)">
+      ${state.ticket.items.length > 1 ?
+        `<button class="ticket-item-eliminar" onclick="eliminarItemTicket(${i})">✕</button>` :
+        ''}
+    </div>
+  `).join('');
+}
+
+function actualizarItemTicket(i, campo, valor) {
+  if (campo === 'concepto') {
+    state.ticket.items[i][campo] = valor;
+  } else {
+    state.ticket.items[i][campo] = parseFloat(valor) || 0;
+  }
+}
+
+function agregarItemTicket() {
+  state.ticket.items.push({ cantidad: 1, concepto: '', precio: 0 });
+  renderItemsTicket();
+  sonidoClick();
+}
+
+function eliminarItemTicket(i) {
+  state.ticket.items.splice(i, 1);
+  renderItemsTicket();
+  sonidoClick();
+}
+
+function previsualizarTicket() {
+  const itemsValidos = state.ticket.items.filter(i => i.concepto && i.precio > 0);
+
+  if (itemsValidos.length === 0) {
+    toast('Ingrese al menos un producto válido', 'error');
+    sonidoError();
+    return;
+  }
+
+  state.ticket.mensajeCliente = document.getElementById('ticket-mensaje-cliente').value.trim();
+  state.ticket.cliente = document.getElementById('ticket-cliente').value.trim();
+
+  const total = itemsValidos.reduce((s, i) => s + (i.cantidad * i.precio), 0);
+  const fecha = new Date().toLocaleString('es-PE', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+
+  const preview = document.getElementById('ticket-preview');
+  preview.innerHTML = `
+    <div class="ticket-preview-header">
+      <div class="ticket-preview-titulo">${state.config.negocio || 'TICKET DE EMERGENCIA'}</div>
+      <div style="font-size: 0.75rem; color: var(--gris-500); margin-top: 0.3rem;">${fecha}</div>
+      ${state.ticket.cliente ? `<div style="margin-top: 0.3rem; font-weight: 600;">Cliente: ${state.ticket.cliente}</div>` : ''}
+    </div>
+
+    <div class="ticket-preview-aviso">
+      ⚠ Ticket provisional · No es comprobante SUNAT
+    </div>
+
+    <div class="ticket-preview-items">
+      ${itemsValidos.map(i => `
+        <div class="ticket-preview-item">
+          <span>${i.cantidad}x ${i.concepto}</span>
+          <span>S/ ${(i.cantidad * i.precio).toFixed(2)}</span>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="ticket-preview-total">
+      <span>TOTAL</span>
+      <span>S/ ${total.toFixed(2)}</span>
+    </div>
+
+    ${state.ticket.mensajeCliente ? `
+      <div class="ticket-preview-footer">${state.ticket.mensajeCliente}</div>
+    ` : ''}
+  `;
+
+  preview.style.display = 'block';
+  document.getElementById('ticket-acciones').style.display = 'flex';
+  preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  sonidoExito();
+}
+
+function limpiarTicket() {
+  if (!confirm('¿Limpiar el ticket?')) return;
+  state.ticket.items = [{ cantidad: 1, concepto: '', precio: 0 }];
+  state.ticket.cliente = '';
+  document.getElementById('ticket-cliente').value = '';
+  document.getElementById('ticket-preview').style.display = 'none';
+  document.getElementById('ticket-acciones').style.display = 'none';
+  renderItemsTicket();
+  toast('Ticket limpiado');
+  sonidoClick();
+}
+
+async function compartirTicket() {
+  const itemsValidos = state.ticket.items.filter(i => i.concepto && i.precio > 0);
+  if (itemsValidos.length === 0) return;
+
+  const total = itemsValidos.reduce((s, i) => s + (i.cantidad * i.precio), 0);
+  const fecha = new Date().toLocaleString('es-PE', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+
+  let mensaje = `*${state.config.negocio || 'TICKET DE EMERGENCIA'}*\n`;
+  mensaje += `${fecha}\n`;
+  if (state.ticket.cliente) mensaje += `Cliente: ${state.ticket.cliente}\n`;
+  mensaje += `\n⚠ Ticket provisional - NO es comprobante SUNAT\n\n`;
+
+  itemsValidos.forEach(i => {
+    mensaje += `${i.cantidad}x ${i.concepto} - S/ ${(i.cantidad * i.precio).toFixed(2)}\n`;
+  });
+
+  mensaje += `\n*TOTAL: S/ ${total.toFixed(2)}*`;
+
+  if (state.ticket.mensajeCliente) {
+    mensaje += `\n\n${state.ticket.mensajeCliente}`;
+  }
+
+  compartirPorWhatsApp(mensaje, '');
+  sonidoExito();
+}
+
+// ============ COMPARTIR WHATSAPP ============
+function compartirPorWhatsApp(texto, telefono = '') {
+  const tel = telefono ? `51${telefono.replace(/\D/g, '')}` : '';
+  const url = `https://wa.me/${tel}?text=${encodeURIComponent(texto)}`;
+  window.open(url, '_blank');
+}
+
+// ============ INICIALIZACIÓN ============
+window.addEventListener('DOMContentLoaded', () => {
+  cargarConfig();
+  renderDenominaciones();
+  inicializarChipsCategorias();
+  renderEgresos();
+  renderItemsTicket();
+
+  // Cerrar modal al click fuera
+  document.getElementById('modal-config').addEventListener('click', (e) => {
+    if (e.target.id === 'modal-config') cerrarConfig();
+  });
+
+  // Mensaje default del ticket
+  const msgDefault = document.getElementById('ticket-mensaje-cliente');
+  if (!msgDefault.value) {
+    msgDefault.value = 'Este es un ticket provisional. Escríbanos al WhatsApp con un "Hola" para enviarle la boleta oficial cuando vuelva nuestro sistema. Gracias por su comprensión.';
+  }
+});
+</script>
+
+</body>
+</html>
