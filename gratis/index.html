@@ -1777,8 +1777,10 @@ function generarQR() {
   switch(state.qr.tipo) {
     case 'texto':
       texto = document.getElementById('qr-texto').value.trim();
-      // Detectar si es URL o texto plano
-      const esURL = /^https?:\/\//i.test(texto) || /^www\./i.test(texto) || /\.(com|pe|org|net|io)/i.test(texto);
+      // Detectar si es URL o texto plano (case-insensitive)
+      const esURL = /^https?:\/\//i.test(texto) ||
+                    /^www\./i.test(texto) ||
+                    /\.(com|pe|org|net|io|pro|edu|gob|biz|info|tech|app|co|me)(\/|$|\?|#)/i.test(texto);
       tipoLabel = esURL ? 'Dirección Web' : 'Texto';
       infoVisible = texto.length > 60 ? texto.substring(0, 57) + '...' : texto;
       break;
