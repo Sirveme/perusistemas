@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notificaciones CCPL — Guía técnica</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    line-height: 1.6;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+  .sidebar {
+    background: #1e293b;
+    padding: 24px 20px;
+    border-right: 1px solid #334155;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar h1 {
+    font-size: 18px;
+    margin: 0 0 8px;
+    color: #fbbf24;
+  }
+  .sidebar .subtitle {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-bottom: 24px;
+  }
+  .sidebar nav a {
+    display: block;
+    padding: 8px 10px;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 2px;
+    transition: background 0.15s;
+  }
+  .sidebar nav a:hover { background: #334155; color: white; }
+  .sidebar nav a.active { background: #3b82f6; color: white; }
+  .sidebar nav .section-title {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 10px 4px;
+    font-weight: 600;
+  }
+  main {
+    padding: 40px 50px;
+    max-width: 900px;
+  }
+  h2 {
+    color: #fbbf24;
+    border-bottom: 2px solid #334155;
+    padding-bottom: 8px;
+    margin-top: 40px;
+    font-size: 24px;
+  }
+  h2:first-child { margin-top: 0; }
+  h3 {
+    color: #60a5fa;
+    margin-top: 28px;
+    font-size: 18px;
+  }
+  h4 { color: #a78bfa; margin-top: 20px; font-size: 15px; }
+  p, li { color: #cbd5e1; }
+  code {
+    background: #1e293b;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "JetBrains Mono", Consolas, monospace;
+    font-size: 13px;
+    color: #fbbf24;
+  }
+  pre {
+    background: #0a0f1e;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  pre code { background: transparent; padding: 0; color: #e2e8f0; }
+  .sql-keyword { color: #f472b6; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 16px 0;
+    background: #1e293b;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid #334155;
+    font-size: 13px;
+  }
+  th {
+    background: #334155;
+    color: #fbbf24;
+    font-weight: 600;
+  }
+  tr:last-child td { border-bottom: none; }
+  .callout {
+    background: rgba(59, 130, 246, 0.1);
+    border-left: 4px solid #3b82f6;
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .callout.warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-left-color: #f59e0b;
+  }
+  .callout.success {
+    background: rgba(16, 185, 129, 0.1);
+    border-left-color: #10b981;
+  }
+  .callout.danger {
+    background: rgba(239, 68, 68, 0.1);
+    border-left-color: #ef4444;
+  }
+  .copy-btn {
+    background: #334155;
+    color: #94a3b8;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    float: right;
+    margin-top: -2px;
+  }
+  .copy-btn:hover { background: #475569; color: white; }
+  .flow-diagram {
+    background: #1e293b;
+    border-radius: 8px;
+    padding: 20px;
+    font-family: "JetBrains Mono", Consolas, monospace;
+    font-size: 13px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  .flow-step {
+    background: #334155;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 4px 0;
+    display: inline-block;
+  }
+  .flow-arrow { color: #fbbf24; margin: 0 6px; }
+  .glossary-term {
+    background: #1e293b;
+    border-left: 3px solid #a78bfa;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .glossary-term strong {
+    color: #a78bfa;
+    font-size: 15px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  details {
+    background: #1e293b;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 8px 0;
+    cursor: pointer;
+  }
+  details summary {
+    color: #fbbf24;
+    font-weight: 600;
+    user-select: none;
+  }
+  details[open] summary { border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 8px; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 0 4px;
+  }
+  .badge-ok { background: #10b981; color: white; }
+  .badge-warn { background: #f59e0b; color: white; }
+  .badge-err { background: #ef4444; color: white; }
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { position: relative; height: auto; }
+    main { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <h1>🔔 Notificaciones CCPL</h1>
+    <div class="subtitle">Guía técnica completa</div>
+    
+    <nav>
+      <div class="section-title">Conceptos</div>
+      <a href="#identidades">Las 3 identidades</a>
+      <a href="#flujo">Flujo Push completo</a>
+      <a href="#tablas">Mapa de tablas</a>
+      
+      <div class="section-title">Glosario</div>
+      <a href="#vapid">VAPID</a>
+      <a href="#pwa">PWA</a>
+      <a href="#service-worker">Service Worker</a>
+      <a href="#websocket">WebSocket</a>
+      <a href="#polling">Polling</a>
+      <a href="#fomo">FOMO</a>
+      
+      <div class="section-title">Diagnóstico</div>
+      <a href="#tree">¿Por qué no llega push?</a>
+      <a href="#410">Error 410 Gone</a>
+      
+      <div class="section-title">Queries útiles</div>
+      <a href="#q-devices">Devices activos</a>
+      <a href="#q-notif">Bitácora notif_log</a>
+      <a href="#q-sin-member">Colegiados sin member</a>
+      <a href="#q-access">Accesos al sistema</a>
+      <a href="#q-categorias">Configuración categorías</a>
+      
+      <div class="section-title">Métricas</div>
+      <a href="#metricas-adopcion">Adopción WebApp</a>
+      <a href="#metricas-pago">Pagos web vs caja</a>
+      <a href="#metricas-deuda">Deuda y morosidad</a>
+    </nav>
+  </aside>
+
+  <main>
+    
+    <h2 id="identidades">Las 3 Identidades</h2>
+    <p>El concepto central que hay que tener claro para entender todo. Hay <strong>3 cosas distintas</strong> que pueden confundirse:</p>
+    
+    <table>
+      <thead><tr><th>Identidad</th><th>Qué es</th><th>Tabla</th><th>Cambia?</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Persona</strong></td>
+          <td>Ser humano real (Duilio, Anggie)</td>
+          <td>—</td>
+          <td>Casi nunca</td>
+        </tr>
+        <tr>
+          <td><strong>Cuenta</strong></td>
+          <td>Credenciales (DNI + clave)</td>
+          <td><code>users</code> + <code>members</code></td>
+          <td>Una vez, persiste</td>
+        </tr>
+        <tr>
+          <td><strong>Dispositivo</strong></td>
+          <td>Cada navegador en cada equipo</td>
+          <td><code>devices</code></td>
+          <td>Constantemente</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="callout">
+      <strong>Regla clave:</strong> Una persona tiene <strong>UNA cuenta</strong> y <strong>MUCHOS dispositivos</strong>.
+    </div>
+    
+    <h3>Ejemplo concreto: Duilio</h3>
+    <ul>
+      <li><strong>1 persona:</strong> tú</li>
+      <li><strong>1 cuenta:</strong> user_id=X (DNI 05393776, rol SOTE)</li>
+      <li><strong>N dispositivos:</strong>
+        <ul>
+          <li>Chrome PC oficina</li>
+          <li>Chrome PC casa</li>
+          <li>Chrome celular Android</li>
+          <li>Safari iPad</li>
+        </ul>
+      </li>
+    </ul>
+    
+    <p>Cada vez que abres la PWA en un navegador nuevo, se crea un device NUEVO. El sistema NO sabe que es la misma persona; sabe que el mismo <code>user_id</code> tiene 4 devices asociados.</p>
+
+    
+    <h2 id="flujo">Flujo Push completo</h2>
+    <p>De principio a fin, qué pasa desde que el usuario abre el sitio hasta que recibe push:</p>
+    
+    <div class="flow-diagram">
+<strong>Paso 1 — La cuenta YA existe (pre-requisito)</strong>
+<span class="flow-step">users</span> <span class="flow-arrow">→</span> <span class="flow-step">members</span> <span class="flow-arrow">→</span> <span class="flow-step">(rol en CCPL)</span>
+
+<strong>Paso 2 — Login</strong>
+Decano escribe "DECANO" + clave
+<span class="flow-arrow">↓</span>
+Backend: UPPER(input) → buscar en users + validar Argon2
+<span class="flow-arrow">↓</span>
+Sesión iniciada (cookie en navegador)
+
+<strong>Paso 3 — Suscripción VAPID (clave!)</strong>
+Toca botón "Activar notificaciones"
+<span class="flow-arrow">↓</span>
+JS: Notification.requestPermission()
+<span class="flow-arrow">↓</span>
+SO: popup "¿Permitir notificaciones?"
+<span class="flow-arrow">↓</span>
+Acepta
+<span class="flow-arrow">↓</span>
+JS: pushManager.subscribe({applicationServerKey: VAPID_PUBLIC_KEY})
+<span class="flow-arrow">↓</span>
+Google FCM / Apple APNS: genera endpoint único
+<span class="flow-arrow">↓</span>
+JS: POST /api/comunicados/push/registrar
+<span class="flow-arrow">↓</span>
+Backend: INSERT INTO devices (member_id, endpoint, p256dh, auth)
+
+<strong>Paso 4 — Envío de push</strong>
+Anggie cobra
+<span class="flow-arrow">↓</span>
+Hook 6.1 → notif_service.disparar_evento("pago_caja", ...)
+<span class="flow-arrow">↓</span>
+SELECT user_ids elegibles (notif_role_categoria + notif_user_categoria)
+<span class="flow-arrow">↓</span>
+Para cada user → buscar devices activos
+<span class="flow-arrow">↓</span>
+pywebpush.webpush(...) → cifra con p256dh/auth
+<span class="flow-arrow">↓</span>
+Google FCM entrega al SO del Decano
+<span class="flow-arrow">↓</span>
+Service Worker descifra y muestra notificación
+    </div>
+    
+    
+    <h2 id="tablas">Mapa de tablas</h2>
+    <p>Las relaciones esenciales del sistema de notificaciones:</p>
+    
+    <div class="flow-diagram">
+   PERSONA real
+       │
+       ▼
+   <span class="flow-step">users</span> ←── login (UPPER + Argon2)
+       │
+       ├─────────┬───────────┬────────────────┐
+       ▼         ▼           ▼                ▼
+   <span class="flow-step">members</span>  <span class="flow-step">devices</span>  <span class="flow-step">notif_config</span>  <span class="flow-step">notif_log</span>
+   (rol+org)  (cada PWA)   (preferencias)  (auditoría)
+       │
+       ▼
+   <span class="flow-step">colegiados</span> ← datos profesionales
+    </div>
+    
+    <h3>Tablas de configuración</h3>
+    <table>
+      <thead><tr><th>Tabla</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><td><code>notif_role_categoria</code></td><td>Qué roles reciben qué categoría (institucional)</td></tr>
+        <tr><td><code>notif_user_categoria</code></td><td>Asignaciones individuales (excepciones por usuario)</td></tr>
+        <tr><td><code>notif_categoria_map</code></td><td>Mapeo categoría fina → gruesa</td></tr>
+        <tr><td><code>notif_categorias_obligatorias</code></td><td>Las que no se pueden silenciar</td></tr>
+        <tr><td><code>notif_config</code></td><td>Preferencia personal por user × categoría</td></tr>
+        <tr><td><code>notif_queue</code></td><td>Eventos en espera para resúmenes</td></tr>
+        <tr><td><code>notif_log</code></td><td>Bitácora de envíos (debugging y métricas)</td></tr>
+        <tr><td><code>fomo_avisos</code></td><td>Avisos automáticos del sistema (Sprint 1+)</td></tr>
+        <tr><td><code>login_aliases</code></td><td>Alias texto → DNI (DECANO, FINANZAS, ADMIN)</td></tr>
+      </tbody>
+    </table>
+
+    
+    <h2 id="vapid">Glosario — VAPID</h2>
+    <div class="glossary-term">
+      <strong>VAPID — Voluntary Application Server Identification</strong>
+      Protocolo para que tu servidor pueda enviar push notifications a navegadores sin pasar por servicios de terceros como Firebase. Usas un par de claves: pública (la conoce el navegador) y privada (la guarda tu servidor). Las claves están en Railway env vars: <code>VAPID_PUBLIC_KEY</code>, <code>VAPID_PRIVATE_KEY</code>, <code>VAPID_CLAIMS_EMAIL</code>.
+    </div>
+    
+    <h2 id="pwa">PWA</h2>
+    <div class="glossary-term">
+      <strong>PWA — Progressive Web App</strong>
+      Aplicación web que se comporta como app nativa: se "instala" en el celular, funciona offline parcialmente, recibe push notifications. CCPL ES una PWA. El usuario la instala desde el navegador con "Agregar a pantalla de inicio".
+    </div>
+    
+    <h2 id="service-worker">Service Worker</h2>
+    <div class="glossary-term">
+      <strong>Service Worker</strong>
+      Código JavaScript que corre en segundo plano en el navegador, INCLUSO si la PWA está cerrada. Es lo que recibe los push y muestra la notificación. En CCPL es el archivo <code>sw.js</code>. Se registra una vez y queda "activo" para siempre (mientras el usuario no borre datos).
+    </div>
+    
+    <h2 id="websocket">WebSocket</h2>
+    <div class="glossary-term">
+      <strong>WebSocket</strong>
+      Conexión bidireccional persistente entre navegador y servidor. Mientras la página está abierta, se mantiene conectada y pueden mandarse mensajes en tiempo real (sin que el cliente pregunte cada N segundos).
+      <br><br>
+      <strong>Diferencia con Push:</strong> WebSocket requiere que la página esté abierta. Push funciona incluso con la PWA cerrada.
+      <br><br>
+      <strong>CCPL usa ambos:</strong> WebSocket para chat en vivo (<code>/ws/alerta</code>), Push para notificaciones importantes.
+    </div>
+    
+    <h2 id="polling">Polling</h2>
+    <div class="glossary-term">
+      <strong>Polling</strong>
+      El cliente le pregunta al servidor cada N segundos "¿hay novedades?". Es el método más viejo. Ineficiente, gasta batería y datos. CCPL evita polling cuando puede.
+    </div>
+    
+    <h2 id="fomo">FOMO</h2>
+    <div class="glossary-term">
+      <strong>FOMO — Fear Of Missing Out</strong>
+      En CCPL <strong>v2 (reinterpretado)</strong>: avisos automáticos del sistema basados en reglas (vence en 5 días, asamblea mañana). Antes eran mensajes motivacionales aleatorios. Ahora son útiles.
+      <br><br>
+      Tabla: <code>fomo_avisos</code>. Cada fila es un aviso a una persona específica.
+    </div>
+
+    
+    <h2 id="tree">Diagnóstico — ¿Por qué no llega push?</h2>
+    <p>Decision tree para depurar:</p>
+    
+    <details>
+      <summary>1. ¿El user_id está en notif_log?</summary>
+      <pre><code>SELECT evento_tipo, resultado, sent_at::timestamp 
+FROM notif_log 
+WHERE user_id = ?
+ORDER BY sent_at DESC LIMIT 5;</code></pre>
+      <ul>
+        <li><span class="badge badge-err">SIN registro</span> El user NO es destinatario. Verificar mapeo role→categoria.</li>
+        <li><span class="badge badge-warn">resultado='silenciado_por_config'</span> El usuario apagó esa categoría en /notificaciones.</li>
+        <li><span class="badge badge-warn">resultado='sin_device'</span> No tiene PWA activada. Salto al paso 2.</li>
+        <li><span class="badge badge-err">resultado='error'</span> Algo falló al enviar. Ver <code>error_detalle</code>.</li>
+        <li><span class="badge badge-ok">resultado='enviado'</span> El push se mandó. Salto al paso 3.</li>
+      </ul>
+    </details>
+    
+    <details>
+      <summary>2. ¿Tiene devices activos?</summary>
+      <pre><code>SELECT id, push_endpoint, is_active, created_at::timestamp
+FROM devices
+WHERE member_id = (
+  SELECT id FROM members WHERE user_id = ?
+);</code></pre>
+      <ul>
+        <li><span class="badge badge-err">Sin filas</span> Nunca aceptó push. Debe entrar y aceptar.</li>
+        <li><span class="badge badge-warn">is_active=false</span> Suscripción expirada. Reactivar.</li>
+        <li><span class="badge badge-ok">is_active=true</span> Salto al paso 3.</li>
+      </ul>
+    </details>
+    
+    <details>
+      <summary>3. ¿El navegador puede recibir?</summary>
+      <p>En el celular del usuario, verificar:</p>
+      <ul>
+        <li>¿El navegador tiene permisos de notificaciones para ccploreto.org.pe?</li>
+        <li>¿El SO no está en modo silencio / no molestar?</li>
+        <li>¿La PWA está instalada (no solo abierta en navegador)?</li>
+      </ul>
+    </details>
+    
+    
+    <h2 id="410">Error 410 Gone</h2>
+    <div class="callout warning">
+      <p><strong>Significa:</strong> el endpoint del device ya no existe. El navegador lo descartó por: usuario borró datos, desinstaló PWA, revocó permiso, o expiró por inactividad.</p>
+      <p><strong>Solución:</strong> el sistema debería marcar el device como <code>is_active=false</code> al recibir 410. Limpieza pendiente en backlog.</p>
+    </div>
+    
+    
+    <h2 id="q-devices">Query — Devices activos</h2>
+    
+    <h3>Cuántas personas tienen push</h3>
+    <pre><code>SELECT COUNT(DISTINCT member_id) AS personas_con_push,
+       COUNT(*) AS devices_totales
+FROM devices 
+WHERE is_active = TRUE;</code></pre>
+    
+    <h3>Top 10 con más devices</h3>
+    <pre><code>SELECT u.public_id, u.name, COUNT(d.id) AS devices_activos
+FROM members m
+JOIN users u ON u.id = m.user_id
+JOIN devices d ON d.member_id = m.id AND d.is_active = TRUE
+GROUP BY m.user_id, u.public_id, u.name
+ORDER BY devices_activos DESC 
+LIMIT 10;</code></pre>
+    
+    <h3>Devices expirados pendientes de limpiar</h3>
+    <pre><code>SELECT COUNT(*) FROM devices WHERE is_active = FALSE;</code></pre>
+    
+    
+    <h2 id="q-notif">Query — Bitácora notif_log</h2>
+    
+    <h3>Resumen últimos 7 días</h3>
+    <pre><code>SELECT resultado, COUNT(*) AS cantidad
+FROM notif_log
+WHERE sent_at > NOW() - INTERVAL '7 days'
+GROUP BY resultado
+ORDER BY cantidad DESC;</code></pre>
+    
+    <h3>Tasa de entrega por evento</h3>
+    <pre><code>SELECT evento_tipo,
+       COUNT(*) FILTER (WHERE resultado='enviado') AS enviados,
+       COUNT(*) FILTER (WHERE resultado='sin_device') AS sin_device,
+       ROUND(100.0 * COUNT(*) FILTER (WHERE resultado='enviado') / NULLIF(COUNT(*),0), 1) AS tasa_entrega
+FROM notif_log
+WHERE sent_at > NOW() - INTERVAL '7 days'
+GROUP BY evento_tipo
+ORDER BY tasa_entrega DESC;</code></pre>
+    
+    <h3>Eventos por usuario (top 20)</h3>
+    <pre><code>SELECT u.name, COUNT(*) AS push_recibidos
+FROM notif_log l
+JOIN users u ON u.id = l.user_id
+WHERE l.sent_at > NOW() - INTERVAL '7 days'
+  AND l.resultado = 'enviado'
+GROUP BY u.id, u.name
+ORDER BY push_recibidos DESC
+LIMIT 20;</code></pre>
+    
+    
+    <h2 id="q-sin-member">Query — Colegiados sin member</h2>
+    
+    <pre><code>SELECT 
+  COUNT(*) FILTER (WHERE member_id IS NULL) AS sin_member,
+  COUNT(*) FILTER (WHERE member_id IS NOT NULL) AS con_member,
+  COUNT(*) AS total
+FROM colegiados
+WHERE organization_id = 1;</code></pre>
+    
+    <h3>Lista de irregulares</h3>
+    <pre><code>SELECT codigo_matricula, apellidos_nombres, dni
+FROM colegiados
+WHERE organization_id = 1 AND member_id IS NULL
+ORDER BY dni;</code></pre>
+    
+    
+    <h2 id="q-access">Query — Accesos al sistema</h2>
+    
+    <h3>Top usuarios por sesiones esta semana</h3>
+    <pre><code>SELECT u.public_id, u.name, COUNT(*) AS sesiones
+FROM access_logs a
+JOIN users u ON u.id = a.user_id
+WHERE a.created_at > NOW() - INTERVAL '7 days'
+GROUP BY u.id, u.public_id, u.name
+ORDER BY sesiones DESC 
+LIMIT 20;</code></pre>
+    
+    <h3>Colegiados que entran al sistema (¿adopción?)</h3>
+    <pre><code>SELECT 
+  COUNT(DISTINCT m.user_id) AS colegiados_activos_semana,
+  (SELECT COUNT(*) FROM colegiados WHERE organization_id=1 AND condicion='habil') AS colegiados_habiles_totales
+FROM access_logs a
+JOIN members m ON m.user_id = a.user_id  
+WHERE m.organization_id = 1
+  AND m.role IN ('colegiado','user')
+  AND a.created_at > NOW() - INTERVAL '7 days';</code></pre>
+    
+    
+    <h2 id="q-categorias">Query — Configuración de categorías</h2>
+    
+    <h3>Quiénes apagaron alguna categoría</h3>
+    <pre><code>SELECT u.name, nc.categoria, nc.modo, nc.activo
+FROM notif_config nc
+JOIN users u ON u.id = nc.user_id
+WHERE nc.activo = FALSE OR nc.modo = 'silencioso'
+ORDER BY u.name;</code></pre>
+    
+    <h3>Distribución por modo de entrega</h3>
+    <pre><code>SELECT modo, COUNT(*) AS usuarios
+FROM notif_config
+WHERE activo = TRUE
+GROUP BY modo
+ORDER BY usuarios DESC;</code></pre>
+    
+    
+    <h2 id="metricas-adopcion">Métricas — Adopción WebApp</h2>
+    
+    <div class="callout success">
+      Estas métricas son tu "as bajo la manga" para conversaciones con directivos. Demuestran tracción real.
+    </div>
+    
+    <h3>Adopción de notificaciones</h3>
+    <pre><code>-- Penetración de push notifications
+WITH stats AS (
+  SELECT 
+    (SELECT COUNT(DISTINCT m.id) 
+     FROM members m JOIN devices d ON d.member_id=m.id 
+     WHERE d.is_active=TRUE AND m.organization_id=1) AS con_push,
+    (SELECT COUNT(*) FROM members WHERE organization_id=1 AND is_active=TRUE) AS total
+)
+SELECT con_push, total, 
+       ROUND(100.0 * con_push / NULLIF(total,0), 1) AS pct_adopcion
+FROM stats;</code></pre>
+    
+    <h3>Curva de adopción semanal</h3>
+    <pre><code>SELECT 
+  DATE_TRUNC('week', created_at)::date AS semana,
+  COUNT(*) AS devices_nuevos,
+  SUM(COUNT(*)) OVER (ORDER BY DATE_TRUNC('week', created_at)) AS acumulado
+FROM devices
+WHERE created_at > NOW() - INTERVAL '90 days'
+GROUP BY 1 ORDER BY 1;</code></pre>
+    
+    
+    <h2 id="metricas-pago">Métricas — Pagos web vs caja</h2>
+    
+    <pre><code>SELECT 
+  DATE_TRUNC('week', p.created_at)::date AS semana,
+  COUNT(*) FILTER (WHERE p.payment_method='cash' OR p.notes LIKE '%CAJA%') AS pagos_caja,
+  COUNT(*) FILTER (WHERE p.notes LIKE '%OPENPAY%' OR p.notes LIKE '%web%') AS pagos_web,
+  SUM(p.amount) FILTER (WHERE p.notes LIKE '%CAJA%') AS monto_caja,
+  SUM(p.amount) FILTER (WHERE p.notes LIKE '%OPENPAY%') AS monto_web
+FROM payments p
+WHERE p.created_at > NOW() - INTERVAL '60 days'
+  AND p.organization_id = 1
+GROUP BY 1 ORDER BY 1;</code></pre>
+    
+    
+    <h2 id="metricas-deuda">Métricas — Deuda y morosidad</h2>
+    
+    <h3>Saldo total pendiente</h3>
+    <pre><code>SELECT 
+  COUNT(*) AS deudas_pendientes,
+  COUNT(DISTINCT colegiado_id) AS colegiados_morosos,
+  SUM(balance) AS saldo_total
+FROM debts
+WHERE organization_id = 1 
+  AND status = 'pending'
+  AND balance > 0;</code></pre>
+    
+    <h3>Morosidad por concepto</h3>
+    <pre><code>SELECT 
+  cc.nombre AS concepto,
+  COUNT(*) AS deudas,
+  SUM(d.balance) AS saldo
+FROM debts d
+LEFT JOIN conceptos_cobro cc ON cc.id = d.concepto_cobro_id
+WHERE d.organization_id = 1 
+  AND d.status = 'pending'
+GROUP BY cc.nombre
+ORDER BY saldo DESC;</code></pre>
+    
+    <h3>Fraccionamientos en riesgo</h3>
+    <pre><code>SELECT 
+  COUNT(*) FILTER (WHERE estado = 'activo') AS activos,
+  COUNT(*) FILTER (WHERE estado = 'perdido') AS perdidos,
+  COUNT(*) FILTER (WHERE estado = 'completado') AS completados
+FROM fraccionamientos
+WHERE organization_id = 1;</code></pre>
+    
+    
+    <h2>Próximos pasos</h2>
+    
+    <ul>
+      <li>Cuando arranque el Sprint 1 (zClaude-97o), la tabla <code>fomo_avisos</code> empezará a tener datos automáticos</li>
+      <li>Cuando llegue Sprint 2 (Asambleas), agregar queries de asistencia</li>
+      <li>Sprint 3 (Encuestas): queries de participación y voto público vs privado</li>
+      <li>Sprint 4 (Tributarias): conexión con <code>colegiado_ruc</code> y <code>cronograma_sunat</code></li>
+      <li>Sprint 5 (Cumpleaños): cron + métricas de "saludos enviados / cumpleaños del mes"</li>
+    </ul>
+    
+    <div class="callout">
+      Esta guía vive como artefacto descargable. Cuando agregues nuevas queries o conceptos, edita el HTML o pídeme una v2.
+    </div>
+    
+  </main>
+</div>
+
+<script>
+// Resaltar sección activa en sidebar al hacer scroll
+const sections = document.querySelectorAll('h2[id]');
+const navLinks = document.querySelectorAll('.sidebar nav a');
+
+function highlightActive() {
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop;
+    if (window.scrollY >= top - 100) {
+      current = section.id;
+    }
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', highlightActive);
+highlightActive();
+
+// Botón "copiar" en cada pre
+document.querySelectorAll('pre').forEach(pre => {
+  const btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.textContent = 'Copiar';
+  btn.onclick = () => {
+    navigator.clipboard.writeText(pre.querySelector('code').textContent);
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => btn.textContent = 'Copiar', 1500);
+  };
+  pre.style.position = 'relative';
+  pre.insertBefore(btn, pre.firstChild);
+});
+</script>
+</body>
+</html>
