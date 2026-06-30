@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perú Sistemas Pro · Software para empresarios de Loreto</title>
+<meta name="description" content="Sistemas que dan poder y tranquilidad al empresario. Facturalo, QueVendi, Alerta.pe y PagoOK. Empresa iquiteña con 20 años de experiencia.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --psp-rojo: #8B1A1F;
+    --psp-rojo-claro: #B91C1C;
+    --psp-rojo-oscuro: #6B1318;
+    --qv-amarillo: #FCD34D;
+    --qv-amarillo-fuerte: #F59E0B;
+    --qv-verde: #16A34A;
+    --azul-confianza: #1E40AF;
+    --gris-50: #F9FAFB;
+    --gris-100: #F3F4F6;
+    --gris-200: #E5E7EB;
+    --gris-300: #D1D5DB;
+    --gris-500: #6B7280;
+    --gris-700: #374151;
+    --gris-900: #111827;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+    --shadow-xl: 0 20px 60px rgba(0,0,0,0.20);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #ffffff;
+    color: var(--gris-900);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    background: white;
+    border-bottom: 1px solid var(--gris-200);
+    padding: 0.75rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--gris-900);
+  }
+
+  .logo-cuadro {
+    background: linear-gradient(135deg, var(--psp-rojo) 0%, var(--psp-rojo-oscuro) 100%);
+    color: white;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .logo-texto strong {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--gris-900);
+  }
+
+  .logo-texto span {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--gris-500);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .header-cta {
+    background: var(--qv-verde);
+    color: white;
+    padding: 0.5rem 1.1rem;
+    border-radius: 24px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+  }
+
+  .header-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFFBEB 50%, #FEF3C7 100%);
+    padding: 3rem 1rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(252, 211, 77, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge-iquitos {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: white;
+    border: 1.5px solid var(--qv-amarillo-fuerte);
+    color: var(--psp-rojo);
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hero h1 {
+    font-size: 2.3rem;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--gris-900);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 .highlight {
+    color: var(--psp-rojo);
+    position: relative;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--gris-700);
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    font-weight: 500;
+  }
+
+  /* ============ AUDIO PLAYER CTA ============ */
+  .audio-cta {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    max-width: 540px;
+    margin: 0 auto;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .audio-cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(252,211,77,0.05) 0%, rgba(139,26,31,0.05) 100%);
+    pointer-events: none;
+  }
+
+  .audio-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--qv-amarillo);
+  }
+
+  .audio-cta-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .audio-foto {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--psp-rojo) 0%, var(--psp-rojo-oscuro) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    font-size: 2rem;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .audio-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .audio-foto::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    background: var(--qv-verde);
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--qv-verde);
+    animation: pulse-ring 2s infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 2px var(--qv-verde), 0 0 0 0 rgba(22, 163, 74, 0.6); }
+    70% { box-shadow: 0 0 0 2px var(--qv-verde), 0 0 0 12px rgba(22, 163, 74, 0); }
+    100% { box-shadow: 0 0 0 2px var(--qv-verde), 0 0 0 0 rgba(22, 163, 74, 0); }
+  }
+
+  .audio-info {
+    flex: 1;
+    text-align: left;
+  }
+
+  .audio-titulo {
+    font-size: 0.78rem;
+    color: var(--qv-verde);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .audio-titulo::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--qv-verde);
+    border-radius: 50%;
+    animation: pulse-dot 1.5s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .audio-mensaje {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--gris-900);
+    line-height: 1.3;
+    margin-bottom: 0.4rem;
+  }
+
+  .audio-meta {
+    font-size: 0.78rem;
+    color: var(--gris-500);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .audio-play-btn {
+    width: 56px;
+    height: 56px;
+    background: var(--psp-rojo);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s;
+  }
+
+  .audio-cta:hover .audio-play-btn {
+    background: var(--qv-verde);
+    transform: scale(1.1);
+  }
+
+  /* Audio actual */
+  .audio-player-active {
+    display: none;
+    margin-top: 1rem;
+  }
+
+  .audio-player-active.activo {
+    display: block;
+  }
+
+  audio {
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  /* ============ SECCIONES ============ */
+  .seccion {
+    padding: 4rem 1rem;
+  }
+
+  .seccion-content {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .seccion-titulo {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .seccion-titulo h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--gris-900);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .seccion-titulo p {
+    font-size: 1.05rem;
+    color: var(--gris-500);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ============ FILOSOFÍA RESUMEN ============ */
+  .filosofia {
+    background: white;
+    padding: 3rem 1rem;
+  }
+
+  .filosofia-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .filosofia-cita {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--gris-900);
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .filosofia-cita::before {
+    content: '"';
+    color: var(--psp-rojo);
+    font-size: 2.5rem;
+    line-height: 0.5;
+    vertical-align: -0.4em;
+    margin-right: 0.2rem;
+  }
+
+  .filosofia-cita::after {
+    content: '"';
+    color: var(--psp-rojo);
+    font-size: 2.5rem;
+    line-height: 0.5;
+    vertical-align: -0.4em;
+    margin-left: 0.2rem;
+  }
+
+  .filosofia-firma {
+    color: var(--gris-500);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  /* ============ PRODUCTOS ============ */
+  .productos {
+    background: var(--gris-50);
+  }
+
+  .productos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .producto-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .producto-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--gris-200);
+  }
+
+  .producto-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--gris-100);
+  }
+
+  .producto-icono {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    color: white;
+  }
+
+  .producto-card[data-producto="facturalo"] .producto-icono { background: linear-gradient(135deg, #2563EB, #1E40AF); }
+  .producto-card[data-producto="quevendi"] .producto-icono { background: linear-gradient(135deg, #F59E0B, #D97706); color: var(--gris-900); }
+  .producto-card[data-producto="alerta"] .producto-icono { background: linear-gradient(135deg, #DC2626, #991B1B); }
+  .producto-card[data-producto="pagook"] .producto-icono { background: linear-gradient(135deg, #16A34A, #15803D); }
+
+  .producto-titulo {
+    flex: 1;
+  }
+
+  .producto-nombre {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--gris-900);
+    line-height: 1.1;
+    margin-bottom: 0.2rem;
+  }
+
+  .producto-url {
+    font-size: 0.78rem;
+    color: var(--gris-500);
+    font-weight: 600;
+  }
+
+  .producto-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-left: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .producto-badge.disponible {
+    background: #D1FAE5;
+    color: #065F46;
+  }
+
+  .producto-badge.proximamente {
+    background: #FEF3C7;
+    color: #78350F;
+  }
+
+  .producto-body {
+    padding: 1.25rem 1.5rem;
+    flex: 1;
+  }
+
+  .producto-tagline {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gris-900);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .producto-descripcion {
+    color: var(--gris-700);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .producto-beneficios {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.9rem;
+  }
+
+  .producto-beneficios li {
+    padding: 0.3rem 0 0.3rem 1.6rem;
+    position: relative;
+    font-size: 0.88rem;
+    color: var(--gris-700);
+  }
+
+  .producto-beneficios li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0.3rem;
+    color: var(--qv-verde);
+    font-weight: 800;
+    font-size: 1rem;
+  }
+
+  .producto-footer {
+    padding: 0 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .producto-cta {
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .producto-cta-primary {
+    background: var(--psp-rojo);
+    color: white;
+  }
+
+  .producto-cta-primary:hover {
+    background: var(--psp-rojo-oscuro);
+    transform: translateY(-1px);
+  }
+
+  .producto-cta-secondary {
+    background: var(--gris-100);
+    color: var(--gris-700);
+    border: 1px solid var(--gris-200);
+  }
+
+  .producto-cta-secondary:hover {
+    background: var(--gris-200);
+  }
+
+  /* ============ TESTIMONIOS ============ */
+  .testimonios {
+    background: white;
+  }
+
+  .testimonios-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .testimonio {
+    background: var(--gris-50);
+    border-radius: 16px;
+    padding: 1.75rem;
+    position: relative;
+    border: 1px solid var(--gris-200);
+  }
+
+  .testimonio::before {
+    content: '"';
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    font-size: 4rem;
+    color: var(--qv-amarillo-fuerte);
+    line-height: 1;
+    font-family: Georgia, serif;
+    opacity: 0.5;
+  }
+
+  .testimonio-texto {
+    color: var(--gris-700);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+  }
+
+  .testimonio-autor {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .testimonio-foto {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--gris-200);
+    flex-shrink: 0;
+    overflow: hidden;
+    border: 3px solid white;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .testimonio-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .testimonio-foto-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--psp-rojo), var(--psp-rojo-oscuro));
+    color: white;
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
+
+  .testimonio-info strong {
+    display: block;
+    color: var(--gris-900);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .testimonio-info span {
+    color: var(--gris-500);
+    font-size: 0.8rem;
+  }
+
+  /* ============ CTA FINAL ============ */
+  .cta-final {
+    background: linear-gradient(135deg, var(--psp-rojo) 0%, var(--psp-rojo-oscuro) 100%);
+    color: white;
+    text-align: center;
+    padding: 4rem 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-final::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -10%;
+    width: 120%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(252,211,77,0.15) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .cta-final-content {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-final h2 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .cta-final p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+  }
+
+  .cta-botones {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-btn {
+    padding: 0.9rem 1.5rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-md);
+  }
+
+  .cta-btn-whatsapp {
+    background: #25D366;
+    color: white;
+  }
+
+  .cta-btn-whatsapp:hover {
+    background: #1FAE54;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .cta-btn-visita {
+    background: white;
+    color: var(--psp-rojo);
+  }
+
+  .cta-btn-visita:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    background: var(--gris-900);
+    color: var(--gris-300);
+    padding: 2.5rem 1rem 1.5rem;
+    text-align: center;
+  }
+
+  .footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .footer-logo {
+    color: white;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-info {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.7;
+  }
+
+  .footer-info a {
+    color: var(--qv-amarillo);
+    text-decoration: none;
+  }
+
+  .footer-legal {
+    border-top: 1px solid #374151;
+    padding-top: 1.25rem;
+    font-size: 0.75rem;
+    color: var(--gris-500);
+    line-height: 1.5;
+  }
+
+  .footer-anpdp {
+    display: inline-block;
+    background: rgba(252,211,77,0.1);
+    border: 1px solid rgba(252,211,77,0.3);
+    color: var(--qv-amarillo);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    margin-top: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (min-width: 768px) {
+    .hero h1 {
+      font-size: 3rem;
+    }
+
+    .productos-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .testimonios-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .seccion-titulo h2 {
+      font-size: 2.5rem;
+    }
+
+    .cta-final h2 {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero h1 {
+      font-size: 3.4rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<div class="header">
+  <div class="header-content">
+    <a href="/" class="logo">
+      <div class="logo-cuadro">PSP</div>
+      <div class="logo-texto">
+        <strong>Perú Sistemas Pro</strong>
+        <span>Iquitos, Loreto</span>
+      </div>
+    </a>
+    <a href="https://wa.me/51967317946?text=Hola%20Duilio%2C%20vi%20la%20p%C3%A1gina%20de%20Per%C3%BA%20Sistemas%20Pro%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n." class="header-cta">
+      💬 Conversemos
+    </a>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="badge-iquitos">
+      🌳 Empresa iquiteña · 20 años desarrollando software
+    </div>
+
+    <h1>
+      Software que le da <span class="highlight">poder y tranquilidad</span><br>
+      sobre su negocio
+    </h1>
+
+    <p class="hero-subtitle">
+      Para que esté enterado de lo que pasa en su empresa, a cualquier hora,
+      cualquier día, desde cualquier lugar. Sin tener que preguntar.
+    </p>
+
+    <!-- Audio CTA -->
+    <div class="audio-cta" onclick="reproducirAudio()">
+      <div class="audio-cta-content">
+        <div class="audio-foto"><img src="duilio_restuccia_negro.png" alt="Duilio Restuccia"></div>
+        <div class="audio-info">
+          <div class="audio-titulo">
+            Mensaje de voz · 90 segundos
+          </div>
+          <div class="audio-mensaje">
+            Escuche por qué los empresarios están prefiriendo nuestros sistemas
+          </div>
+          <div class="audio-meta">
+            🎙️ Duilio Restuccia · Director
+          </div>
+        </div>
+        <div class="audio-play-btn">
+          ▶
+        </div>
+      </div>
+      <div class="audio-player-active" id="audio-player-active">
+        <audio controls id="audio-element" preload="none">
+          <source src="parati-perusistemas.m4a" type="audio/mp4">
+          Su navegador no soporta audio HTML5.
+        </audio>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FILOSOFÍA ============ -->
+<section class="filosofia">
+  <div class="filosofia-content">
+    <div class="filosofia-cita">
+      Nuestras herramientas no son solo para controlar stock o registrar ventas.
+      Son para darle a usted, el empresario, poder real sobre su negocio.
+      Y la tranquilidad de saber que todo está bajo control,
+      aunque no esté presente.
+    </div>
+    <div class="filosofia-firma">
+      — Duilio Restuccia, Director · Perú Sistemas Pro
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCTOS ============ -->
+<section class="seccion productos">
+  <div class="seccion-content">
+    <div class="seccion-titulo">
+      <h2>Nuestros sistemas</h2>
+      <p>Cuatro productos pensados para resolver problemas reales del empresario peruano</p>
+    </div>
+
+    <div class="productos-grid">
+
+      <!-- FACTURALO -->
+      <div class="producto-card" data-producto="facturalo">
+        <div class="producto-header">
+          <div class="producto-icono">📄</div>
+          <div class="producto-titulo">
+            <div class="producto-nombre">Facturalo.pro</div>
+            <div class="producto-url">facturalo.pro</div>
+          </div>
+          <span class="producto-badge disponible">Disponible</span>
+        </div>
+        <div class="producto-body">
+          <div class="producto-tagline">
+            Para emitir facturas SUNAT sin invertir en un sistema completo
+          </div>
+          <div class="producto-descripcion">
+            Ideal para profesionales independientes y negocios pequeños que necesitan
+            emitir facturas electrónicas SUNAT desde el celular o computadora,
+            sin instalación.
+          </div>
+          <ul class="producto-beneficios">
+            <li>Emite facturas, boletas y notas de crédito</li>
+            <li>Funciona desde celular, tablet o PC</li>
+            <li>Se integra con su sistema actual si lo tiene</li>
+            <li>Costo bajo, sin contratos largos</li>
+          </ul>
+        </div>
+        <div class="producto-footer">
+          <a href="https://wa.me/51967317946?text=Hola%20Duilio%2C%20quiero%20informaci%C3%B3n%20sobre%20Facturalo.pro"
+             class="producto-cta producto-cta-primary">
+            💬 Quiero más información
+          </a>
+        </div>
+      </div>
+
+      <!-- QUEVENDI -->
+      <div class="producto-card" data-producto="quevendi">
+        <div class="producto-header">
+          <div class="producto-icono">🛒</div>
+          <div class="producto-titulo">
+            <div class="producto-nombre">QueVendi.pro</div>
+            <div class="producto-url">quevendi.pro</div>
+          </div>
+          <span class="producto-badge disponible">Disponible</span>
+        </div>
+        <div class="producto-body">
+          <div class="producto-tagline">
+            El sistema de gestión que su negocio necesita
+          </div>
+          <div class="producto-descripcion">
+            Registre ventas por voz mientras atiende al cliente, sin teclear,
+            sin perder tiempo. Vea desde su celular qué se vendió, cuánto queda
+            en stock y cuánto entró en caja, aunque esté fuera del negocio.
+          </div>
+          <ul class="producto-beneficios">
+            <li>Comandos de voz para vender más rápido</li>
+            <li>Control de stock y caja en tiempo real</li>
+            <li>Página web con su menú o catálogo integrado</li>
+            <li>Atienda pedidos y delivery desde la misma plataforma</li>
+          </ul>
+        </div>
+        <div class="producto-footer">
+          <a href="https://wa.me/51967317946?text=Hola%20Duilio%2C%20quiero%20una%20demo%20de%20QueVendi.pro"
+             class="producto-cta producto-cta-primary">
+            🎥 Pedir demo
+          </a>
+        </div>
+      </div>
+
+      <!-- ALERTA.PE -->
+      <div class="producto-card" data-producto="alerta">
+        <div class="producto-header">
+          <div class="producto-icono">🔔</div>
+          <div class="producto-titulo">
+            <div class="producto-nombre">Alerta.pe</div>
+            <div class="producto-url">alerta.pe</div>
+          </div>
+          <span class="producto-badge disponible">Disponible</span>
+        </div>
+        <div class="producto-body">
+          <div class="producto-tagline">
+            Nunca más se entere de una notificación SUNAT cuando ya es tarde
+          </div>
+          <div class="producto-descripcion">
+            Alerta.pe revisa su buzón SUNAT por usted las 24 horas, 7 días a la semana.
+            Si llega una multa, una observación, un beneficio o una orden de embargo,
+            lo enteramos al instante en su celular.
+          </div>
+          <ul class="producto-beneficios">
+            <li>Revisión automática del buzón SUNAT</li>
+            <li>Alertas instantáneas en su celular</li>
+            <li>Evita multas, embargos y oportunidades perdidas</li>
+            <li>Exclusivo para empresarios responsables</li>
+          </ul>
+        </div>
+        <div class="producto-footer">
+          <a href="https://wa.me/51967317946?text=Hola%20Duilio%2C%20quiero%20protegerme%20con%20Alerta.pe"
+             class="producto-cta producto-cta-primary">
+            🛡️ Quiero protegerme
+          </a>
+        </div>
+      </div>
+
+      <!-- PAGOOK -->
+      <div class="producto-card" data-producto="pagook">
+        <div class="producto-header">
+          <div class="producto-icono">💸</div>
+          <div class="producto-titulo">
+            <div class="producto-nombre">PagoOK.pro</div>
+            <div class="producto-url">pagook.pro</div>
+          </div>
+          <span class="producto-badge proximamente">Próximamente</span>
+        </div>
+        <div class="producto-body">
+          <div class="producto-tagline">
+            Cobre con Yape y Plin con tranquilidad, sin mirar el celular
+          </div>
+          <div class="producto-descripcion">
+            PagoOK verifica cada pago Yape o Plin en 3 segundos y avisa a quien usted
+            decida: su cajera, su esposa o usted mismo. Esté donde esté,
+            sabrá al instante qué entró a su cuenta.
+          </div>
+          <ul class="producto-beneficios">
+            <li>Verificación automática en 3 segundos</li>
+            <li>Notificaciones a múltiples personas</li>
+            <li>Trabaje desde cualquier lugar del mundo</li>
+            <li>Su cajera nunca más cobrará mal un Yape</li>
+          </ul>
+        </div>
+        <div class="producto-footer">
+          <a href="https://wa.me/51967317946?text=Hola%20Duilio%2C%20%C2%BFmi%20celular%20es%20compatible%20con%20PagoOK%3F%20Tengo%20un%20[mencione%20su%20modelo]"
+             class="producto-cta producto-cta-primary">
+            📱 ¿Mi celular es compatible?
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIOS ============ -->
+<section class="seccion testimonios">
+  <div class="seccion-content">
+    <div class="seccion-titulo">
+      <h2>Lo que dicen nuestros clientes</h2>
+      <p>Empresarios e instituciones que confían en nuestros sistemas</p>
+    </div>
+
+    <div class="testimonios-grid">
+
+      <!-- Multiservicios Shevalche -->
+      <div class="testimonio">
+        <div class="testimonio-texto">
+          Con QueVendi hemos ordenado completamente nuestras ventas
+          y el control de stock. Antes perdíamos productos y no sabíamos
+          qué se vendía mejor. Ahora todo está claro.
+        </div>
+        <div class="testimonio-autor">
+          <div class="testimonio-foto">
+            <img src="logo-shevalche.png" alt="Shevalche">
+            <div class="testimonio-foto-placeholder">MS</div>
+          </div>
+          <div class="testimonio-info">
+            <strong>Multiservicios Shevalche</strong>
+            <span>Distribuidor de bebidas y licores</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CCPL -->
+      <div class="testimonio">
+        <div class="testimonio-texto">
+          La administración del Colegio se transformó. Los pagos de cuotas,
+          la gestión de colegiados y los reportes que antes tomaban días,
+          ahora se hacen en minutos. Excelente trabajo y soporte.
+        </div>
+        <div class="testimonio-autor">
+          <div class="testimonio-foto">
+            <img src="logo-ccpl.png" alt="CCPL">
+            <div class="testimonio-foto-placeholder">CC</div>
+          </div>
+          <div class="testimonio-info">
+            <strong>CCPL</strong>
+            <span>Colegio Contadores Públicos de Loreto</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selva Viva Hotel -->
+      <div class="testimonio">
+        <div class="testimonio-texto">
+          Lo que más valoro es que puedo ver desde mi celular cómo va el hotel
+          aunque esté de viaje. Esa tranquilidad no tiene precio.
+          Duilio entiende lo que el empresario necesita.
+        </div>
+        <div class="testimonio-autor">
+          <div class="testimonio-foto">
+            <img src="logo-selvaviva.png" alt="Selva Viva">
+            <div class="testimonio-foto-placeholder">SV</div>
+          </div>
+          <div class="testimonio-info">
+            <strong>Selva Viva Hotel</strong>
+            <span>Iquitos, Loreto</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="cta-final">
+  <div class="cta-final-content">
+    <h2>Conversemos sobre su negocio</h2>
+    <p>
+      Le mostramos cómo nuestros sistemas pueden ayudarle.
+      Sin compromiso, sin presión. Solo una conversación honesta.
+    </p>
+    <div class="cta-botones">
+      <a href="https://wa.me/51967317946?text=Hola%20Duilio%2C%20vi%20la%20p%C3%A1gina%20de%20Per%C3%BA%20Sistemas%20Pro%20y%20me%20gustar%C3%ADa%20saber%20m%C3%A1s." class="cta-btn cta-btn-whatsapp">
+        💬 Escribir por WhatsApp
+      </a>
+      <a href="https://wa.me/51967317946?text=Hola%20Duilio%2C%20me%20gustar%C3%ADa%20que%20me%20visite%20para%20conocer%20sus%20sistemas." class="cta-btn cta-btn-visita">
+        🤝 Agendar visita en Iquitos
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">Perú Sistemas Pro E.I.R.L.</div>
+    <div class="footer-info">
+      RUC 20615446565 · Iquitos, Loreto, Perú<br>
+      WhatsApp: <a href="https://wa.me/51967317946">+51 967 317 946</a>
+    </div>
+    <div class="footer-anpdp">
+      🛡️ Empresa registrada ante la Autoridad Nacional de Protección de Datos Personales del Ministerio de Justicia
+    </div>
+    <div class="footer-legal">
+      © 2026 Perú Sistemas Pro E.I.R.L. Todos los derechos reservados.<br>
+      <a href="/politica-privacidad" style="color: var(--gris-500); text-decoration: underline;">Política de Privacidad</a>
+      ·
+      <a href="/terminos" style="color: var(--gris-500); text-decoration: underline;">Términos de Uso</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+let audioReproductor = null;
+
+function reproducirAudio() {
+  const playerDiv = document.getElementById('audio-player-active');
+  const audio = document.getElementById('audio-element');
+
+  if (!playerDiv.classList.contains('activo')) {
+    playerDiv.classList.add('activo');
+    audio.play().catch(e => {
+      console.log('Error al reproducir audio:', e);
+      // Si no hay archivo de audio, simplemente mostrar el control
+    });
+  }
+}
+
+// Analytics simple (opcional)
+document.querySelectorAll('.producto-cta, .cta-btn, .header-cta').forEach(btn => {
+  btn.addEventListener('click', () => {
+    console.log('CTA clicked:', btn.textContent.trim());
+    // Aquí puede integrar Google Analytics, Plausible, etc.
+  });
+});
+</script>
+
+</body>
+</html>
