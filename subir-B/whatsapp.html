@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>¿Cuánto te costará WhatsApp desde el 1 de octubre? | Perú Sistemas Pro</title>
+<meta name="description" content="Desde el 1 de octubre de 2026, Meta cobra las respuestas y avisos por la API de WhatsApp. Calcula en soles cuánto pagará tu negocio.">
+<meta property="og:title" content="¿Cuánto te costará WhatsApp desde el 1 de octubre?">
+<meta property="og:description" content="Calculadora gratuita en soles. Perú tiene una de las tarifas más altas de la región.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_PE">
+<meta property="og:url" content="https://perusistemas.pro/whatsapp.html">
+<meta property="og:image" content="https://perusistemas.pro/duilio.webp">
+<meta property="og:image:width" content="389">
+<meta property="og:image:height" content="364">
+<meta property="og:image:alt" content="Duilio Restuccia, director de Perú Sistemas Pro">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A1410; --bg2:#0F1D17; --cell:#12241C;
+  --border:#217346; --border-soft:#1A4A30;
+  --text:#E4EBE6; --muted:#9FB3A7; --head-text:#F2F5F0;
+  --rojo:#D42020; --dorado:#F4B400; --accion:#2ECC71;
+  --fs:15px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit;border-radius:0}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Archivo",system-ui,"Segoe UI",Arial,sans-serif;font-size:var(--fs);line-height:1.5;font-feature-settings:"tnum" 1}
+a{color:var(--dorado)}
+:focus-visible{outline:2px solid var(--dorado);outline-offset:2px}
+
+.sec{min-height:88vh;display:flex;align-items:center;justify-content:center;padding:56px 20px;border-bottom:1px solid var(--border-soft)}
+.wrap{width:100%;max-width:980px}
+.narrow{max-width:720px}
+h1,h2,h3{margin:0 0 14px;line-height:1.15;color:var(--head-text)}
+h1{font-size:clamp(30px,5.2vw,52px);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(24px,3.6vw,36px);font-weight:700}
+h3{font-size:17px;font-weight:700}
+p{margin:0 0 14px;max-width:68ch}
+.lead{font-size:18px;color:var(--muted)}
+.small{font-size:13px;color:var(--muted)}
+
+/* Barra de fórmula (hero) */
+.fx{display:grid;grid-template-columns:auto auto 1fr;border:1px solid var(--border);background:var(--cell);margin:28px 0 30px;font-size:16px}
+.fx>div{padding:10px 14px;border-right:1px solid var(--border)}
+.fx>div:last-child{border-right:0;color:var(--head-text);overflow-x:auto;white-space:nowrap}
+.fx .ref{color:var(--muted);min-width:64px}
+.fx .fxl{color:var(--dorado);font-style:italic;font-weight:700}
+.fx b{color:var(--dorado)}
+
+/* Botones con relieve */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;font:inherit;font-weight:700;font-size:16px;cursor:pointer;text-decoration:none;
+  background:var(--accion);color:#08140E;border:1px solid #27B863;border-bottom:4px solid #1B8A4A;border-right:3px solid #1B8A4A;transition:transform .05s}
+.btn:active{transform:translateY(2px);border-bottom-width:2px}
+.btn.alt{background:var(--cell);color:var(--head-text);border-color:var(--border);border-bottom-color:#15502F;border-right-color:#15502F}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* Tabla tipo hoja */
+.sheet{border:1px solid var(--border);background:var(--cell);width:100%}
+.sheet .row{display:grid;border-bottom:1px solid var(--border)}
+.sheet .row:last-child{border-bottom:0}
+.sheet .row>div{padding:12px 14px;border-right:1px solid var(--border)}
+.sheet .row>div:last-child{border-right:0}
+.sheet .hd{background:var(--border);color:var(--head-text);font-weight:700}
+.c3{grid-template-columns:1fr 1fr 1fr}
+.c2{grid-template-columns:1fr 1fr}
+@media (max-width:720px){.c3,.c2{grid-template-columns:1fr}.sheet .row>div{border-right:0;border-bottom:1px solid var(--border-soft)}.sheet .row>div:last-child{border-bottom:0}}
+
+.ico{width:22px;height:22px;stroke:var(--accion);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;display:block;margin-bottom:8px}
+.note{border-left:3px solid var(--dorado);padding:10px 14px;background:var(--bg2);margin-top:18px;font-size:14px;color:var(--muted)}
+
+/* Calculadora */
+.calc{display:grid;grid-template-columns:1.05fr 1fr;border:1px solid var(--border)}
+@media (max-width:820px){.calc{grid-template-columns:1fr}}
+.inputs{border-right:1px solid var(--border)}
+@media (max-width:820px){.inputs{border-right:0;border-bottom:1px solid var(--border)}}
+.inputs .hd,.out .hd{background:var(--border);color:var(--head-text);font-weight:700;padding:10px 14px}
+.field{display:grid;grid-template-columns:1fr 120px;border-bottom:1px solid var(--border-soft);background:var(--cell)}
+.field label{padding:10px 14px;border-right:1px solid var(--border-soft);font-size:14px}
+.field label span{display:block;font-size:12px;color:var(--muted)}
+.field input{width:100%;background:var(--bg);color:var(--head-text);border:0;padding:10px 12px;font:inherit;font-size:16px;font-weight:600;text-align:right}
+.field input:focus{outline:2px solid var(--dorado);outline-offset:-2px}
+.mode{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
+.mode button{background:var(--bg2);color:var(--muted);border:0;border-right:1px solid var(--border);padding:12px;font:inherit;font-weight:600;cursor:pointer}
+.mode button:last-child{border-right:0}
+.mode button[aria-pressed="true"]{background:var(--cell);color:var(--head-text);box-shadow:inset 0 3px 0 var(--accion)}
+details.adv summary{padding:10px 14px;cursor:pointer;color:var(--muted);font-size:13px;background:var(--bg2);border-bottom:1px solid var(--border-soft)}
+.out{background:var(--bg2);display:flex;flex-direction:column}
+.line{display:grid;grid-template-columns:1fr auto;border-bottom:1px solid var(--border-soft);font-size:14px}
+.line>div{padding:9px 14px}
+.line>div:last-child{text-align:right;font-weight:600;color:var(--head-text);border-left:1px solid var(--border-soft);min-width:120px}
+.total{padding:22px 14px;border-bottom:1px solid var(--border)}
+.total .lbl{font-size:14px;color:var(--muted)}
+.total .big{font-size:clamp(38px,6vw,56px);font-weight:800;color:var(--dorado);line-height:1.05}
+.total .sub{font-size:14px;color:var(--muted);margin-top:6px}
+.appmsg{padding:22px 14px;display:none}
+.outcta{padding:16px 14px;margin-top:auto}
+.outcta .btn{width:100%;justify-content:center}
+
+/* Canales */
+.route{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border)}
+.route>div{padding:22px}
+.route>div:first-child{border-right:1px solid var(--border)}
+@media (max-width:720px){.route{grid-template-columns:1fr}.route>div:first-child{border-right:0;border-bottom:1px solid var(--border)}}
+.route .who{font-size:13px;color:var(--muted);margin-bottom:6px}
+.route .cost{font-size:26px;font-weight:800;margin-top:10px}
+.route .cost.g{color:var(--accion)}
+
+.faq details{border:1px solid var(--border);border-top:0;background:var(--cell)}
+.faq details:first-child{border-top:1px solid var(--border)}
+.faq summary{padding:14px 16px;cursor:pointer;font-weight:600;color:var(--head-text)}
+.faq details p{padding:0 16px 14px;margin:0;color:var(--muted)}
+
+/* Quien esta detras: foto a la izquierda en escritorio, arriba en celular */
+.quien{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:start;margin-top:20px}
+.retrato{display:block;width:100%;height:auto;border:1px solid var(--border)}
+.quien .txt p:last-child{margin-bottom:0}
+@media (max-width:720px){.quien{grid-template-columns:1fr;gap:18px}.retrato{max-width:260px}}
+
+footer{padding:28px 20px 40px;text-align:center;font-size:13px;color:var(--muted)}
+footer p{margin:0 auto 8px}
+.wm{position:fixed;right:-40px;bottom:10vh;font-weight:800;font-size:120px;color:var(--border);opacity:.05;pointer-events:none;animation:drift 40s linear infinite alternate;z-index:0}
+@keyframes drift{from{transform:translateY(0)}to{transform:translateY(-30px)}}
+@media (prefers-reduced-motion:reduce){.wm{animation:none}}
+main{position:relative;z-index:1}
+</style>
+<!-- Meta Pixel. Si se vacia el ID no se carga NADA de Meta: ni script, ni cookie. -->
+<script>
+(function(){
+  var META_PIXEL_ID = "1822541342097605";
+  if(!META_PIXEL_ID) return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', META_PIXEL_ID);
+  fbq('track','PageView');
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=1822541342097605&amp;ev=PageView&amp;noscript=1"></noscript>
+</head>
+<body>
+<div class="wm" aria-hidden="true">S/</div>
+<main>
+
+<!-- HERO -->
+<section class="sec">
+  <div class="wrap">
+    <h1>Desde el 1 de octubre, cada respuesta por WhatsApp puede costarle a tu negocio.</h1>
+    <p class="lead">Meta empieza a cobrar las respuestas y los avisos que las empresas envían por la API de WhatsApp. Y Perú está entre los países con la tarifa más alta de la región.</p>
+    <div class="fx" role="img" aria-label="Fórmula: costo mensual igual a mensajes enviados menos mil gratuitos, por la tarifa por mensaje">
+      <div class="ref">C1</div><div class="fxl">fx</div>
+      <div>= (mensajes enviados − 1,000 gratis) × <b>tarifa por mensaje</b></div>
+    </div>
+    <a class="btn" href="#calculadora">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h2M12 18h4"/></svg>
+      Calcular mi costo en soles
+    </a>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="sec">
+  <div class="wrap">
+    <h2>Lo que cambia para las empresas que usan la API</h2>
+    <p class="lead">Hasta el 30 de septiembre, responder a un cliente dentro de las 24 horas era gratis. Eso se acaba.</p>
+    <div class="sheet" style="margin-top:22px">
+      <div class="row c3 hd"><div>Respuestas a clientes</div><div>Avisos automáticos</div><div>Fotos, audios y videos</div></div>
+      <div class="row c3">
+        <div>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>
+          Solo los primeros 1,000 mensajes del mes son gratis. Desde el 1,001, cada respuesta se paga.
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+          Confirmaciones, recordatorios de cita y avisos de pago se cobran desde el primer envío.
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.5"/></svg>
+          Cada envío cuenta como un mensaje. Diez fotos del catálogo son diez cobros.
+        </div>
+      </div>
+    </div>
+    <div class="note">Si atiendes solo desde la app WhatsApp Business del celular, este cobro no te aplica. Afecta a quienes usan la API: bots, plataformas de atención o CRM conectados a WhatsApp.</div>
+  </div>
+</section>
+
+<!-- CALCULADORA -->
+<section class="sec" id="calculadora">
+  <div class="wrap">
+    <h2>¿Cuánto pagarías cada mes?</h2>
+    <p class="lead">Ingresa los datos de tu negocio. El cálculo se hace aquí mismo; no guardamos nada.</p>
+
+    <div class="calc" style="margin-top:22px">
+      <div class="inputs">
+        <div class="hd">Tu operación</div>
+        <div class="mode" role="group" aria-label="¿Cómo atiendes hoy?">
+          <button type="button" id="mApi" aria-pressed="true">Con bot o plataforma (API)</button>
+          <button type="button" id="mApp" aria-pressed="false">Desde la app del celular</button>
+        </div>
+        <div class="field"><label for="consultas">Consultas que atiendes al día<span>Clientes distintos que te escriben</span></label><input id="consultas" type="number" min="0" inputmode="numeric" value="30"></div>
+        <div class="field"><label for="msgs">Mensajes que envías por consulta<span>Cuenta saludos, fotos, audios, precios</span></label><input id="msgs" type="number" min="0" inputmode="numeric" value="8"></div>
+        <div class="field"><label for="dias">Días de atención al mes</label><input id="dias" type="number" min="0" max="31" inputmode="numeric" value="30"></div>
+        <div class="field"><label for="avisos">Avisos automáticos al mes<span>Confirmaciones, recordatorios, cobranzas</span></label><input id="avisos" type="number" min="0" inputmode="numeric" value="0"></div>
+        <div class="field"><label for="ads">% de clientes que llegan por anuncios<span>Anuncios de Facebook o Instagram que abren WhatsApp</span></label><input id="ads" type="number" min="0" max="100" inputmode="numeric" value="0"></div>
+        <details class="adv">
+          <summary>Ajustar tarifa y tipo de cambio</summary>
+          <div class="field"><label for="tarifa">Tarifa por mensaje (US$)<span>Referencial para Perú; confírmala con tu proveedor</span></label><input id="tarifa" type="number" min="0" step="0.001" value="0.03"></div>
+          <div class="field"><label for="tc">Tipo de cambio (S/ por US$)</label><input id="tc" type="number" min="0" step="0.01" value="3.50"></div>
+        </details>
+      </div>
+
+      <div class="out" aria-live="polite">
+        <div class="hd">Resultado</div>
+        <div id="apiOut">
+          <div class="line"><div>Respuestas enviadas al mes</div><div id="oServ">0</div></div>
+          <div class="line"><div>Menos: llegan por anuncios (72 h gratis)</div><div id="oAds">0</div></div>
+          <div class="line"><div>Menos: franquicia gratuita</div><div id="oFree">0</div></div>
+          <div class="line"><div>Respuestas que pagas</div><div id="oPayServ">0</div></div>
+          <div class="line"><div>Avisos que pagas</div><div id="oPayAv">0</div></div>
+          <div class="total">
+            <div class="lbl">Pagarías a Meta cada mes</div>
+            <div class="big" id="oSoles">S/ 0</div>
+            <div class="sub" id="oSub">US$ 0 al mes · S/ 0 al año</div>
+          </div>
+        </div>
+        <div class="appmsg" id="appOut">
+          <h3>Hoy este cobro no te aplica.</h3>
+          <p class="small">Atender desde la app del celular sigue sin costo por mensaje. Pero si piensas automatizar respuestas, conectar un bot o atender con varias personas, pasarás a la API y el cobro sí correrá. Cambia a "Con bot o plataforma" para ver cuánto sería.</p>
+        </div>
+        <div class="outcta">
+          <a class="btn" id="waBtn" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>
+            Quiero reducir este costo
+          </a>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:12px">Cálculo referencial con las reglas vigentes desde el 1 de octubre de 2026. No incluye el cargo adicional que suelen sumar las plataformas intermediarias.</p>
+  </div>
+</section>
+
+<!-- SOLUCIÓN -->
+<section class="sec">
+  <div class="wrap">
+    <h2>WhatsApp para vender. Tu propio canal para atender.</h2>
+    <p class="lead">No se trata de dejar WhatsApp, sino de usarlo donde es gratis y mover el resto a un canal propio.</p>
+    <div class="route" style="margin-top:22px">
+      <div>
+        <div class="who">Clientes nuevos que llegan por anuncios</div>
+        <h3>Siguen en WhatsApp</h3>
+        <p class="small">Las conversaciones que nacen de un anuncio de Facebook o Instagram tienen 72 horas sin costo por mensaje.</p>
+        <div class="cost g">US$ 0 por 72 h</div>
+      </div>
+      <div>
+        <div class="who">Visitantes de tu web y clientes actuales</div>
+        <h3>Pasan a tu canal propio</h3>
+        <p class="small">Chat en tu web con notificaciones al celular para citas, pedidos, pagos y recordatorios. Tus clientes lo abren con un link, sin instalar nada.</p>
+        <div class="cost g">S/ 0 por mensaje</div>
+      </div>
+    </div>
+    <div class="note">Pensado para clínicas, colegios, universidades, colegios profesionales, deliverys y empresas de servicios que ya tienen clientes y les escriben todos los días.</div>
+  </div>
+</section>
+
+<!-- RESPALDO -->
+<section class="sec">
+  <div class="wrap narrow">
+    <h2>Quién está detrás</h2>
+    <div class="quien">
+      <img class="retrato" src="duilio.webp" width="389" height="364" loading="lazy" decoding="async"
+           alt="Duilio Restuccia, director de Perú Sistemas Pro">
+      <div class="txt">
+        <p>Perú Sistemas Pro desarrolla sistemas de gestión para empresas e instituciones peruanas: facturación electrónica, puntos de venta, sistemas para restaurantes y la plataforma de un colegio profesional en producción.</p>
+        <p>Lo dirige Duilio Restuccia, con más de 20 años en desarrollo de software y consultoría, y experiencia previa en SUNAT.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec">
+  <div class="wrap narrow">
+    <h2>Preguntas frecuentes</h2>
+    <div class="faq" style="margin-top:18px">
+      <details><summary>¿Tengo que dejar WhatsApp?</summary><p>No. La propuesta es mantener WhatsApp para captar clientes por anuncios, donde las primeras 72 horas son gratis, y atender lo recurrente en un canal propio sin costo por mensaje.</p></details>
+      <details><summary>Uso la app WhatsApp Business del celular. ¿Me afecta?</summary><p>El cobro del 1 de octubre no aplica a la app. Aplica a la API, que es lo que usan los bots, las plataformas de atención y los CRM.</p></details>
+      <details><summary>¿La tarifa de la calculadora es exacta?</summary><p>Es referencial. Meta fija la tarifa según el país del cliente que recibe el mensaje y la actualiza periódicamente. Puedes ajustarla en la calculadora.</p></details>
+      <details><summary>¿Mis clientes tienen que instalar algo?</summary><p>No. Abren un link desde su celular. Si aceptan las notificaciones, reciben tus avisos como cualquier otra app.</p></details>
+      <details><summary>¿Cuánto cuesta?</summary><p>Depende del tamaño de tu operación. Escríbenos con el resultado de tu cálculo y te damos un diagnóstico sin costo.</p></details>
+    </div>
+    <p style="margin-top:26px"><a class="btn" id="waBtn2" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>
+      Pedir diagnóstico gratuito
+    </a></p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>Perú Sistemas Pro E.I.R.L. · Iquitos, Loreto</p>
+  <p>Fuente de las reglas de cobro: documentación de precios de WhatsApp Business Platform (Meta). WhatsApp es una marca de Meta Platforms; este sitio no está afiliado a Meta.</p>
+  <p>Usamos cookies de medición de Meta para mejorar nuestros anuncios.</p>
+</footer>
+
+<script>
+(function(){
+  var WA = "51967317946";
+  var $ = function(id){return document.getElementById(id)};
+  var ids = ["consultas","msgs","dias","avisos","ads","tarifa","tc"];
+  var mode = "api";
+  var fmt = function(n){return Math.round(n).toLocaleString("es-PE")};
+  var money = function(n){return n.toLocaleString("es-PE",{minimumFractionDigits:2,maximumFractionDigits:2})};
+  var num = function(id){var v=parseFloat($(id).value);return isFinite(v)&&v>0?v:0};
+  var last = {soles:0};
+
+  function calc(){
+    var serv = num("consultas")*num("msgs")*num("dias");
+    var pct = Math.min(num("ads"),100)/100;
+    var adsFree = serv*pct;
+    var restante = serv-adsFree;
+    var free = Math.min(1000,restante);
+    var payServ = Math.max(0,restante-1000);
+    var payAv = num("avisos");
+    var usd = (payServ+payAv)*num("tarifa");
+    var soles = usd*num("tc");
+    $("oServ").textContent = fmt(serv);
+    $("oAds").textContent = adsFree? "−"+fmt(adsFree) : "0";
+    $("oFree").textContent = free? "−"+fmt(free) : "0";
+    $("oPayServ").textContent = fmt(payServ);
+    $("oPayAv").textContent = fmt(payAv);
+    $("oSoles").textContent = "S/ "+money(soles);
+    $("oSub").textContent = "US$ "+money(usd)+" al mes · S/ "+money(soles*12)+" al año";
+    last = {soles:soles, serv:serv};
+    link();
+  }
+  function link(){
+    var t;
+    if(mode==="api"){
+      t = "Hola, usé la calculadora de WhatsApp. Atiendo unas "+fmt(num("consultas"))+" consultas al día y me saldría aprox. S/ "+money(last.soles)+" al mes. Quiero reducir ese costo.";
+    }else{
+      t = "Hola, usé la calculadora de WhatsApp. Atiendo desde la app del celular y quiero saber qué opciones tengo antes de automatizar.";
+    }
+    var url = "https://wa.me/"+WA+"?text="+encodeURIComponent(t);
+    $("waBtn").href = url; $("waBtn2").href = url;
+  }
+  function setMode(m){
+    mode = m;
+    $("mApi").setAttribute("aria-pressed", m==="api");
+    $("mApp").setAttribute("aria-pressed", m==="app");
+    $("apiOut").style.display = m==="api" ? "block" : "none";
+    $("appOut").style.display = m==="app" ? "block" : "none";
+    link();
+  }
+  /* --- Medicion (Meta). Sin pixel configurado no existe fbq y no pasa nada. --- */
+  var usoEnviado = false;
+  function px(evento, datos, propio){
+    if(typeof fbq !== "function") return;
+    fbq(propio ? "trackCustom" : "track", evento, datos);
+  }
+  function marcarUso(){            /* una sola vez por visita */
+    if(usoEnviado) return;
+    usoEnviado = true;
+    px("UsoCalculadora", undefined, true);
+  }
+  function lead(){
+    /* En modo "app del celular" el cobro no aplica: el valor va en 0. */
+    var v = mode === "api" ? Math.round(last.soles*100)/100 : 0;
+    px("Lead", {value: v, currency: "PEN"});
+  }
+
+  ids.forEach(function(id){
+    $(id).addEventListener("input",calc);
+    $(id).addEventListener("input",marcarUso);
+  });
+  $("mApi").addEventListener("click",function(){setMode("api")});
+  $("mApp").addEventListener("click",function(){setMode("app")});
+  $("waBtn").addEventListener("click",lead);
+  $("waBtn2").addEventListener("click",lead);
+  calc();
+})();
+</script>
+</body>
+</html>
