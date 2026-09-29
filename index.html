@@ -66,7 +66,7 @@ nav {
 .nav-wa {
   background: #25D366; border-radius: 20px;
   padding: 6px 14px; font-size: 0.78rem; font-weight: 700;
-  color: white; display: flex; align-items: center; gap: 5px;
+  color: var(--white); display: flex; align-items: center; gap: 5px;
   transition: opacity 0.15s;
 }
 .nav-wa:hover { opacity: 0.88; }
@@ -142,7 +142,7 @@ nav {
 .btn-outline {
   background: transparent;
   border: 2px solid rgba(255,255,255,0.4);
-  color: white; font-weight: 600; font-size: 0.9rem;
+  color: var(--white); font-weight: 600; font-size: 0.9rem;
   padding: 13px 24px; border-radius: 8px;
   cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
   transition: all 0.15s; font-family: var(--font-body);
@@ -155,7 +155,7 @@ nav {
   margin-top: 48px;
 }
 .hero-stat {
-  text-align: center; color: white;
+  text-align: center; color: var(--white);
 }
 .hero-stat strong {
   display: block; font-family: var(--font-display);
@@ -226,7 +226,7 @@ section { padding: 60px 20px; }
   gap: 20px; margin-top: 40px;
 }
 .prod-card {
-  background: white;
+  background: var(--white);
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 2px 16px rgba(180,28,28,0.08);
@@ -285,7 +285,7 @@ section { padding: 60px 20px; }
 .qv .prod-features li::before { color: #C2410C; }
 .qv .badge-lite  { background: #FFF3ED; color: #C2410C; }
 .qv .badge-new   { background: #DCFCE7; color: #15803D; }
-.qv .prod-cta    { background: #C2410C; color: white; }
+.qv .prod-cta    { background: #C2410C; color: var(--white); }
 
 /* MeTraes */
 .mt .prod-icon   { background: #FEF3C7; }
@@ -293,20 +293,20 @@ section { padding: 60px 20px; }
 .mt .prod-features li::before { color: #B45309; }
 .mt .badge-beta  { background: #FEF3C7; color: #B45309; }
 .mt .badge-kds   { background: #EDE9FE; color: #6D28D9; }
-.mt .prod-cta    { background: #B45309; color: white; }
+.mt .prod-cta    { background: #B45309; color: var(--white); }
 
 /* ColegiosPro */
 .cp .prod-icon   { background: #EFF6FF; }
 .cp .prod-name   { color: #1D4ED8; }
 .cp .prod-features li::before { color: #1D4ED8; }
 .cp .badge-sunat { background: #DCFCE7; color: #15803D; }
-.cp .prod-cta    { background: #1D4ED8; color: white; }
+.cp .prod-cta    { background: #1D4ED8; color: var(--white); }
 
 /* Facturalo */
 .fl .prod-icon   { background: #F0FDF4; }
 .fl .prod-name   { color: #15803D; }
 .fl .prod-features li::before { color: #15803D; }
-.fl .prod-cta    { background: #15803D; color: white; }
+.fl .prod-cta    { background: #15803D; color: var(--white); }
 
 /* ═══════════════ BARRA DE ESTADO ═══════════════ */
 .status-bar {
@@ -330,11 +330,11 @@ section { padding: 60px 20px; }
 .dot-green  { background: #4ADE80; box-shadow: 0 0 6px #4ADE80; }
 .dot-yellow { background: #FCD34D; box-shadow: 0 0 6px #FCD34D; }
 .dot-blue   { background: #60A5FA; box-shadow: 0 0 6px #60A5FA; }
-.status-label { font-size: 0.7rem; font-weight: 700; color: white; }
+.status-label { font-size: 0.7rem; font-weight: 700; color: var(--white); }
 
 /* ═══════════════ POR QUÉ ═══════════════ */
 .porque { background: var(--red-deep); }
-.porque .section-title { color: white; }
+.porque .section-title { color: var(--white); }
 .porque .section-title em { color: var(--gold); }
 .porque .section-label { color: var(--gold-light); }
 .razones-grid {
@@ -350,11 +350,11 @@ section { padding: 60px 20px; }
 }
 .razon-card:hover { background: rgba(255,255,255,0.1); }
 .razon-icon { font-size: 1.6rem; margin-bottom: 10px; }
-.razon-title { font-size: 0.9rem; font-weight: 700; color: white; margin-bottom: 6px; }
+.razon-title { font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
 .razon-body { font-size: 0.8rem; color: rgba(255,255,255,0.55); line-height: 1.55; }
 
 /* ═══════════════ ORIGEN ═══════════════ */
-.origen { background: white; }
+.origen { background: var(--white); }
 .origen-wrap {
   display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
 }
@@ -386,7 +386,7 @@ section { padding: 60px 20px; }
 .mapa-pin-label {
   font-size: 0.65rem; font-weight: 800; color: var(--red);
   text-transform: uppercase; letter-spacing: 0.5px;
-  background: white; padding: 2px 6px; border-radius: 4px;
+  background: var(--white); padding: 2px 6px; border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 .mapa-lines {
@@ -414,7 +414,7 @@ section { padding: 60px 20px; }
   max-width: 720px; margin-left: auto; margin-right: auto;
 }
 details {
-  background: white; border-radius: 10px;
+  background: var(--white); border-radius: 10px;
   border: 1px solid var(--border);
   overflow: hidden;
   transition: box-shadow 0.15s;
@@ -457,7 +457,7 @@ details strong { color: var(--text); }
 .cta-wa h2 {
   font-family: var(--font-display);
   font-size: clamp(2rem, 6vw, 3.5rem);
-  color: white; margin-bottom: 14px; position: relative;
+  color: var(--white); margin-bottom: 14px; position: relative;
 }
 .cta-wa h2 em { font-style: normal; color: var(--gold); }
 .cta-wa p {
@@ -471,7 +471,7 @@ details strong { color: var(--text); }
 }
 .btn-wa-big {
   display: inline-flex; align-items: center; gap: 10px;
-  background: #25D366; color: white;
+  background: #25D366; color: var(--white);
   font-size: 1.05rem; font-weight: 800;
   padding: 16px 36px; border-radius: 50px;
   box-shadow: 0 6px 24px rgba(37,211,102,0.4);
@@ -489,19 +489,25 @@ footer {
 }
 .footer-brand {
   font-family: var(--font-display);
-  font-size: 1.6rem; color: white; margin-bottom: 6px;
+  font-size: 1.6rem; color: #F5F0EE; margin-bottom: 6px;
 }
 .footer-brand span { color: var(--gold); }
 .footer-meta {
   font-size: 0.72rem; color: rgba(255,255,255,0.4);
   line-height: 1.7; margin-bottom: 14px;
 }
+.footer-legal {
+  font-size: 0.78rem; line-height: 1.9; margin-bottom: 12px;
+  color: rgba(245,240,238,0.45);
+}
+.footer-legal a { color: var(--gold); text-decoration: none; }
+.footer-legal a:hover { text-decoration: underline; }
 .footer-socials { display: flex; justify-content: center; gap: 12px; margin-top: 16px; }
 .social-btn {
   width: 36px; height: 36px; border-radius: 50%;
   background: rgba(255,255,255,0.1);
   display: flex; align-items: center; justify-content: center;
-  color: white; font-size: 0.9rem; transition: background 0.15s;
+  color: var(--white); font-size: 0.9rem; transition: background 0.15s;
 }
 .social-btn:hover { background: var(--gold); color: var(--red-deep); }
 
@@ -524,7 +530,7 @@ footer {
 }
 .bb-btn:hover { opacity: 0.88; }
 .bb-oferta { background: var(--gold); color: var(--red-deep); }
-.bb-wa     { background: #25D366; color: white; }
+.bb-wa     { background: #25D366; color: var(--white); }
 .bb-sep    { width: 1px; background: rgba(255,255,255,0.15); }
 
 /* ═══════════════ ANIMACIONES DE ENTRADA ═══════════════ */
@@ -639,7 +645,7 @@ footer {
       <div class="mockup-content">
         <div style="font-size:0.5rem;color:#166534;font-weight:700;letter-spacing:0.5px">BOLETA ELECTRÓNICA</div>
         <div class="mockup-bignum" style="color:#22c55e;font-size:1.3rem">B001-00000042</div>
-        <div style="font-size:0.5rem;color:#4b5563;margin:2px 0">RUC 20600123456</div>
+        <div style="font-size:0.5rem;color:#4b5563;margin:2px 0">RUC 20615446565</div>
         <div style="display:flex;gap:3px;margin-top:4px">
           <div style="flex:1;height:5px;background:#22c55e;border-radius:2px;opacity:0.8"></div>
           <div style="flex:1;height:5px;background:#22c55e22;border-radius:2px"></div>
@@ -1006,19 +1012,23 @@ footer {
 <footer>
   <div class="footer-brand">PERU<span>SISTEMAS</span>.PRO</div>
   <div class="footer-meta">
-    Peru Sistemas Pro E.I.R.L. · RUC 20xxxxxxxxx<br>
-    Iquitos, Loreto, Perú<br>
+    PERU SISTEMAS PRO E.I.R.L. · RUC 20615446565<br>
+    Cal. Iquitos Mz. A Lote 49, Punchana, Maynas, Loreto, Perú<br>
     <a href="mailto:info@perusistemas.pro" style="color:rgba(255,255,255,0.4)">info@perusistemas.pro</a> · +51 967 317 946
+  </div>
+  <div class="footer-legal">
+    <a href="/privacidad">Política de Privacidad</a> ·
+    <a href="/terminos">Términos de Servicio</a> ·
+    <a href="/eliminar-datos">Eliminación de datos</a>
   </div>
   <div style="font-size:0.68rem;color:rgba(255,255,255,0.25)">
     QueVendi.pro · MeTraes.com · ColegiosPro · Facturalo.pro<br>
-    © 2025 Peru Sistemas Pro. Todos los derechos reservados.
+    © 2026 Perú Sistemas Pro. Todos los derechos reservados.
   </div>
   <div class="footer-socials">
     <a href="https://wa.me/51967317946" class="social-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
-    <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-    <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
-    <a href="https://www.linkedin.com" class="social-btn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://facebook.com/perusistemaspro" class="social-btn" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://instagram.com/perusistemas.pro" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
   </div>
 </footer>
 
