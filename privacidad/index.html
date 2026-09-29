@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2A0505">
+<title>Política de Privacidad | Perú Sistemas Pro</title>
+<meta name="description" content="Cómo trata los datos personales Perú Sistemas Pro, conforme a la Ley N.° 29733 de Protección de Datos Personales del Perú.">
+<link rel="canonical" href="https://perusistemas.pro/privacidad">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_PE">
+<meta property="og:title" content="Política de Privacidad | Perú Sistemas Pro">
+<meta property="og:description" content="Cómo trata los datos personales Perú Sistemas Pro, conforme a la Ley N.° 29733 de Protección de Datos Personales del Perú.">
+<meta property="og:url" content="https://perusistemas.pro/privacidad">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=Tinos:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#2A0505; --bg2:#4A0808; --panel:#3A0606;
+  --gold:#D4A017; --gold-light:#F0C843;
+  --text:#F5F0EE; --muted:#C4AFAC;
+  --border:rgba(212,160,23,.22); --border-soft:rgba(245,240,238,.10);
+  --font-display:'Bebas Neue',Impact,sans-serif;
+  --font-serif:'Tinos',Georgia,serif;
+  --font-body:'DM Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);
+  font-size:16px;line-height:1.7}
+a{color:var(--gold)}
+a:hover{color:var(--gold-light)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* Cabecera */
+.cab{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:16px 20px;border-bottom:1px solid var(--border);background:var(--bg2);
+  position:sticky;top:0;z-index:10}
+.marca{font-family:var(--font-display);font-size:1.5rem;letter-spacing:.02em;
+  color:var(--text);text-decoration:none}
+.marca span{color:var(--gold)}
+.volver{font-size:.82rem;text-decoration:none;white-space:nowrap}
+
+/* Documento */
+main{padding:0 20px}
+.doc{max-width:68ch;margin:0 auto;padding:40px 0 56px}
+.kicker{font-family:var(--font-body);font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);margin:0 0 10px}
+h1{font-family:var(--font-display);font-size:clamp(2.1rem,6vw,3.1rem);line-height:1.05;
+  letter-spacing:.01em;margin:0 0 12px;color:var(--text)}
+.actualizado{font-size:.82rem;color:var(--muted);margin:0 0 8px}
+.entrada{font-family:var(--font-serif);font-size:1.12rem;color:var(--muted);
+  border-left:3px solid var(--gold);padding-left:16px;margin:24px 0 32px}
+h2{font-family:var(--font-display);font-size:1.6rem;letter-spacing:.02em;
+  margin:40px 0 12px;color:var(--gold-light);line-height:1.2}
+h3{font-size:1rem;margin:26px 0 8px;color:var(--text)}
+p{margin:0 0 16px}
+ul,ol{margin:0 0 16px;padding-left:22px}
+li{margin:8px 0}
+li::marker{color:var(--gold)}
+strong{color:var(--gold-light);font-weight:600}
+hr{border:0;border-top:1px solid var(--border-soft);margin:36px 0}
+
+/* Ficha de datos y avisos */
+.ficha{background:var(--panel);border:1px solid var(--border);padding:18px 20px;margin:0 0 24px}
+.ficha p{margin:0 0 6px;font-size:.94rem}
+.ficha p:last-child{margin-bottom:0}
+.ficha .et{color:var(--muted);font-size:.78rem;text-transform:uppercase;
+  letter-spacing:.1em;display:block;margin-bottom:8px}
+.aviso{background:var(--bg2);border-left:3px solid var(--gold);padding:14px 18px;
+  margin:24px 0;font-size:.94rem}
+.aviso p:last-child{margin-bottom:0}
+.pasos{counter-reset:paso;list-style:none;padding:0}
+.pasos li{counter-increment:paso;position:relative;padding-left:42px;margin:16px 0}
+.pasos li::before{content:counter(paso);position:absolute;left:0;top:0;
+  width:28px;height:28px;background:var(--gold);color:#2A0505;font-weight:700;
+  display:flex;align-items:center;justify-content:center;font-size:.9rem}
+table{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:.92rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border-soft);
+  vertical-align:top}
+th{color:var(--gold);font-weight:600;font-size:.78rem;text-transform:uppercase;
+  letter-spacing:.08em}
+.tabla-caja{overflow-x:auto}
+
+/* Pie */
+footer{background:var(--bg2);border-top:2px solid var(--gold);padding:32px 20px;
+  text-align:center}
+.footer-brand{font-family:var(--font-display);font-size:1.6rem;color:var(--text);
+  margin-bottom:10px}
+.footer-brand span{color:var(--gold)}
+.footer-meta{font-size:.78rem;color:var(--muted);line-height:1.8;margin-bottom:12px}
+.footer-meta a{color:var(--muted)}
+.footer-legal{font-size:.78rem;line-height:1.9;margin-bottom:12px;color:rgba(245,240,238,.45)}
+.footer-legal a{color:var(--gold);text-decoration:none}
+.footer-legal a:hover{text-decoration:underline}
+.footer-prod{font-size:.72rem;color:#9C8683;line-height:1.8}
+
+@media (max-width:640px){
+  body{font-size:15px}
+  .doc{padding:28px 0 40px}
+  .cab{padding:12px 16px}
+  main{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<header class="cab">
+  <a class="marca" href="/">PERU<span>SISTEMAS</span>.PRO</a>
+  <a class="volver" href="/">← Volver al inicio</a>
+</header>
+
+<main>
+  <article class="doc">
+    <p class="kicker">Legal</p>
+    <h1>Política de Privacidad</h1>
+    <p class="actualizado">Última actualización: 28 de setiembre de 2026</p>
+    <p class="entrada">Cómo tratamos los datos personales en nuestra plataforma de atención por WhatsApp, conforme a la Ley N.° 29733 y su Reglamento.</p>
+
+    <h2>1. Quién es el responsable</h2>
+    <div class="ficha">
+      <span class="et">Responsable del tratamiento</span>
+      <p><strong>PERU SISTEMAS PRO E.I.R.L.</strong></p>
+      <p>RUC 20615446565</p>
+      <p>Cal. Iquitos Mz. A Lote 49, Punchana, Maynas, Loreto, Perú</p>
+      <p><a href="mailto:info@perusistemas.pro">info@perusistemas.pro</a> · +51 967 317 946</p>
+    </div>
+    <p>Esta política se rige por la <strong>Ley N.° 29733, Ley de Protección de Datos
+    Personales</strong>, y su Reglamento aprobado por Decreto Supremo N.° 003-2013-JUS.</p>
+
+    <h2>2. Nuestro rol: encargados del tratamiento</h2>
+    <p>Prestamos servicios de atención y ventas automatizadas por WhatsApp a empresas.
+    Esto significa que tratamos dos grupos de datos distintos, y nuestro rol es distinto
+    en cada uno:</p>
+    <div class="tabla-caja">
+    <table>
+      <tr><th>Datos</th><th>Nuestro rol</th></tr>
+      <tr>
+        <td>Datos de nuestros <strong>clientes</strong> (las empresas que contratan el servicio)</td>
+        <td>Somos <strong>titulares del banco de datos</strong>: los tratamos para la
+        relación comercial, la facturación y el soporte.</td>
+      </tr>
+      <tr>
+        <td>Datos de los <strong>usuarios finales</strong> que escriben por WhatsApp a
+        esas empresas</td>
+        <td>Somos <strong>encargados del tratamiento</strong>, por cuenta de la empresa
+        cliente. Ella es la titular del banco de datos de sus contactos y quien decide
+        para qué se usan.</td>
+      </tr>
+    </table>
+    </div>
+    <div class="aviso">
+      <p>Si escribiste por WhatsApp a una empresa que usa nuestra plataforma, tus datos
+      le pertenecen a esa empresa. Nosotros solo los procesamos siguiendo sus
+      instrucciones. Puedes ejercer tus derechos ante ella o ante nosotros: en el segundo
+      caso trasladamos tu solicitud a la empresa y la atendemos en lo que nos
+      corresponde.</p>
+    </div>
+
+    <h2>3. Qué datos tratamos</h2>
+    <h3>De las empresas cliente</h3>
+    <ul>
+      <li>Razón social, RUC y domicilio.</li>
+      <li>Nombre, cargo, correo y teléfono de la persona de contacto.</li>
+      <li>Datos necesarios para la facturación y el cobro del servicio.</li>
+    </ul>
+    <h3>De los usuarios finales que escriben por WhatsApp</h3>
+    <ul>
+      <li><strong>Número de teléfono</strong> desde el que se escribe.</li>
+      <li><strong>Nombre de perfil</strong> de WhatsApp, tal como lo muestra la aplicación.</li>
+      <li><strong>Contenido de los mensajes</strong> intercambiados con la empresa.</li>
+      <li><strong>Archivos enviados</strong>: imágenes, audios, videos y documentos.</li>
+      <li>Fecha, hora y estado de entrega de cada mensaje.</li>
+    </ul>
+    <p>No solicitamos datos sensibles. Si un usuario los envía por iniciativa propia
+    dentro de una conversación, se tratan únicamente para atender esa conversación y se
+    eliminan cuando se solicita.</p>
+
+    <h2>4. Para qué los usamos</h2>
+    <p>La finalidad es <strong>prestar el servicio de atención y ventas automatizadas con
+    inteligencia artificial sobre WhatsApp Business Platform</strong>, por cuenta de la
+    empresa cliente. En concreto:</p>
+    <ul>
+      <li>Responder consultas de sus clientes.</li>
+      <li>Tomar pedidos, reservas y citas.</li>
+      <li>Dar soporte y enviar avisos relacionados con el negocio.</li>
+      <li>Derivar la conversación a una persona del equipo cuando corresponde.</li>
+    </ul>
+    <p>No usamos el contenido de las conversaciones para publicidad propia,
+    <strong>no vendemos datos personales</strong> y no los cedemos con fines comerciales.</p>
+
+    <h2>5. Con quién los compartimos</h2>
+    <p>Para prestar el servicio trabajamos con proveedores que actúan como encargados y
+    solo tratan los datos según nuestras instrucciones:</p>
+    <div class="tabla-caja">
+    <table>
+      <tr><th>Proveedor</th><th>Para qué</th></tr>
+      <tr><td><strong>Meta Platforms</strong></td>
+          <td>WhatsApp Business Platform: es el canal por el que viajan los mensajes.</td></tr>
+      <tr><td><strong>Anthropic</strong> y <strong>OpenAI</strong></td>
+          <td>Modelos de inteligencia artificial, usados <strong>únicamente para generar la
+          respuesta</strong> de cada conversación.</td></tr>
+      <tr><td><strong>Railway</strong></td>
+          <td>Infraestructura y alojamiento de la plataforma.</td></tr>
+    </table>
+    </div>
+    <p>El contenido enviado a los proveedores de inteligencia artificial
+    <strong>no se utiliza para entrenar modelos</strong>, ni propios ni de terceros.</p>
+
+    <h2>6. Transferencia internacional</h2>
+    <p>Los proveedores mencionados operan servidores <strong>fuera del territorio
+    peruano</strong>, principalmente en los Estados Unidos de América. Por lo tanto,
+    prestar el servicio implica un flujo transfronterizo de datos personales, conforme al
+    artículo 15 de la Ley N.° 29733.</p>
+    <p>Exigimos a cada proveedor compromisos contractuales de confidencialidad y
+    seguridad equivalentes a los que asumimos nosotros. Al contratar el servicio, la
+    empresa cliente autoriza esta transferencia y se obliga a informarla a sus propios
+    contactos.</p>
+
+    <h2>7. Cuánto tiempo los conservamos</h2>
+    <ul>
+      <li><strong>Datos de la empresa cliente:</strong> mientras dure la relación
+      contractual y, después, el plazo que exijan las normas tributarias y comerciales.</li>
+      <li><strong>Conversaciones y archivos de los usuarios finales:</strong> se conservan
+      mientras dure el contrato con la empresa cliente, según la configuración que ella
+      defina. Al terminar el contrato se eliminan dentro de los
+      <strong>noventa (90) días</strong> siguientes, salvo que la empresa cliente solicite
+      antes su devolución o eliminación, o que una obligación legal exija conservarlas por
+      más tiempo.</li>
+    </ul>
+
+    <h2>8. Cómo los protegemos</h2>
+    <ul>
+      <li>Cifrado de las comunicaciones en tránsito mediante TLS.</li>
+      <li>Control de acceso por credenciales individuales y separación de los datos de
+      cada cliente.</li>
+      <li>Registro de accesos y de operaciones sobre los bancos de datos.</li>
+      <li>Acceso limitado al personal que lo necesita para prestar el servicio, sujeto a
+      deber de confidencialidad.</li>
+    </ul>
+    <p>Ningún sistema es infalible. Ante un incidente de seguridad que afecte datos
+    personales, informaremos a la empresa cliente sin demora para que adopte las medidas
+    que le correspondan.</p>
+
+    <h2>9. Tus derechos (ARCO)</h2>
+    <p>Puedes ejercer los derechos de <strong>acceso, rectificación, cancelación y
+    oposición</strong>, además de los derechos de información y de tratamiento objetivo
+    reconocidos por la Ley N.° 29733.</p>
+    <p>Escríbenos a <a href="mailto:info@perusistemas.pro">info@perusistemas.pro</a> con el asunto
+    <strong>«Derechos ARCO»</strong>, indicando tu nombre, el derecho que ejerces y el
+    número de WhatsApp o el RUC con el que te identificamos.</p>
+    <p>Conforme al Reglamento de la Ley, atendemos las solicitudes de <strong>acceso en un
+    plazo de veinte (20) días hábiles</strong> y las de <strong>rectificación, cancelación
+    u oposición en diez (10) días hábiles</strong>, contados desde su recepción.</p>
+    <p>Si consideras que no atendimos tu solicitud, puedes presentar un reclamo ante la
+    <strong>Autoridad Nacional de Protección de Datos Personales</strong> del Ministerio
+    de Justicia y Derechos Humanos.</p>
+    <p>Para eliminar tus datos, hay instrucciones paso a paso en
+    <a href="/eliminar-datos">Eliminación de datos</a>.</p>
+
+    <h2>10. Cambios en esta política</h2>
+    <p>Podemos actualizar esta política cuando cambien el servicio o las normas
+    aplicables. La fecha de la última actualización figura al inicio. Si el cambio es
+    sustancial, avisaremos a las empresas cliente por correo electrónico.</p>
+
+  </article>
+</main>
+
+<footer>
+  <div class="footer-brand">PERU<span>SISTEMAS</span>.PRO</div>
+  <div class="footer-meta">
+    PERU SISTEMAS PRO E.I.R.L. · RUC 20615446565<br>
+    Cal. Iquitos Mz. A Lote 49, Punchana, Maynas, Loreto, Perú<br>
+    <a href="mailto:info@perusistemas.pro">info@perusistemas.pro</a> · +51 967 317 946
+  </div>
+  <div class="footer-legal">
+    <a href="/privacidad">Política de Privacidad</a> ·
+    <a href="/terminos">Términos de Servicio</a> ·
+    <a href="/eliminar-datos">Eliminación de datos</a>
+  </div>
+  <div class="footer-prod">
+    QueVendi.pro · MeTraes.com · ColegiosPro · Facturalo.pro<br>
+    © 2026 Perú Sistemas Pro
+  </div>
+</footer>
+
+</body>
+</html>

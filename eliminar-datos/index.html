@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2A0505">
+<title>Eliminación de datos | Perú Sistemas Pro</title>
+<meta name="description" content="Cómo solicitar la eliminación de tus datos personales en Perú Sistemas Pro y cómo desconectar una cuenta de WhatsApp de la plataforma.">
+<link rel="canonical" href="https://perusistemas.pro/eliminar-datos">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_PE">
+<meta property="og:title" content="Eliminación de datos | Perú Sistemas Pro">
+<meta property="og:description" content="Cómo solicitar la eliminación de tus datos personales en Perú Sistemas Pro y cómo desconectar una cuenta de WhatsApp de la plataforma.">
+<meta property="og:url" content="https://perusistemas.pro/eliminar-datos">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=Tinos:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#2A0505; --bg2:#4A0808; --panel:#3A0606;
+  --gold:#D4A017; --gold-light:#F0C843;
+  --text:#F5F0EE; --muted:#C4AFAC;
+  --border:rgba(212,160,23,.22); --border-soft:rgba(245,240,238,.10);
+  --font-display:'Bebas Neue',Impact,sans-serif;
+  --font-serif:'Tinos',Georgia,serif;
+  --font-body:'DM Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);
+  font-size:16px;line-height:1.7}
+a{color:var(--gold)}
+a:hover{color:var(--gold-light)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* Cabecera */
+.cab{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:16px 20px;border-bottom:1px solid var(--border);background:var(--bg2);
+  position:sticky;top:0;z-index:10}
+.marca{font-family:var(--font-display);font-size:1.5rem;letter-spacing:.02em;
+  color:var(--text);text-decoration:none}
+.marca span{color:var(--gold)}
+.volver{font-size:.82rem;text-decoration:none;white-space:nowrap}
+
+/* Documento */
+main{padding:0 20px}
+.doc{max-width:68ch;margin:0 auto;padding:40px 0 56px}
+.kicker{font-family:var(--font-body);font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);margin:0 0 10px}
+h1{font-family:var(--font-display);font-size:clamp(2.1rem,6vw,3.1rem);line-height:1.05;
+  letter-spacing:.01em;margin:0 0 12px;color:var(--text)}
+.actualizado{font-size:.82rem;color:var(--muted);margin:0 0 8px}
+.entrada{font-family:var(--font-serif);font-size:1.12rem;color:var(--muted);
+  border-left:3px solid var(--gold);padding-left:16px;margin:24px 0 32px}
+h2{font-family:var(--font-display);font-size:1.6rem;letter-spacing:.02em;
+  margin:40px 0 12px;color:var(--gold-light);line-height:1.2}
+h3{font-size:1rem;margin:26px 0 8px;color:var(--text)}
+p{margin:0 0 16px}
+ul,ol{margin:0 0 16px;padding-left:22px}
+li{margin:8px 0}
+li::marker{color:var(--gold)}
+strong{color:var(--gold-light);font-weight:600}
+hr{border:0;border-top:1px solid var(--border-soft);margin:36px 0}
+
+/* Ficha de datos y avisos */
+.ficha{background:var(--panel);border:1px solid var(--border);padding:18px 20px;margin:0 0 24px}
+.ficha p{margin:0 0 6px;font-size:.94rem}
+.ficha p:last-child{margin-bottom:0}
+.ficha .et{color:var(--muted);font-size:.78rem;text-transform:uppercase;
+  letter-spacing:.1em;display:block;margin-bottom:8px}
+.aviso{background:var(--bg2);border-left:3px solid var(--gold);padding:14px 18px;
+  margin:24px 0;font-size:.94rem}
+.aviso p:last-child{margin-bottom:0}
+.pasos{counter-reset:paso;list-style:none;padding:0}
+.pasos li{counter-increment:paso;position:relative;padding-left:42px;margin:16px 0}
+.pasos li::before{content:counter(paso);position:absolute;left:0;top:0;
+  width:28px;height:28px;background:var(--gold);color:#2A0505;font-weight:700;
+  display:flex;align-items:center;justify-content:center;font-size:.9rem}
+table{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:.92rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border-soft);
+  vertical-align:top}
+th{color:var(--gold);font-weight:600;font-size:.78rem;text-transform:uppercase;
+  letter-spacing:.08em}
+.tabla-caja{overflow-x:auto}
+
+/* Pie */
+footer{background:var(--bg2);border-top:2px solid var(--gold);padding:32px 20px;
+  text-align:center}
+.footer-brand{font-family:var(--font-display);font-size:1.6rem;color:var(--text);
+  margin-bottom:10px}
+.footer-brand span{color:var(--gold)}
+.footer-meta{font-size:.78rem;color:var(--muted);line-height:1.8;margin-bottom:12px}
+.footer-meta a{color:var(--muted)}
+.footer-legal{font-size:.78rem;line-height:1.9;margin-bottom:12px;color:rgba(245,240,238,.45)}
+.footer-legal a{color:var(--gold);text-decoration:none}
+.footer-legal a:hover{text-decoration:underline}
+.footer-prod{font-size:.72rem;color:#9C8683;line-height:1.8}
+
+@media (max-width:640px){
+  body{font-size:15px}
+  .doc{padding:28px 0 40px}
+  .cab{padding:12px 16px}
+  main{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<header class="cab">
+  <a class="marca" href="/">PERU<span>SISTEMAS</span>.PRO</a>
+  <a class="volver" href="/">← Volver al inicio</a>
+</header>
+
+<main>
+  <article class="doc">
+    <p class="kicker">Legal</p>
+    <h1>Eliminación de datos</h1>
+    <p class="actualizado">Última actualización: 28 de setiembre de 2026</p>
+    <p class="entrada">Cómo pedir que eliminemos tus datos personales y cómo una empresa desconecta su WhatsApp de nuestra plataforma.</p>
+
+    <h2>1. Qué puedes solicitar</h2>
+    <p>Puedes pedir que eliminemos los datos personales que tratamos sobre ti. El
+    procedimiento es gratuito y aplica tanto a las <strong>empresas cliente</strong> como
+    a los <strong>usuarios finales</strong> que escribieron por WhatsApp a una empresa que
+    usa nuestra plataforma.</p>
+
+    <h2>2. Cómo solicitarlo</h2>
+    <ol class="pasos">
+      <li>Escribe un correo a <strong><a href="mailto:info@perusistemas.pro">info@perusistemas.pro</a></strong>.</li>
+      <li>Pon exactamente este asunto: <strong>«Eliminación de datos»</strong>.</li>
+      <li>Incluye en el mensaje uno de estos dos datos, según tu caso:
+        <ul>
+          <li>Tu <strong>número de WhatsApp</strong> en formato internacional
+          (por ejemplo, +51 9XX XXX XXX), si escribiste a una empresa.</li>
+          <li>El <strong>RUC de la empresa</strong>, si eres el titular o representante de
+          una empresa cliente.</li>
+        </ul>
+      </li>
+      <li>Indica tu nombre y, si lo sabes, el nombre de la empresa con la que
+      conversaste. Nos ayuda a ubicar los datos más rápido.</li>
+    </ol>
+    <div class="aviso">
+      <p>No hace falta llenar ningún formulario ni crear una cuenta. Basta el correo.</p>
+    </div>
+
+    <h2>3. Qué eliminamos</h2>
+    <ul>
+      <li>El historial de mensajes asociado a tu número.</li>
+      <li>Los archivos que hayas enviado o recibido: imágenes, audios, videos y documentos.</li>
+      <li>Tu número de teléfono y tu nombre de perfil de WhatsApp.</li>
+      <li>Los registros derivados de esa conversación en nuestros sistemas.</li>
+    </ul>
+
+    <h3>Qué no podemos eliminar</h3>
+    <ul>
+      <li>La información que debamos conservar por <strong>obligación legal</strong>, como
+      los comprobantes de pago y la documentación contable y tributaria de las empresas
+      cliente.</li>
+      <li>Las copias que puedan existir <strong>en los sistemas de Meta</strong>, que se
+      rigen por las políticas de WhatsApp y de Meta. Esas debes gestionarlas directamente
+      con Meta desde tu aplicación de WhatsApp.</li>
+      <li>La copia de la conversación que la <strong>empresa con la que hablaste</strong>
+      conserve por su cuenta, fuera de nuestra plataforma.</li>
+    </ul>
+
+    <h2>4. Plazos</h2>
+    <ul>
+      <li><strong>Acuse de recibo:</strong> confirmamos por correo que recibimos tu
+      solicitud, normalmente dentro de las 48 horas.</li>
+      <li><strong>Resolución:</strong> atendemos la eliminación en un plazo máximo de
+      <strong>diez (10) días hábiles</strong>, conforme al Reglamento de la
+      Ley N.° 29733.</li>
+      <li><strong>Confirmación:</strong> te escribimos de vuelta cuando la eliminación se
+      ha ejecutado, indicando qué se eliminó y qué se conservó por obligación legal.</li>
+    </ul>
+
+    <h2>5. Si escribiste a una empresa que usa nuestra plataforma</h2>
+    <p>En ese caso la empresa es la <strong>titular del banco de datos</strong> y nosotros
+    actuamos como encargados por su cuenta. Al recibir tu solicitud:</p>
+    <ul>
+      <li>La trasladamos a la empresa correspondiente, que es quien debe resolverla.</li>
+      <li>En paralelo, eliminamos los datos en nuestros sistemas.</li>
+      <li>Te informamos a qué empresa se trasladó, para que puedas darle seguimiento.</li>
+    </ul>
+    <p>Hay más detalle sobre esta distinción en la
+    <a href="/privacidad">Política de Privacidad</a>.</p>
+
+    <h2>6. Cómo una empresa desconecta su WhatsApp</h2>
+    <p>Si eres cliente y quieres desvincular tu cuenta de nuestra plataforma:</p>
+    <ol class="pasos">
+      <li>Envíanos un correo a <a href="mailto:info@perusistemas.pro">info@perusistemas.pro</a> solicitando la baja
+      del servicio.</li>
+      <li>Ingresa al <strong>Administrador Comercial de Meta</strong>
+      (business.facebook.com), entra a la configuración de tu cuenta de WhatsApp Business
+      y <strong>elimina a Perú Sistemas Pro como socio</strong> con acceso a esa cuenta.</li>
+      <li>Revoca los permisos concedidos a nuestra aplicación. Desde ese momento dejamos
+      de poder enviar o recibir mensajes en tu nombre.</li>
+      <li>Nosotros eliminamos las credenciales de acceso y, si lo pides, los datos de las
+      conversaciones, dentro de los <strong>diez (10) días hábiles</strong> siguientes.
+      Antes de eliminarlos podemos entregarte una copia.</li>
+    </ol>
+    <div class="aviso">
+      <p>Tu número y tu cuenta de WhatsApp Business siguen siendo tuyos. Desconectarte de
+      nuestra plataforma no afecta la titularidad de la cuenta ni tu historial en Meta.</p>
+    </div>
+
+    <h2>7. Contacto</h2>
+    <div class="ficha">
+      <span class="et">Escríbenos a</span>
+      <p><strong>PERU SISTEMAS PRO E.I.R.L.</strong></p>
+      <p>RUC 20615446565</p>
+      <p>Cal. Iquitos Mz. A Lote 49, Punchana, Maynas, Loreto, Perú</p>
+      <p><a href="mailto:info@perusistemas.pro">info@perusistemas.pro</a> · +51 967 317 946</p>
+    </div>
+    <p>Si no estás conforme con nuestra respuesta, puedes presentar un reclamo ante la
+    <strong>Autoridad Nacional de Protección de Datos Personales</strong> del Ministerio
+    de Justicia y Derechos Humanos del Perú.</p>
+
+  </article>
+</main>
+
+<footer>
+  <div class="footer-brand">PERU<span>SISTEMAS</span>.PRO</div>
+  <div class="footer-meta">
+    PERU SISTEMAS PRO E.I.R.L. · RUC 20615446565<br>
+    Cal. Iquitos Mz. A Lote 49, Punchana, Maynas, Loreto, Perú<br>
+    <a href="mailto:info@perusistemas.pro">info@perusistemas.pro</a> · +51 967 317 946
+  </div>
+  <div class="footer-legal">
+    <a href="/privacidad">Política de Privacidad</a> ·
+    <a href="/terminos">Términos de Servicio</a> ·
+    <a href="/eliminar-datos">Eliminación de datos</a>
+  </div>
+  <div class="footer-prod">
+    QueVendi.pro · MeTraes.com · ColegiosPro · Facturalo.pro<br>
+    © 2026 Perú Sistemas Pro
+  </div>
+</footer>
+
+</body>
+</html>
